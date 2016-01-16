@@ -46,7 +46,41 @@ Before I say more, let me start by giving a clear definition of a "mock." I l
 
 Here's what a quick and dirty (hand-rolled) mock might look like in go:
 
-{{< gist kmdupr33 757e18ddb2d93f737f83 >}}
+
+{{< highlight go "style=default">}}
+type mockEmailSender struct {
+	test        *testing.T
+	sendCalled  bool
+	sendSubject string
+	sendBody    string
+}
+
+func (m *mockEmailSender) Send(subject string, body string) {
+	m.sendCalled = true
+	m.sendSubject = subject
+	m.sendBody = body
+}
+
+func (m mockEmailSender) verifyExpectation() {
+	if !m.sendCalled {
+		m.test.Error("Expected call to Send()")
+	}
+
+	if m.sendSubject != "Should we use mocking libraries?" {
+		m.test.Errorf("Expeced Send() with subject: %s, received: %s", "Should we use mocking libraries?", m.sendSubject)
+	}
+
+	if m.sendBody != "Probably" {
+		m.test.Errorf("Expected Send() with body: %s, received: %s", "Probably", m.sendBody)
+	}
+
+}
+
+func TestEmailSender(t *testing.T) {
+	m := mockEmailSender{test: t}
+	defer m.verifyExpectation()
+}
+{{< / highlight >}}
 
 Of course, this is a contrived example, but its enough to help convey the idea of a mock. As you can see, the test will fail if the mock doesn't receive a call with the appropriate arguments. The mock has been "pre-programmed" to expect a call to Send() with specify arguments and that expectation must be fulfilled in order for the test to pass.
 
