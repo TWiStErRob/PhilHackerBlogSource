@@ -1,5 +1,12 @@
 baseurl: http://replace-this-with-your-hugo-site.com/
 disablePathToLower: true
 languageCode: en-us
-title: My New Hugo Site
+title: Philosophical Hacker
+theme: casper
+params:
+    cover: images/the-thinker.jpg
+    description: Articles on android and go development
+    twitterName: philosohacker
+    facebookName: philosophicalhacker
+    linkedinName: k-matthew-dupree-44672178
 ...

@@ -74,10 +74,10 @@ Regardless of whether there's any confusion of terms in Gerrand's remarks about 
 
 
 
-	
+
   1. easier to reason about
 
-	
+
   2. easier to read
 
 
@@ -100,7 +100,5 @@ So, that's where I stand for now. I think that if you're going to use mocks for 
 
 
 
-	
+
   1. Steve Freeman claims that Robert Martin conflates mocks with stubs in the comments of Robert Martin's article.
-
-
