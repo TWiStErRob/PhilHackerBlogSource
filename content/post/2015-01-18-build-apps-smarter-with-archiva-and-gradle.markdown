@@ -22,34 +22,34 @@ With Eclipse, the workflow for creating a multi-project setup went something lik
 
 
 
-	
+
   1. Create an app project.
 
-	
+
   2. Create library projects.
 
-	
+
   3. Add library projects as a dependencies for the app project.
 
-	
+
   4. Push all projects to version control
 
 
 This isn’t terrible, but whenever someone else wants to build your app, they need to:
 
-	
+
   1. Checkout the app project
 
-	
+
   2. Import that project into Eclipse
 
-	
+
   3. Checkout library projects
 
-	
+
   4. Import those projects into Eclipse
 
-	
+
   5. Add those library projects as dependencies for the app project.
 
 
@@ -85,19 +85,19 @@ In order to upload your artifact to archiva, you simply run the uploadArchives t
 
 
 
-	
+
   1. Ctrl + Shift + A (Cmd + Shift + A on the mac)
 
-	
+
   2. Type ‘Gradle’ into the action search bar
 
-	
+
   3. Select ‘Gradle’ from the list of actions
 
-	
+
   4. Once the gradle tasks window appears, double click uploadArchives from the ‘All Tasks’ list
 
-	
+
   5. Once this is done, you should be able to save this gradle task as a build configuration so that running it again is simpler:
 
 
@@ -119,10 +119,4 @@ Next, go to the build.gradle file for the particular module you are building. He
 
 That’s it! Once you’ve configured all your library projects to publish artifacts to archiva, building projects that are dependent on multiple libraries is now really simple. It involves exactly one step:
 
-
-
-	
   1. Checkout app project. Hit build.
-
-
-Checkout app project. Hit build.

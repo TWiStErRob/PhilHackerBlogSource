@@ -22,10 +22,10 @@ Android 1.2 introduced unit testing support. Now, we can run junit tests on the 
 
 
 
-	
-  * Why should anyone care about this new feature? 
 
-	
+  * Why should anyone care about this new feature?
+
+
   * What the heck is unit testing anyways?
 
 
@@ -47,13 +47,13 @@ Let's say we were working on Google's IO Sched app from last year. The above sc
 
 
 
-	
+
   * If the user taps the plus button before the IO session has happened, the session is added to the user's schedule and a notification is set to remind the user that the IO session is coming up.
 
-	
+
   * If the user taps the plus button after the IO session has happened, when the user returns to the screen, they will be presented with a card that asks them for feedback about the session.
 
-	
+
   * If the session has already been added to the user's schedule, when they enter the session detail screen, they should see a "check" button instead of a "plus" button, and pressing this button should perform the reverse of one of the two above operations, depending on whether the check button is pressed before or after the IO session.
 
 
@@ -88,7 +88,7 @@ This second snippet is found on the android page entitled "[Building Effective
 In spite of their differences, these two snippets are both called "unit tests." I don't mean to quibble over definitions, but our sloppiness with the word "unit test" is, I think, unhelpful. Here's a more precise definition:
 
 
-<blockquote>A unit test is a test that can verify that_ all of the code_ in exactly one _non-trivial_ class is working correctly. If this test fails, we know that the problem is located in that class being tested.</blockquote>
+>A unit test is a test that can verify that __all of the code__ in exactly one __non-trivial__ class is working correctly. If this test fails, we know that the problem is located in that class being tested.
 
 
 On this definition, tests like `MyActivityUnitTestCase` in the first snippet would not count as a unit tests because, as [I've pointed out elsewhere](http://philosophicalhacker.com/2015/04/17/why-android-unit-testing-is-so-hard-pt-1/), when testing activities, we often lack enough control over the pre-act state required to exercise different branches of the methods we want to test. Moreover, [activities often contain dependencies that aren't injected](http://philosophicalhacker.com/2015/04/24/why-android-unit-testing-is-so-hard-pt-2/), so if a test fails, it may fail because of an error in the code of one of the non-mocked dependencies within the activity being tested.

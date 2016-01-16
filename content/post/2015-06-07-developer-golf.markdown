@@ -50,30 +50,30 @@ Par for the next course: 5</blockquote>
 
 
 
-	
+
   1. For every developer, calculate her average number of contributions (additions and deletions) per week.
 
-	
+
   2. Calculate the standard deviation for weekly team member contributions.
 
-	
+
   3. The number of mulligans a developer has earned is equal to the square of the number of standard deviations her average weekly contribution is above the average weekly contribution for all developers. (You can't have negative mulligans.)
 
 
 Here's an example:
 
 
-<blockquote>**Average weekly contributions: **
+>**Average weekly contributions:**
 
-Bob: 1000 contributions
+>Bob: 1000 contributions
 
-Barbara: 2000 contributions
+>Barbara: 2000 contributions
 
-Billy: 3000 contributions
+>Billy: 3000 contributions
 
-**Standard deviation: 1000**
+>**Standard deviation: 1000**
 
-Billy gets a mulligan.</blockquote>
+>Billy gets a mulligan.
 
 
 **Team play:** You could introduce team play simply by treating teams as you would individuals.

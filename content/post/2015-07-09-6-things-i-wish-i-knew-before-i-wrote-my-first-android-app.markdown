@@ -17,13 +17,7 @@ Here's a list of things to keep in mind as you're writing your first Android ap
 Of course, if you're doing your job right as a student of Android development, you'll probably hate your app later regardless. As @codestandards says,
 
 
-<blockquote>
-
-> 
-> If the code you wrote a year ago doesn't seem bad to you, you're probably not learning enough.
-> 
-> 
-— Code Standards (@codestandards) [May 21, 2015](https://twitter.com/codestandards/status/601373392059518976)</blockquote>
+{{< tweet 601373392059518976 >}}
 
 
 If you're an experienced Java developer, items 1, 2, and 5 probably won't be interesting to you. Items 3 and 4, on the other hand, might show you some cool stuff you can do with Android Studio that you might not have known about, even if you've never been guilty of making the mistakes I demo in those items.
@@ -97,13 +91,13 @@ In my first app, I wrote code that provided functionality that's already provide
 
 
 
-	
+
   1. Listen to the [Google IO Fragmented podcast episode](http://fragmentedpodcast.com/episodes/9/). In this episode the ask developers what 3rd party libraries they see as essential for Android development. Spoiler: its mostly Dagger, Retrofit, Picasso, and Mockito.
 
-	
+
   2. Subscribe [to Android Weekly](http://androidweekly.net/). They've got a section that contains the latest libraries that are coming out. Keep an eye out for what seems useful to you.
 
-	
+
   3. Look for open source applications that solve problems similar to the ones that you are solving with your app. You might find one that uses a third-party library that you want to use or you might find that they've used a standard java library that you were unaware of.
 
 

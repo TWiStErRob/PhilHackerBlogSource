@@ -10,7 +10,7 @@ url: /2015/04/11/against-android-unit-tests/
 wordpress_id: 277
 ---
 
-**Edit: **Since I've written this, I've come to realize that making unit testable Android apps does not require us to remove compile-time dependencies on the Android SDK. I talk about this realization in [the post that concludes this series](http://philosophicalhacker.com/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/).
+**Edit:** Since I've written this, I've come to realize that making unit testable Android apps does not require us to remove compile-time dependencies on the Android SDK. I talk about this realization in [the post that concludes this series](http://philosophicalhacker.com/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/).
 
 
 
@@ -26,11 +26,11 @@ I believe that the folks at Square are on to something. I think that their attem
 
 I realize that this is a radical suggestion. I’m basically asking us to take a stack that looks like this:
 
-****![AndroidStack-01](http://www.philosophicalhacker.com/wp-content/uploads/2015/04/androidstack-01.png)****
+![AndroidStack-01](http://www.philosophicalhacker.com/wp-content/uploads/2015/04/androidstack-01.png)
 
 And make it look like this:
 
-****[![AndroidStack-02](http://www.philosophicalhacker.com/wp-content/uploads/2015/04/androidstack-02.png)](http://www.philosophicalhacker.com/wp-content/uploads/2015/04/androidstack-02.png)****
+[![AndroidStack-02](http://www.philosophicalhacker.com/wp-content/uploads/2015/04/androidstack-02.png)](http://www.philosophicalhacker.com/wp-content/uploads/2015/04/androidstack-02.png)
 
 Although this suggestion is radical and although it might seem like a long shot, I think its worth exploring since it will free developers from the unfortunate features of writing Android unit tests without forcing them to rely on third-party libraries that will invariably lag behind the newest updates to the Android ecosystem. Moreover, if Kent Beck is right in claiming that testable code is well structured code, we might also discover better ways of designing our applications.
 
@@ -49,10 +49,8 @@ Notes:
 
 
 
-	
+
   1. He said this during [his 2013 talk on Dagger at DevOxx](https://www.parleys.com/tutorial/529bde2ce4b0e619540cc3ae)
 
-	
+
   2. In [an android developers blog post](http://android-developers.blogspot.com/2014/07/google-io-2014-app-source-code-now.html), Bruno Oliveira presents the app as a model for us to follow.
-
-

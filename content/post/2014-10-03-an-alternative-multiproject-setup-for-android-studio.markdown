@@ -41,9 +41,9 @@ Both of the unfortunate features of the "Google way" of handling multi-project s
 Suppose you've got a project structure that looks something like this:
 
 
-<blockquote>App1 depends on the [StickyListHeaders](https://github.com/emilsjolander/StickyListHeaders) library
+>App1 depends on the [StickyListHeaders](https://github.com/emilsjolander/StickyListHeaders) library
 
-App2 depends on the StickyListHeaders library</blockquote>
+>App2 depends on the StickyListHeaders library</blockquote>
 
 
 If you were to follow the Google's user guide in setting up your projects, then you would create two projects, one for App1 and another for App2. The project directories for App1 and App2 would each contain a submodule that has the code from the StickyListHeaders library that each app needs to build successfully.
@@ -62,16 +62,16 @@ It turns out there's a better way to manage multiple projects in Android Studio.
 
 
 
-	
+
   1. Create an Android Studio project for the StickyListHeaders library
 
-	
+
   2. Create an Android Studio project for App2
 
-	
+
   3. Create an Android Studio project for App1
 
-	
+
   4. Configure App1 and App2 to build the modules in the StickyListHeaders project.
 
 
@@ -98,5 +98,3 @@ If you've got any concerns with this setup or if you have a better alternative, 
 1. I say "sort of" because you aren't exactly stuck between the two options I've discussed here. You could also turn your libraries into maven artifacts and include them into your app that way. This method, however, does not allow you to work on your library code and app code simultaneously unless you run multiple instances of Android Studio. Aint nobody got the memory for that.
 
 2. Well, there are alternatives to git submodules that might offer a decent solution here, but why make things so complicated, when you can simply do what I've suggested in this post.
-
-

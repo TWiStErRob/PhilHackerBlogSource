@@ -10,7 +10,7 @@ url: /2015/03/24/how-to-keep-your-rxjava-subscribers-from-leaking/
 wordpress_id: 257
 ---
 
-**Edit:** Shortly after writing this l, I realized that the solution that I present here isn't very good. I'm leaving it here just in case it can serve as a building block for better solutions.
+**Edit:** Shortly after writing this, I realized that the solution that I present here isn't very good. I'm leaving it here just in case it can serve as a building block for better solutions.
 
 Sometimes you don't have control over the lifecycle of your `Subscribers`. In these cases, to avoid leaking your `Subscriber`, you have to unsubscribe from your `Observable` when you're notified that your `Subscriber` is about to be destroyed. It can be really annoying to have to worry about unsubscribing your `Subscriptions `to avoid memory leaks, so in this post, I'll show how, with a few lines of code, you can stop worrying about leaking your `Subscribers`.
 
@@ -20,19 +20,19 @@ An Android `Activity` is basically a screen that you see when you're using an An
 
 Sometimes you want to fetch some data and then update the UI with that data in response to a touch event, and sometimes fetching data can't be done on the main thread. `Observables` can be a nice way to handle this problem:
 
-https://gist.github.com/kmdupr33/ef8023275ca36d201360
+{{< gist kmdupr33 ef8023275ca36d201360>}}
 
 However, if the Android framework wants to destroy your `Activity` while your `Observable` is doing its thing, you run into a problem: The `Observable` will keep your Activity from being garbage collected, because your `Activity` contains a reference to an anonymous inner `Subscriber` and this `Subscriber` implicitly contains a reference to your `Activity`.
 
 The straightforward solution to this is to unsubscribe from your `Observable` when the `Activity` is about to be destroyed:
 
-https://gist.github.com/kmdupr33/338f863a42f53b736bdd
+{{< gist kmdupr33 338f863a42f53b736bdd >}}
 
 Although this solution is straightforward, it puts you in an unfortunate dilemma:
 
 
 
-	
+
   * Horn 1: You have to worry about unsubscribing from your `Observer` in all of your `Activities` in your app
 
 
@@ -45,7 +45,7 @@ Although this solution is straightforward, it puts you in an unfortunate dilemma
 
 
 
-	
+
   * Horn 2: You have to unsubscribe in a base `Activity` class that calls unsubscribe on a `CompositeSubscription`, have subclasses add `Subscriptions` to the base `Activity`'s `CompositeSubscription`, and make all of your `Activities` extend that base class.¹
 
 
@@ -53,11 +53,11 @@ I think there might be a better solution: If we subclass `Observable` to wrap ou
 
 To see how this would work, let's start by defining the `Subscriber` decorator:
 
-https://gist.github.com/kmdupr33/b5fe4b2a67a3473e20c7
+{{< gist kmdupr33 b5fe4b2a67a3473e20c7 >}}
 
 Next, we define the Observable subclass that adds a `safeSubscribe()` method to wrap the `Subscriber` passed in:
 
-https://gist.github.com/kmdupr33/057612a1d383cc196c9a
+{{< gist kmdupr33 057612a1d383cc196c9a >}}
 
 And that's it. Now, clients can subscribe to an `Observable` without having to worry about leaking an object with a big memory footprint. Instead, only the `Subscriber` decorator is leaked, and since the Subscriber decorator doesn't have a big memory footprint, its not a huge deal if it sticks around until the `Observer` is done doing its thing.
 

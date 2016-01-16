@@ -28,24 +28,24 @@ Since “business logic” is one of those tricky phrases that seems to have mul
 
 Let’s look at how the square way would have us write the `SessionCalendarService` that I introduced in the last post. Right now, the `SessionCalendarService` looks like this:
 
-https://gist.github.com/kmdupr33/f56c957a4fd57eefb064
+{{< gist kmdupr33 f56c957a4fd57eefb064 >}}
 
 As you can see, the `SessionCalendarService` calls on helper methods that it defines later on. Once we tally up these helper methods and the class’ field declarations, the `Service` is 400+ lines long. Its certainly not a trivial task to get a handle on what’s happening in the class, and, as we already saw last post, there’s no way to unit test `SessionCalendarService`.
 Let’s see how the square way would have us write this. Again, the square way requires us to move the business logic out of android classes and move them into a business object. The business object for the `SessionCalendarService` is a `SessionCalendarUpdater`, and this is what it looks like:
 
-https://gist.github.com/kmdupr33/8dd6bc35033415c7f383
+{{< gist kmdupr33 8dd6bc35033415c7f383 >}}
 
 I want to highlight a few things about this gist. First, notice that you don’t see the new keyword at all. Because a business object’s dependencies are injected, it never uses the new keyword. This is key for keeping the class unit testable. Second, you’ll notice that the class does not explicitly depend on the Android SDK. Because a business object’s dependencies are android-specific implementations of android-agnostic interfaces, it does not need to depend on the Android SDK.
 
 How do these dependencies get into the `SessionCalendarUpdater`? They are injected by the `SessionCalendarService`:
 
-https://gist.github.com/kmdupr33/bfc68c1e4cc60172bc86
+{{< gist kmdupr33 bfc68c1e4cc60172bc86 >}}
 
 Notice that this revised `SessionCalendarService` is full of new keywords. The presence of new keywords, however, in this class is not a problem. We can see this if we make a second observation about this gist: it contains no business logic. Because of this, there isn’t really a need to unit test this class. As long as we’re sure that we’ve called updateCalendar() on the `SessionCalendarUpdater`, the only errors that are likely to happen in this class are compile-time errors. There’s no need to write a test to check for conditions that the compiler already guards against.
 
 For the reasons that I mentioned in my last post two posts, breaking up our `Service` like this will allow us to more easily unit test our business logic. A test for the `SessionCalendarUpdater` might look like this:
 
-https://gist.github.com/kmdupr33/e03771c0a6582741ee7e
+{{< gist kmdupr33 e03771c0a6582741ee7e >}}
 
 
 # Conclusion

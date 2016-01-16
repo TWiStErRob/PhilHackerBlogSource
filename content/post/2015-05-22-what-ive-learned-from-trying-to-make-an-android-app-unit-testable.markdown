@@ -16,13 +16,13 @@ Now that we've discussed [why unit testing in Android is so difficult](http://ph
 
 
 
-	
+
   1. Removing all compile time dependencies on the Android SDK is not necessary for us write fast unit tests for Android. (Its also not really a practical thing to try to do anyway.)
 
-	
+
   2. Provided that we redefine The Square Way so that it does not require us to remove compile-time dependencies on the Android SDK, the only problem that arises when trying to apply The Square Way is simply writing all of boilerplate code. Fortunately, much of this boilerplate can be written for us by Android Studio.
 
-	
+
   3. Dependency Injection is really the main "active ingredient" that allows The Square Way enhance the unit testability of our applications.
 
 
@@ -38,19 +38,19 @@ The idea that started off this entire series was to make Android apps more unit 
 
 As we'll see later in this post, this idea is fundamentally misguided. Making our applications unit testable has more to do with making proper use of dependency injection than it does with decoupling from the Android SDK. The primary reason for this is that an object's Android dependencies can be mocked out using something like Mockito, and in cases where Mocktio alone fails to give us clean control over the pre-act-state of test, we can replace those android dependencies with interfaces that have mock implementations. This is what we did with the `SessionRepositoryManager` I discussed in [my post on how to make UI app component classes unit testable](http://philosophicalhacker.com/2015/05/08/how-to-make-our-android-apps-unit-testable-pt-2/):
 
-https://gist.github.com/kmdupr33/54d1b6a42139dcae8c2e
+{{< gist kmdupr33 54d1b6a42139dcae8c2e >}}
 
 In addition to being unnecessary, completely decoupling from the Android SDK is impractical. The problems that arise when you attempt to this are, in retrospect, obvious and uninteresting, so I will only briefly state them here. Attempting to remove all compile-time dependencies on the Android SDK from your application will likely result in:
 
 
 
-	
+
   1. An unacceptably dramatic increase in the number of methods and classes your application has to define.
 
-	
+
   2. Interfaces that are near copies of already existing Android interfaces
 
-	
+
   3. Constructors bloated with dependencies that would not otherwise needed to be injected into an object.
 
 
@@ -64,7 +64,7 @@ If we redefine The Square Way so that it does not require us to remove dependenc
 
 If this is true, then the only thing that prevents us from adopting The Square Way is having to write a bunch of boilerplate code. Fortunately, Android Studio provides us with a refactoring option that helps in making the transition to The Square Way: the `Extract Delegate` option. With this option, you can automatically move a class's methods and instance variables to a delegate class and have the original class call on this newly created delegate instead of relying on its own methods:
 
-[youtube https://www.youtube.com/watch?v=N0F7w4wEnQ8]
+{{< youtube N0F7w4wEnQ8 >}}
 
 This video demonstrates how to make use of the Extract Delegate option to do some of the refactoring necessary to make the SessionDetailActivity's onStop() method unit testable. I discuss why this kind of refactor is necessary [in an earlier post](http://philosophicalhacker.com/2015/05/08/how-to-make-our-android-apps-unit-testable-pt-2/). Obviously, this mechanical option isn't going to cover all cases, and you may need to rework some methods to separate out the business logic from the statements that update an Activity's view, but the option is definitely helpful.
 
@@ -74,18 +74,12 @@ This video demonstrates how to make use of the Extract Delegate option to do som
 
 
 
-## 
+##
 
 
 
 
-<blockquote>
-
-> 
-> The secret... Dependency injection. "How to Make Our Android Apps Unit Testable (Pt. 1)" [http://t.co/srqzk34Aoi](http://t.co/srqzk34Aoi)
-> 
-> 
-— Chris Arriola (@arriolachris) [May 15, 2015](https://twitter.com/arriolachris/status/599232312492982273)</blockquote>
+{{< tweet 599232312492982273 >}}
 
 
 

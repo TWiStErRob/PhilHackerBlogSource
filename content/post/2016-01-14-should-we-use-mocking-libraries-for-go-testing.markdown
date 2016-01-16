@@ -46,7 +46,7 @@ Before I say more, let me start by giving a clear definition of a "mock." I l
 
 Here's what a quick and dirty (hand-rolled) mock might look like in go:
 
-
+{{< gist kmdupr33 757e18ddb2d93f737f83 >}}
 
 Of course, this is a contrived example, but its enough to help convey the idea of a mock. As you can see, the test will fail if the mock doesn't receive a call with the appropriate arguments. The mock has been "pre-programmed" to expect a call to Send() with specify arguments and that expectation must be fulfilled in order for the test to pass.
 

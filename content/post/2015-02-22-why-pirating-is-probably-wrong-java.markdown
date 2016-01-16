@@ -10,4 +10,4 @@ url: /2015/02/22/why-pirating-is-probably-wrong-java/
 wordpress_id: 253
 ---
 
-https://gist.github.com/kmdupr33/7df17204478aa27f53c0
+{{< gist kmdupr33 7df17204478aa27f53c0 >}}

@@ -10,7 +10,7 @@ url: /2015/04/24/why-android-unit-testing-is-so-hard-pt-2/
 wordpress_id: 301
 ---
 
-**Edit: **In [the post that concludes this series](http://philosophicalhacker.com/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/), I point out that making unit testable Android apps does not require us to remove compile-time dependencies on the Android SDK and that attempting to do so is impractical anyway. Ignore anything in this post that suggests otherwise.
+**Edit:** In [the post that concludes this series](http://philosophicalhacker.com/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/), I point out that making unit testable Android apps does not require us to remove compile-time dependencies on the Android SDK and that attempting to do so is impractical anyway. Ignore anything in this post that suggests otherwise.
 
 
 
@@ -36,21 +36,21 @@ To begin to see why the standard way leads to untestable app components, let’s
 
 With those points in mind, we can see that dependency injection, in some cases, is really the only acceptable way to write code whose pre-act-state can be altered and whose post-act-state is accessible. Let’s look at a non-android example of this:
 
-https://gist.github.com/kmdupr33/b0e31bfca58e8acb9465
+{{< gist kmdupr33 b0e31bfca58e8acb9465 >}}
 
-Dependency injection is really the only way to unit test `doIntenseCalculation()`. `doIntenseCalculation()` doesn’t have a return value. Moreover, there’s no property on `MathNerd` that will allow us to determine the validity of our post-act-state. We could get the post-act-state in a test from the `m`CalcCache`` like this:
+Dependency injection is really the only way to unit test `doIntenseCalculation()`. `doIntenseCalculation()` doesn’t have a return value. Moreover, there’s no property on `MathNerd` that will allow us to determine the validity of our post-act-state. We could get the post-act-state in a test from the `mCalcCache` like this:
 
-https://gist.github.com/kmdupr33/554cc7afe27cdc5e6426
+{{< gist kmdupr33 554cc7afe27cdc5e6426 >}}
 
 If we did this, however, we would no longer be writing a unit test for `MathNerd`. We’d be writing an integration test that checks the behavior of a `MathNerd` and whatever class is responsible for updating the `CalcCache` with the results from doIntenseCalculationInBackground().
 
 Dependency injection is really the only way that we can verify our post-act-state for a unit test. We inject mocks and verify that methods are called in the right circumstances:
 
-https://gist.github.com/kmdupr33/528c6094c43a74f8c0be
+{{< gist kmdupr33 528c6094c43a74f8c0be >}}
 
 There are many instances in which unit testing an Android class requires the same thing: dependency injection. Here’s the problem: key android classes have dependencies that we cannot inject. The `SessionCalendarService` that’s launched by the `SessionDetailActivity` I talked about last time is an example of this:
 
-https://gist.github.com/kmdupr33/02f61591f40f459ae40c
+{{< gist kmdupr33 02f61591f40f459ae40c >}}
 
 The `SessionCalendarService` has a ContentResolver as a dependency. This dependency, however, is not one that we can inject, so there’s simply no way for us to write a unit test for onHandleIntent(). onHandleIntent() doesn’t have a return method and there’s no property on `SessionCalendarService` that would allow us to check the validity of our post-act-state. To verify our post-act-state, we could actually query the ContentProvider to see if the requested data has been inserted, but then we wouldn’t be writing a unit test for a `SessionCalendarService`. Instead, we’d be writing an integration test that tests both our `SessionCalendarService` and whatever ContentProvider handles session calendar data.
 
@@ -62,13 +62,13 @@ So, if you put business logic into an Android class whose dependencies cannot be
 
 In some cases, the standard way will only make it very difficult to unit test your code. If we return to the `onStop()` method within the `SessionDetailActivity` that we examined in the last article, we’ll see this:
 
-https://gist.github.com/kmdupr33/4c90e155dcaf6c4e0147
+{{< gist kmdupr33 4c90e155dcaf6c4e0147 >}}
 
 There is no publically accessible property that will tell us whether the `SessionCalendarService` has been launched with the right parameters. Morover, `onStop()` is a protected method whose return value cannot be modified. Thus, the only way we can access post-act-state is to check the state of a dependency injected into `onStop()`.
 
 At this point, you’ll notice that the code within `onStop()` that launches the `SessionCalendarService` doesn’t actually belong to a single object at all. In other words, there is no dependency to inject into `onStop()` that would allow us to access the post-act-state for a test that checks if the Service has been launched under the right conditions with the right arguments. To put the point a third way, in order to start making `onStop()` testable, it needs to look something like this:
 
-https://gist.github.com/kmdupr33/84a4a4c92affc3910536
+{{< gist kmdupr33 84a4a4c92affc3910536 >}}
 
 This isn’t the cleanest way of refactoring `onStop()`, but something like this is necessary if we want to make the code unit testable while adhering to the standard practice of keeping our business logic in Activities. Now, think for a second about how counter-intuitive this refactor is: Instead of simply calling startService(), a method that belongs to Context and, by extension, the `SessionDetailActivity`, we are using a `ServiceLauncher`, an object that depends on a Context to start the service. The SesionDetailActivity that is-a Context is using an object that has-a Context to launch the `SessionCalendarService`.
 

@@ -18,7 +18,7 @@ I'm using TDD to write a HackerNews client for Android. This post (and the ones 
 ## Testing a Walking Skeleton
 
 
-The first step in kick-starting a TDD workflow, according to Steve Freeman and Nat Pryce in _Growing Object Oriented Software Guided by Tests, _is to "test a walking skeleton." A walking skeleton, as they define it, is this:
+The first step in kick-starting a TDD workflow, according to Steve Freeman and Nat Pryce in _Growing Object Oriented Software Guided by Tests_, is to "test a walking skeleton." A walking skeleton, as they define it, is this:
 
 
 <blockquote>A “walking skeleton” is an implementation of the thinnest possible slice of real functionality that we can automatically build, deploy, and test end-to-end.
@@ -28,7 +28,7 @@ pg. 69-70</blockquote>
 
 A walking skeleton for a HackerNews client, as I see it, should just display a list of HackerNews story ids. To implement this test, I use a simple espresso test that looks like this:
 
-
+{{< gist kmdupr33 a25db0930e583db05535 >}}
 
 
 ### How I Got Consistent Test Data
@@ -40,9 +40,15 @@ Let me briefly describe how I used this approach in my application.
 
 Objects in PhilHackerNews access the Dagger object graph from the `PhilHackerNewsApplication` subclass. That class is responsible for making the `ObjectGraph`:
 
+{{< gist kmdupr33 eb4565747da03d9f1309 >}}
+
 So, when I'm running a test, I use a custom test runner that creates a subclass of `PhilHackerNewsApplication` to create the `ObjectGraph` with the overridden module:
 
+{{< gist kmdupr33 d8a344157014e3cf0c8a >}}
+
 The `TestApplication` class creates the `ObjectGraph` with a module that overrides the dependencies responsible for fetching HackerNews data:
+
+{{< gist kmdupr33 36c1e516b335092057c2 >}}
 
 `TestLoaderModule` is the module that provides the overridden dependency. It provides a HackerNewsRestAdapter that simply loads HackerNews data from memory instead of the server:
 
@@ -62,10 +68,10 @@ Here's something interesting about the state of the architecture currently: it u
 
 
 
-	
+
   * The network calls are made and delivered properly even if the MainActivity and its Fragment are destroyed because of a configuration change
 
-	
+
   * The classes in the "Application Layer" of this app are freed from having to worry about the Android-specific problem of asynchronous data loading for app components that can be destroyed and recreated at any time.
 
 
@@ -79,10 +85,15 @@ Pg. 90</blockquote>
 
 The problem that Loaders attempt to solve, as I see it, is a technical one that doesn't belong in the Application Layer. To shield application layer objects from this technical detail, I've created and pass around an Observable that, upon subscription, initializes a load from a Loader using a LoaderManager:
 
+{{< gist kmdupr33 c6c1641ed1a24e07e062 >}}
+
 Rather than dealing with loaders directly, clients that want to consume the "loaded" data subscribe to the `Observable` that's created with a `LoaderInitializingOnSubscribe`. In my application, Activities/Fragments/Presenters will not interact with this Observable directly, however. Instead, they'll interact with a StoryRepository that will (eventually) be responsible for deciding whether data gets loaded from the cache or from the network. Here's what that class looks like at the moment:
+
+{{< gist kmdupr33 378997639d5bac95a392 >}}
 
 And here's a relevant snippet of the Fragment that uses this class to load the HackerNews data:
 
+{{< gist kmdupr33 fb1c638f2fdbe6a8bd68 >}}
 
 
 If you want to have a closer look at what I've done, feel free to take a look at [the repo for this project](https://github.com/kmdupr33/PhilHackerNews).

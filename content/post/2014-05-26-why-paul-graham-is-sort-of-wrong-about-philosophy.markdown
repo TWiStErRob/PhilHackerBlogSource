@@ -17,13 +17,13 @@ A couple years ago, Paul Graham wrote [an essay about philosophy](http://www.pau
 
 
 
-	
+
   * Philosophy has largely been driven by our failure to realize that our words are imprecise.
 
-	
+
   * This failure is the result of failing to search for useful knowledge.
 
-	
+
   * We can do philosophy better if we filter out thoughts that don’t meet a usefulness criterion.
 
 
@@ -49,7 +49,7 @@ Then there’s epistemology, the study of knowledge. How do we know that we’re
 
 Again, if someone responded to these questions by saying that we are confused about the meaning of the word “know,” we’d feel that they have missed the point.² When I ask, “How do I know I’m not in the matrix?,” I’m asking, “Why should I believe that I’m not in the matrix?” That question makes no reference to the word “know,” and yet it is still, in my opinion, an interesting question. Epistemology is another big branch in philosophy, so if we think that there are epistemological questions that aren’t driven by confusion over words, then we have to admit that there’s another large section of philosophical questions that aren’t misguided in the way that Graham suggests.
 
-Now, lets talk about metaphysics. Like I said, I’m more sympathetic to Graham’s point with respect to _some_ kinds of metaphysics.³ Some metaphysical questions may be motivated by confusions over words and some metaphysical questions may be moral questions in disguise, but they are still important questions. Whether someone was “free to act” is something that we consider often in legal settings, and I think it’s right for us to ask this question before we lock someone up. If turns out that “I” don’t exist, to take another one of Graham’s examples, this might change the way we think about, for example, death.4
+Now, lets talk about metaphysics. Like I said, I’m more sympathetic to Graham’s point with respect to _some_ kinds of metaphysics.³ Some metaphysical questions may be motivated by confusions over words and some metaphysical questions may be moral questions in disguise, but they are still important questions. Whether someone was “free to act” is something that we consider often in legal settings, and I think it’s right for us to ask this question before we lock someone up. If turns out that “I” don’t exist, to take another one of Graham’s examples, this might change the way we think about, for example, death.<sup>4</sup>
 
 Even if Graham and I are together in thinking that some metaphysical questions are confused, I don’t think the way that he argues for his point is very compelling. In fact, Graham doesn't really seem to argue for this point at all. I think he comes closest to arguing for his point in the following passages:
 
@@ -73,7 +73,7 @@ I’ll address Graham’s other two points in subsequent posts. Maybe I’ll hav
 
 Here's [the discussion on HackerNews](https://news.ycombinator.com/item?id=7801063).
 
-Here's [my response](http://philosophicalhacker.com/2014/05/27/some-responses-to-your-comments-on-why-paul-graham-is-sort-of-wrong-about-philosophy/) to some of the comments. 
+Here's [my response](http://philosophicalhacker.com/2014/05/27/some-responses-to-your-comments-on-why-paul-graham-is-sort-of-wrong-about-philosophy/) to some of the comments.
 
 **Notes:**
 
@@ -83,4 +83,4 @@ Here's [my response](http://philosophicalhacker.com/2014/05/27/some-responses-to
 
 3. Even though I’m suspicious of metaphysics, no one should take my suspicion very seriously.  I’ve only taken 1 metaphysics class, and I know people who could probably make me doubt whether I should harbor any suspicion towards metaphysics.
 
-4. In _Reasons and Persons, _Derek Parfit argues that there are practical implications of ceasing to believe that the “I” exists_._
+4. In _Reasons and Persons_, Derek Parfit argues that there are practical implications of ceasing to believe that the “I” exists.

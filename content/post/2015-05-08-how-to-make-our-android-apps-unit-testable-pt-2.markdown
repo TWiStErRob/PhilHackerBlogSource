@@ -30,7 +30,7 @@ Although applying The Square Way to UI app components classes can be more compli
 
 Here’s what `onStop()` looks like currently:
 
-https://gist.github.com/kmdupr33/4c90e155dcaf6c4e0147
+{{< gist kmdupr33 4c90e155dcaf6c4e0147 >}}
 
 One problem with this code, as I’ve mentioned before, is that the code that launches the `SessionCalendarService` does not belong to a method on an dependency that’s been injected into the `SessionDetailActivity`. Following The Square Way fixes this problem. The first step for restructuring this code to follow The Square Way is to move the business logic from the `SessionDetailActivity` to a business object. The folks at Square have a name for a business object that contains the business logic that used to live in an `Activity` (or `Fragment`, etc.): they call it a “Presenter.”
 
@@ -38,15 +38,15 @@ The Presenter is responsible for, among other things, updating the View with dat
 
 Here’s what the equivalent of `onStop()` would look like within the `SessionDetailPresenter`:
 
-https://gist.github.com/kmdupr33/5e06819aec1694453ff3
+{{< gist kmdupr33 5e06819aec1694453ff3 >}}
 
 The key thing to note here is that the `SessionDetailPresenter`’s dependencies are passed into its constructor. Because these dependencies are injected, we now have a way of verifying the post-act-state of a unit test against `SessionDetailPresenter`’s `onViewTranslatorStopped()` method:
 
-https://gist.github.com/kmdupr33/c2edd738031bb9314268
+{{< gist kmdupr33 c2edd738031bb9314268 >}}
 
 Although we now have a way of verifying post-act-state for our test, this is not enough. This test, as it’s written, will fail. To see why, let’s take a second look at `onViewTranslatorStopped()`:
 
-https://gist.github.com/kmdupr33/bee17bc98248e662f748
+{{< gist kmdupr33 bee17bc98248e662f748 >}}
 
 The code within onViewTranslatorStopped() is wrapped in an if-statement. It only executes if the starred button state is different from the state in which it was initialized. Recall that `mInitStarred` is initialized in a Loader callback. IOSched checks the database for whether the session has been added to the user’s calendar and uses information to update the UI appropriately once the user returns to the `SessionDetailActivity`. In the above unit test, `mInitStarred` will have a default value of false and `mStarred` will also have a default value of false, so the code within the if-statement will never execute.
 
@@ -54,27 +54,27 @@ Even if we could make the code within that if-statement execute, however, we st
 
 Both of these problems are particular examples of a general problem I pointed out with android unit testing: we often lack sufficient control over the pre-act-state of our test. However, because we’ve injected a `SessionRepositoryManager` into the `SessionDetailPresenter`, we can determine the values of `mSessionStart` and `mInitStarred`. `SessionRepositoryManager` is an Android-agnostic interface¹:
 
-https://gist.github.com/kmdupr33/310eee93627547b34c22
+{{< gist kmdupr33 310eee93627547b34c22 >}}
 
 However, when we create the `SessionDetailPresenter`, we inject an android-specific implementation of the `SessionRepositoryManager` that wraps a `LoaderManager`:
 
-https://gist.github.com/kmdupr33/f22e6ee78bf4c40901a5
+{{< gist kmdupr33 f22e6ee78bf4c40901a5 >}}
 
 Because `SessionRepositoryManager` is just an interface, we can easily define a MockRepositoryManager to facilitate unit testing:
 
-https://gist.github.com/kmdupr33/54d1b6a42139dcae8c2e
+{{< gist kmdupr33 54d1b6a42139dcae8c2e >}}
 
 Notice that we can specify which values we’d like the `MockSessionRepositoryManager` to return when there’s a call to `initRepository()` by passing in a `Session` object into its constructor. Values like `mSessionStart` within the `SessionDetailPresenter` will be initialized with the `startTimeStamp` instance var on the `Session` model object. Now that we have control over these values, we almost have what we need to complete the arrange-step of a unit test for `onViewTranslatorStopped()`:
 
-https://gist.github.com/kmdupr33/472d6cd32f935475773d
+{{< gist kmdupr33 472d6cd32f935475773d >}}
 
 I say “almost” above because there’s still one part of `onViewTranslatorStopped()` that the above test code doesn’t cover. At the bottom of `onViewTranslatorStopped()` there’s a block of code that will run only if `mStarred` is true. This code launches a service that will remind will remind the user attend and/or rate the session they’ve added to their calendar:
 
-https://gist.github.com/kmdupr33/5e06819aec1694453ff3
+{{< gist kmdupr33 5e06819aec1694453ff3 >}}
 
 To make this code run, we need to make sure that `mStarred` is true. We can do this by calling the `SessionDetailPresenter`’s onSessionStarred() method, a method that’s called by the `SessionDetailViewTranslator` (or, if you like confusing names, you would just call this the “SessionDetailView”) when the user taps the star button:
 
-https://gist.github.com/kmdupr33/144b53d71871e18e4c3e
+{{< gist kmdupr33 144b53d71871e18e4c3e >}}
 
 With all of these pieces in place, we finally have everything we need to write a unit test against `onViewTranslatorStopped()`.
 

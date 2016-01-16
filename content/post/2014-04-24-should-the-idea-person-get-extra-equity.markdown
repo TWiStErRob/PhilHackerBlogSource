@@ -27,7 +27,7 @@ Lately, I've been wrestling with a startup question that I hope will be interest
 
 
 
-Should the "idea person" get more equity than the other co-founders _simply because _the startup is based on her idea?
+Should the "idea person" get more equity than the other co-founders _simply because_ the startup is based on her idea?
 
 
 
@@ -52,17 +52,17 @@ Here's are two reasons I'm hesitant to call "moral dibs" on my extra idea-person
 
 
 
-First, I don't really feel responsible for the generation of my startup ideas. I didn't sit around and think hard about "problems" that I could solve with a company. The ideas just sort of came to me.4 Since I didn't really do any work to generate my startup ideas, it feels weird to get rewarded for it. For me, being rewarded for one of my startup ideas would kind of feel like getting rewarded for having a bowel movement. My response to such a prize would be, "Thanks for the reward, but this shit sort of just happened."
+First, I don't really feel responsible for the generation of my startup ideas. I didn't sit around and think hard about "problems" that I could solve with a company. The ideas just sort of came to me.<sup>4</sup> Since I didn't really do any work to generate my startup ideas, it feels weird to get rewarded for it. For me, being rewarded for one of my startup ideas would kind of feel like getting rewarded for having a bowel movement. My response to such a prize would be, "Thanks for the reward, but this shit sort of just happened."
 
 
 
 
-A corollary of this point is that I'd have no problem demanding extra equity if I put a lot of work into coming up with a good idea. If I, for example, researched the various problems that industries or individuals are facing and used this information to come up with a startup idea, then I'd feel totally justified in asking for equity. In this case, however, I'm not getting equity simply for having an idea. Rather, I'm getting equity for work that I put into generating a good idea.5
+A corollary of this point is that I'd have no problem demanding extra equity if I put a lot of work into coming up with a good idea. If I, for example, researched the various problems that industries or individuals are facing and used this information to come up with a startup idea, then I'd feel totally justified in asking for equity. In this case, however, I'm not getting equity simply for having an idea. Rather, I'm getting equity for work that I put into generating a good idea.<sup>5</sup>
 
 
 
 
-The second reason I'm not convinced I should get extra equity is that I haven't really come across any solid arguments to the contrary. In fact, the only real argument I've encountered seems to go something like:  "Without the idea guy, the startup wouldn't be possible, so the idea guy should definitely get more equity."6
+The second reason I'm not convinced I should get extra equity is that I haven't really come across any solid arguments to the contrary. In fact, the only real argument I've encountered seems to go something like:  "Without the idea guy, the startup wouldn't be possible, so the idea guy should definitely get more equity."<sup>6</sup>
 
 
 
@@ -72,7 +72,7 @@ There's got to be more to this argument if its going to be compelling. As it sta
 
 
 
-For those two reasons, I don't think that the idea person should get extra equity. Some might see this as kind of a radical position. It probably is, but don't be offended. I've only thought about this question for an hour and I'm not even a "real entrepreneur" yet, so I'm very open to being wrong about this.7 Feel free to tell me I'm wrong or to tell me how you think about equity splits.
+For those two reasons, I don't think that the idea person should get extra equity. Some might see this as kind of a radical position. It probably is, but don't be offended. I've only thought about this question for an hour and I'm not even a "real entrepreneur" yet, so I'm very open to being wrong about this.<sup>7</sup> Feel free to tell me I'm wrong or to tell me how you think about equity splits.
 
 
 
@@ -92,7 +92,7 @@ For those two reasons, I don't think that the idea person should get extra equit
 
 
 
-3. On the 152nd page of his book _The Founder's Dilemmas, _Noam Wasserman_ _reports that startups typically give the idea guy an extra 10-15% equity. Wasserman  suspects that a part of the equity is given for "past contributions" (including the idea itself) and part of the equity is given out of "recognition that the idea person might be more likely to contribute important additional ideas in the future."
+3. On the 152nd page of his book _The Founder's Dilemmas_, Noam Wasserman reports that startups typically give the idea guy an extra 10-15% equity. Wasserman  suspects that a part of the equity is given for "past contributions" (including the idea itself) and part of the equity is given out of "recognition that the idea person might be more likely to contribute important additional ideas in the future."
 
 
 
@@ -107,9 +107,9 @@ For those two reasons, I don't think that the idea person should get extra equit
 
 
 
-6. One of the founders at Crimson Solutions seemed to make an argument like this. Wasserman, _The Founder's Dilemmas, _152.
+6. One of the founders at Crimson Solutions seemed to make an argument like this. Wasserman, _The Founder's Dilemmas_, 152.
 
 
 
 
-7. The scare quotes are for readers who don't really like how I'm defining "real entrepreneur" in this sentence. Don't worry, there's no need to get philosophical. I'm not trying to define the term "entrepreneur_." _All I'm trying to say is that I'm not working full time on a startup._ _
+7. The scare quotes are for readers who don't really like how I'm defining "real entrepreneur" in this sentence. Don't worry, there's no need to get philosophical. I'm not trying to define the term "entrepreneur." All I'm trying to say is that I'm not working full time on a startup.

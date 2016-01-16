@@ -45,25 +45,25 @@ I see Hannes as making two parallel arguments from analogy here, both of which 
 
 
 
-	
+
   1. There really isn't a problematic circular dependency between an `Activity` and a `Button` because the `Button` only sees the `Activity` as an `OnClickListener` interface.
 
-	
+
   2. A `Presenter` programs against a `View` interface in the same way that a `Button` programs against the `OnClickListener` interface.
 
-	
+
   3. So, the circular dependency between an `Presenter` and a `View` is just as unproblematic as the circular dependency between the `Activity` and the `Button`.
 
 
 Here's the second argument:
 
-	
+
   1. A `Button` isn't in an invalid state just because its created without a click listener.
 
-	
+
   2. A `Presenter` programs against an `View` interface just as a `Button` programs against a `OnClickListener`
 
-	
+
   3. So, a `Presenter` isn't in an invalid state just because its created without its `View`.
 
 
@@ -72,29 +72,29 @@ I have a response to these arguments, but I'm not quite sure how well it stands 
 I think that a good response to both arguments requires us to get clearer on how we're using the word "dependency." My definition of a dependency is basically the one offered by Freeman and Pryce in their book:
 
 
-<blockquote>Services that the object requires from its peers so it can perform its responsibilities. The object cannot function without these services. It should not be possible to create the object without them. For example, a graphics package will need something like a screen or canvas to draw on—it doesn’t make sense without one.
+>Services that the object requires from its peers so it can perform its responsibilities. The object cannot function without these services. It should not be possible to create the object without them. For example, a graphics package will need something like a screen or canvas to draw on—it doesn’t make sense without one.
 
-_Growing Object Oriented Software Guided by Tests, _pg. 94</blockquote>
+>_Growing Object Oriented Software Guided by Tests,_ pg. 94
 
 
 A dependency, however, is only one of three different types of "peers" that an object may have. There's also something called a "notification," which they define in the following passage:
 
 
-<blockquote>Peers that need to be kept up to date with the object’s activity. The object will notify interested peers whenever it changes state or performs a significant action. Notifications are “fire and forget”; the object neither knows nor cares which peers are listening. Notifications are so useful because they decouple objects from each other. For example, in a user interface system, a button component promises to notify any registered listeners when it’s clicked, but does not know what those listeners will do.
+>Peers that need to be kept up to date with the object’s activity. The object will notify interested peers whenever it changes state or performs a significant action. Notifications are “fire and forget”; the object neither knows nor cares which peers are listening. Notifications are so useful because they decouple objects from each other. For example, in a user interface system, a button component promises to notify any registered listeners when it’s clicked, but does not know what those listeners will do.
 
-_Ibid., _pg. 94</blockquote>
+>_Ibid.,_ pg. 94
 
 
 With this distinction in mind, we can now start to respond to Hannes' arguments. The OnClickListener, from a `Button's` perspective, is really a notification, not a dependency, so I agree with the first premise in Hannes' argument: there's nothing _necessarily_ problematic with creating a `Button` without a click listener. I also agree with Hannes' second premise: A `Presenter` can program against a `View` interface just as a `Button` can program against an `OnClickListener` interface.
 
-Here's where we may start to disagree: there's a key difference between an `OnClickListener` and an MVP-View. An MVP-View, from the perspective of a Presenter within a particular application, is _necessarily _a dependency, not a notification. A Presenter shouldn't exist at all if its not going to present a View because that's its _sole responsibility._ To create a Presenter without a View is to create an object that cannot fulfill its responsibility. On the other hand, a Button without a click listener can still perform its responsibilities without a click listener. Its responsibility is to draw itself to the screen and notify any _registered _listeners that the button has been clicked. If there aren't any registered listeners, then a Button can still exercise its responsibility of drawing itself to the screen and it can still notify any listeners that may register with it in the future.
+Here's where we may start to disagree: there's a key difference between an `OnClickListener` and an MVP-View. An MVP-View, from the perspective of a Presenter within a particular application, is _necessarily_ a dependency, not a notification. A Presenter shouldn't exist at all if its not going to present a View because that's its _sole responsibility_. To create a Presenter without a View is to create an object that cannot fulfill its responsibility. On the other hand, a Button without a click listener can still perform its responsibilities without a click listener. Its responsibility is to draw itself to the screen and notify any _registered_ listeners that the button has been clicked. If there aren't any registered listeners, then a Button can still exercise its responsibility of drawing itself to the screen and it can still notify any listeners that may register with it in the future.
 
 I should qualify what I've just said. I used and emphasized the word "necessarily" above because whether something is a dependency or a notification is often context-dependent. I agree with Freeman and Pryce when they say:
 
 
-<blockquote>What matters most is the context in which the collaborating objects are used. For example, in one application an auditing log could be a dependency, because auditing is a legal requirement for the business and no object should be created without an audit trail. Elsewhere, it could be a notification, because auditing is a user choice and objects will function perfectly well without it.
+>What matters most is the context in which the collaborating objects are used. For example, in one application an auditing log could be a dependency, because auditing is a legal requirement for the business and no object should be created without an audit trail. Elsewhere, it could be a notification, because auditing is a user choice and objects will function perfectly well without it.
 
-_Ibid._, pg. 94-95</blockquote>
+>_Ibid._, pg. 94-95
 
 
 So, its possible that, depending on the context, an `OnClickListener` could be either a dependency or a notification. I think that in the context of the design of the Android framework, an `OnClickListener` is a notification. I think, however, that in the context of the development of an application, a button's `OnClickListener` can often actually be a dependency. When we create a `Button` in our application, we plug in the domain-specific responsibilities we have in mind for it. We might say, for example, "this button registers the user for our service and takes them to a welcome screen."
@@ -104,5 +104,3 @@ Once we've added this domain-specific responsibility to a `Button`, it doesn't
 By now, you can probably guess what I would say to Hannes' first argument: I would deny its first premise. I would say, in other words, that there's something fishy about the circular dependency between an `Activity` and its `Button` in the first place and I think there's something fishy about it, regardless of whether the `Button` programs against an interface. Whether the `Button` programs against an interface has nothing to do with the fact that, in the context of our application, it has a dependency on a click listener and that setting an `Activity` as a Button's click listener makes it more difficult for the button to have a different click listener, a difficulty we might want to avoid if we want to take full advantage of polymorphism in implementing ui-related business logic.
 
 Regardless of whether I'm right or wrong to criticize the circular dependency between Activities/Presenters and their Views, I've learned a lot by thinking about this and by engaging with Hannes in this discussion. So thanks, Hannes, and thanks to everyone who takes the time to make thoughtful comments on what I've written. I owe you.
-
-
