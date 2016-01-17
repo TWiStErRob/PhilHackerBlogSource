@@ -10,7 +10,7 @@ url: /2016/01/14/should-we-use-mocking-libraries-for-go-testing/
 wordpress_id: 734
 ---
 
-A few weeks ago, I started learning go. Since I'm a wannabe TDD-er, I took at look at some resources on testing go code. I stumbled upon [Andrew Gerrand's excellent Testing Techniques talk](https://talks.golang.org/2014/testing.slide#1) in which he says this:
+A few weeks ago, I started learning go. Since I'm a wannabe TDD-er, I took a look at some resources on testing go code. I stumbled upon [Andrew Gerrand's excellent Testing Techniques talk](https://talks.golang.org/2014/testing.slide#1) in which he says this:
 
 
 <blockquote>Go eschews a lot of things, including mocks and fakes.</blockquote>
@@ -26,7 +26,7 @@ Of course, after hearing that, I felt a little confused and unsure whether I sho
 
 At that point, it seemed that the question of whether we should use a mocking library while testing go code is a bit of a contentious question, even within Google. I found the seeming contentious nature of this question pretty unhelpful and confusing when I was trying to get a handle on how to write good go code. However, it led me to do some research on the pros and cons of mocking libraries vs hand-written mocks, and in this post, I present the conclusions I came to based on my research:
 
-1. The apparent contentiousness about whether to use use a mocking library if probably partially due to vague terminology.
+1. The apparent contentiousness about whether to use use a mocking library if probably partially due to vague terminology.
 
 2. If we are clear about our terms, the argument against using mocking libraries is not very compelling.
 
