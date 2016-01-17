@@ -6,7 +6,7 @@ comments: true
 date: 2015-04-11T03:35:55Z
 slug: against-android-unit-tests
 title: Against Android Unit Tests
-url: /2015/04/11/against-android-unit-tests/
+url: /2015/04/10/against-android-unit-tests/
 wordpress_id: 277
 ---
 
