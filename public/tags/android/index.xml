@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Android on Philosophical Hacker</title>
+    <link>http://replace-this-with-your-hugo-site.com/tags/android/</link>
+    <description>Recent content in Android on Philosophical Hacker</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 06 Apr 2015 03:39:02 +0000</lastBuildDate>
+    <atom:link href="http://replace-this-with-your-hugo-site.com/tags/android/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Don&#39;t call it &#34;MVP&#34;</title>
+      <link>http://replace-this-with-your-hugo-site.com/2015/04/06/dont-call-it-mvp/</link>
+      <pubDate>Mon, 06 Apr 2015 03:39:02 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/2015/04/06/dont-call-it-mvp/</guid>
+      <description>
+
+&lt;p&gt;Lately there&amp;rsquo;s been a lot of discussion about an alternative architectural pattern for Android development. The acronym that&amp;rsquo;s being used to denote this alternative pattern is &amp;rdquo;MVP.&amp;rdquo; I think that &amp;ldquo;MVP&amp;rdquo; is an inaccurate and confusing designation for this pattern. In this post, I will say why I think &amp;ldquo;MVP&amp;rdquo; is a bad name for the pattern, and I&amp;rsquo;ll suggest a different name for referring to it.&lt;/p&gt;
+
+&lt;h1 id=&#34;what-is-mvp:fc3765be4c525909ad78173b67c20ada&#34;&gt;What is &amp;rdquo;MVP?&amp;rdquo;&lt;/h1&gt;
+
+&lt;p&gt;There are plenty of blog posts out there that describe the &amp;ldquo;MVP&amp;rdquo; pattern, so I&amp;rsquo;m not going to do that here. If you&amp;rsquo;re not familiar with MVP, then I suggest checking out S&lt;a href=&#34;https://corner.squareup.com/2014/10/advocating-against-android-fragments.html&#34;&gt;quare&amp;rsquo;s tirade against fragments&lt;/a&gt; or &lt;a href=&#34;http://hannesdorfmann.com/android/mosby/&#34;&gt;Hannes Dorfmann&amp;rsquo;s post about his library that&amp;rsquo;s supposed to help with implementing MVP&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id=&#34;why-mvp-is-an-unhelpful-name:fc3765be4c525909ad78173b67c20ada&#34;&gt;Why &amp;ldquo;MVP&amp;rdquo; is an Unhelpful Name&lt;/h1&gt;
+
+&lt;p&gt;The problem with the name &amp;rdquo;MVP&amp;rdquo; is that the &lt;code&gt;View&lt;/code&gt;s in the MVP triad are actually quite different from the &lt;code&gt;View&lt;/code&gt;s in Android SDK. They each have fundamentally different responsibilities, so we need a way to mark the difference between Android &lt;code&gt;View&lt;/code&gt;s and MVP &lt;code&gt;View&lt;/code&gt;s. Without clearly marking the difference between them, we make it more difficult to understand the &amp;ldquo;MVP&amp;rdquo; pattern and we run the risk of conflating the two object&amp;rsquo;s responsibilities when we start trying to follow the MVP pattern.&lt;/p&gt;
+
+&lt;p&gt;Let me try to clearly distinguish an Android &lt;code&gt;View&lt;/code&gt; from an MVP &lt;code&gt;View&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Traditionally, an Android &lt;code&gt;View&lt;/code&gt; is generic; it is not application specific. There is no &lt;code&gt;RedditPostTitleView&lt;/code&gt; in the Android SDK. Instead, we just have something generic like a &lt;code&gt;TextView&lt;/code&gt;. There is no &lt;code&gt;onRedditPostTitleClicked()&lt;/code&gt;, but there is a generic &lt;code&gt;onClick()&lt;/code&gt; method.&lt;/p&gt;
+
+&lt;p&gt;An MVP &lt;code&gt;View&lt;/code&gt;, on the other hand, is application specific. The MVP &lt;code&gt;View&lt;/code&gt; responds to application-specific messages from the &lt;code&gt;Presenter&lt;/code&gt;. It responds to messages like &lt;code&gt;showRedditPosts()&lt;/code&gt;. An MVP &lt;code&gt;View&lt;/code&gt; also sends application-specific event messages to its &lt;code&gt;Presenter&lt;/code&gt;, messages like &lt;code&gt;onRedditPostTitleClicked()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;So, Android &lt;code&gt;View&lt;/code&gt;s and MVP &lt;code&gt;View&lt;/code&gt;s are fundamentally different, but both are present in any Android application that follows the &amp;ldquo;MVP&amp;rdquo; pattern. The name &amp;ldquo;MVP&amp;rdquo; obscures the difference between these two &lt;code&gt;View&lt;/code&gt;s. That&amp;rsquo;s why I think its unhelpful.&lt;/p&gt;
+
+&lt;h1 id=&#34;an-alternative-name:fc3765be4c525909ad78173b67c20ada&#34;&gt;An Alternative Name&lt;/h1&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the new name I think we should use instead of &amp;ldquo;MVP&amp;rdquo;: MVVTP&lt;/p&gt;
+
+&lt;p&gt;The &amp;ldquo;VT&amp;rdquo; in the above acronym stands for &amp;ldquo;ViewTranslator.&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;To see why this acronym is more accurate than &amp;ldquo;MVP,&amp;rdquo; let&amp;rsquo;s look a little closer at the responsibilities of Android &lt;code&gt;View&lt;/code&gt;s and MVP &lt;code&gt;View&lt;/code&gt;s. Remember that Android &lt;code&gt;View&lt;/code&gt;s are generic. They&amp;rsquo;re generic because they need to be reusable. A &lt;code&gt;RedditPostTitleView&lt;/code&gt; can only be used in a Reddit client app, so instead we have a generic &lt;code&gt;TextView&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;An MVP &lt;code&gt;View&lt;/code&gt;, on the other hand, has a different responsibility. It lets the &lt;code&gt;Presenter&lt;/code&gt; manipulate what gets drawn on the screen on a more abstract, application-specific level. In other words, an MVP &lt;code&gt;View&lt;/code&gt; translates a higher level, application-specific request from the &lt;code&gt;Presenter&lt;/code&gt; into code that Android &lt;code&gt;View&lt;/code&gt;s can &amp;ldquo;understand.&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;For example, there is no &lt;code&gt;showRedditPosts()&lt;/code&gt; method on a &lt;code&gt;RecyclerView&lt;/code&gt;, but an MVP View takes a &lt;code&gt;showRedditPosts()&lt;/code&gt; message and &amp;ldquo;says&amp;rdquo; to an Android &lt;code&gt;View&lt;/code&gt;, &amp;ldquo;Hey. What the &lt;code&gt;Presenter&lt;/code&gt; really wants when he says &amp;lsquo;&lt;code&gt;showRedditPosts()&lt;/code&gt;&amp;rsquo; is &amp;lsquo;&lt;code&gt;recyclerView.setAdapter(redditPostsAdapter)&lt;/code&gt;&amp;rsquo;.&lt;/p&gt;
+
+&lt;p&gt;That&amp;rsquo;s why I think we should call MVP &lt;code&gt;View&lt;/code&gt;s &amp;ldquo;ViewTranslators.&amp;rdquo; That name more accurately captures their responsibility.&lt;/p&gt;
+
+&lt;p&gt;If we recall that MVP &lt;code&gt;View&lt;/code&gt;s also forward UI events to their &lt;code&gt;Presenter&lt;/code&gt;, we can see another reason why &amp;ldquo;ViewTranslator&amp;rdquo; is a better name for an MVP &lt;code&gt;View&lt;/code&gt;. When an MVP &lt;code&gt;View&lt;/code&gt; forwards a UI event to its &lt;code&gt;Presenter&lt;/code&gt;, it is also translating that generic event into an application-specific one. It converts a generic &lt;code&gt;onClick()&lt;/code&gt; event from a &lt;code&gt;TextView&lt;/code&gt; to an application-specific &lt;code&gt;onRedditTitleClicked()&lt;/code&gt; event.&lt;/p&gt;
+
+&lt;h1 id=&#34;conclusion:fc3765be4c525909ad78173b67c20ada&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;&amp;ldquo;MVP&amp;rdquo; is a bad name for the new architectural pattern that Android devs are talking about because it obscures the difference between MVP &lt;code&gt;View&lt;/code&gt;s and Android &lt;code&gt;View&lt;/code&gt;s. &amp;ldquo;MVVTP,&amp;rdquo; where VT stands for &amp;ldquo;ViewTranslator&amp;rdquo; is a better name for this pattern because it explicitly marks a difference between Android &lt;code&gt;View&lt;/code&gt;s and &lt;code&gt;ViewTranslators&lt;/code&gt;. Android &lt;code&gt;View&lt;/code&gt;s know how to draw stuff, and they don&amp;rsquo;t need any application-specific knowledge to do that. &lt;code&gt;ViewTranslators&lt;/code&gt; translate application-specific requests from the &lt;code&gt;Presenter&lt;/code&gt; into generic messages that Android &lt;code&gt;View&lt;/code&gt;s can understand and they translate generic UI events from &lt;code&gt;View&lt;/code&gt;s to application-specific events that the &lt;code&gt;Presenter&lt;/code&gt;can act on.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>An Alternative Multiproject Setup for Android Studio</title>
+      <link>http://replace-this-with-your-hugo-site.com/2014/10/03/an-alternative-multiproject-setup-for-android-studio/</link>
+      <pubDate>Fri, 03 Oct 2014 03:02:54 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/2014/10/03/an-alternative-multiproject-setup-for-android-studio/</guid>
+      <description>
+
+&lt;p&gt;Google&amp;rsquo;s &lt;a href=&#34;http://tools.android.com/tech-docs/new-build-system/user-guide&#34;&gt;Gradle Plugin user guide recommends&lt;/a&gt; a method for configuring your gradle files to build multiple projects. That method has some shortcomings. In this post, I will briefly explain Google&amp;rsquo;s recommended configuration, note its shortcomings, and  recommend a different way to configure your gradle files to support multi-project setups in Android Studio.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-google-way:1e519e4bdb3f333975d3db6bac5795a8&#34;&gt;The Google Way&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2014/10/screen-shot-2014-10-02-at-9-31-31-pm.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2014/10/screen-shot-2014-10-02-at-9-31-31-pm.png?w=620&#34; alt=&#34;Screen Shot 2014-10-02 at 9.31.31 PM&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This picture illustrates how Google suggests we handle multi-project setups: our main &amp;ldquo;app&amp;rdquo; module is supposed to depend on library modules that reside within the project directory. When the library modules are within the project directory, telling gradle to build them is easy. Our &lt;code&gt;settings.gradle&lt;/code&gt; file looks like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2014/10/screen-shot-2014-10-02-at-9-34-33-pm.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2014/10/screen-shot-2014-10-02-at-9-34-33-pm.png?w=620&#34; alt=&#34;Screen Shot 2014-10-02 at 9.34.33 PM&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;And our &lt;code&gt;build.gradle&lt;/code&gt; looks like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2014/10/screen-shot-2014-10-02-at-10-38-08-pm.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2014/10/screen-shot-2014-10-02-at-10-38-08-pm.png?w=620&#34; alt=&#34;Screen Shot 2014-10-02 at 10.38.08 PM&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;As you can see, Google&amp;rsquo;s suggested configuration is simple, and its even simpler if you use the Android Studio UI to configure you gradle files for you. In spite of it&amp;rsquo;s simplicity, there are several reasons why we might want to avoid this configuration. I discuss those reasons in the next section.&lt;/p&gt;
+
+&lt;h2 id=&#34;some-unfortunate-features-of-the-google-way:1e519e4bdb3f333975d3db6bac5795a8&#34;&gt;Some Unfortunate Features of &amp;ldquo;The Google Way&amp;rdquo;&lt;/h2&gt;
+
+&lt;p&gt;Both of the unfortunate features of the &amp;ldquo;Google way&amp;rdquo; of handling multi-project setups only arise if your working on several apps that depend on the same libraries. If you only ever work on one app and you know for sure you wont have multiple apps that depend on the same library, feel free to skip the rest of this post and continue blissfully using the simple configuration for multiple projects in Android Studio. If, on the other hand, you are working on several apps that depend on the same libraries, read on.&lt;/p&gt;
+
+&lt;p&gt;Suppose you&amp;rsquo;ve got a project structure that looks something like this:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;App1 depends on the &lt;a href=&#34;https://github.com/emilsjolander/StickyListHeaders&#34;&gt;StickyListHeaders&lt;/a&gt; library&lt;/p&gt;
+
+&lt;p&gt;App2 depends on the StickyListHeaders library&lt;/blockquote&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;If you were to follow the Google&amp;rsquo;s user guide in setting up your projects, then you would create two projects, one for App1 and another for App2. The project directories for App1 and App2 would each contain a submodule that has the code from the StickyListHeaders library that each app needs to build successfully.&lt;/p&gt;
+
+&lt;p&gt;It doesn&amp;rsquo;t take make to see the unfortunate features of this setup. First off, you have to have copies of a library for every app that depends on it.&lt;/p&gt;
+
+&lt;p&gt;If you frequently make changes to that library, you&amp;rsquo;re going to want it to be versioned, and you probably want to have the library in a repository that&amp;rsquo;s separate from your app so that you can checkout the library and reuse it for any app that needs it. Since the library module is a subdirectory within the project, you&amp;rsquo;ll have to use git submodules to achieve this. As &lt;a href=&#34;http://codingkilledthecat.wordpress.com/2012/04/28/why-your-company-shouldnt-use-git-submodules/&#34;&gt;others have noted&lt;/a&gt;, however, git submodules aren&amp;rsquo;t really that great.&lt;/p&gt;
+
+&lt;p&gt;So, if you follow the Google way, you&amp;rsquo;re sort of¹ forced to have copies of your libraries for all of your apps that depend on those libraries and if you change those libraries often, then you might have to start using git submodules.²&lt;/p&gt;
+
+&lt;h2 id=&#34;a-different-way:1e519e4bdb3f333975d3db6bac5795a8&#34;&gt;A Different Way&lt;/h2&gt;
+
+&lt;p&gt;It turns out there&amp;rsquo;s a better way to manage multiple projects in Android Studio. The trick is to create separate Android Studio projects for your libraries and to tell gradle that the module for the library that your app depends on is located in the library&amp;rsquo;s project directory. If you wanted to use this method with the project structure I&amp;rsquo;ve described above, you would do the following:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Create an Android Studio project for the StickyListHeaders library&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Create an Android Studio project for App2&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Create an Android Studio project for App1&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Configure App1 and App2 to build the modules in the StickyListHeaders project.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The 4th step is the hard part, so that&amp;rsquo;s the only step that I&amp;rsquo;ll describe in detail. You can reference modules that are external to your project&amp;rsquo;s directory by adding a &lt;code&gt;project&lt;/code&gt; statement in your &lt;code&gt;settings.gradle&lt;/code&gt; file and by setting the &lt;code&gt;projectDir&lt;/code&gt; property on the &lt;code&gt;ProjectDescriptor&lt;/code&gt; object that&amp;rsquo;s returned by that &lt;code&gt;project&lt;/code&gt; statement:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2014/10/screen-shot-2014-10-02-at-10-29-45-pm.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2014/10/screen-shot-2014-10-02-at-10-29-45-pm.png?w=620&#34; alt=&#34;Screen Shot 2014-10-02 at 10.29.45 PM&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;If you&amp;rsquo;ve done this correctly, you&amp;rsquo;ll notice that the modules referenced by your project will show up in the project navigator, even if those modules are external to the project directory:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2014/10/screen-shot-2014-10-02-at-10-31-30-pm.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2014/10/screen-shot-2014-10-02-at-10-31-30-pm.png?w=620&#34; alt=&#34;Screen Shot 2014-10-02 at 10.31.30 PM&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This allows you to work on library code and app code simultaneously. Version control integration also works just fine when you reference modules externally this way. You can commit and push your modifications to the library code just like you can commit and push modifications to your app code.&lt;/p&gt;
+
+&lt;p&gt;This way of setting up multiple projects avoids the difficulties that plague Google&amp;rsquo;s recommended configuration. Because we are referencing a module that is outside of the project directory we don&amp;rsquo;t have to make extra copies of the library module for every app that depends on it and we can version our libraries without any sort of git submodule nonsense.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, this other way of setting up multiple projects is very difficult to find. Obviously, its not something you&amp;rsquo;ll figure out from looking at Google&amp;rsquo;s guide, and at this point, there&amp;rsquo;s no way to configure your projects in this way by using the UI of Android Studio. I&amp;rsquo;m hoping that&amp;rsquo;ll change by the time Android Studio hits 1.0&lt;/p&gt;
+
+&lt;p&gt;If you&amp;rsquo;ve got any concerns with this setup or if you have a better alternative, I&amp;rsquo;d love to hear it!&lt;/p&gt;
+
+&lt;h2 id=&#34;notes:1e519e4bdb3f333975d3db6bac5795a8&#34;&gt;Notes:&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;I say &amp;ldquo;sort of&amp;rdquo; because you aren&amp;rsquo;t exactly stuck between the two options I&amp;rsquo;ve discussed here. You could also turn your libraries into maven artifacts and include them into your app that way. This method, however, does not allow you to work on your library code and app code simultaneously unless you run multiple instances of Android Studio. Aint nobody got the memory for that.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Well, there are alternatives to git submodules that might offer a decent solution here, but why make things so complicated, when you can simply do what I&amp;rsquo;ve suggested in this post.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

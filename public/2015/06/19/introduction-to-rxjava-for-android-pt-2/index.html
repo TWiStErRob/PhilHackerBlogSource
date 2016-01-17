@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  	<meta property="og:title" content=" Introduction to RxJava for Android (Pt. 2) &middot;  Philosophical Hacker" />
+  	<meta property="og:site_name" content="Philosophical Hacker" />
+  	<meta property="og:url" content="http://replace-this-with-your-hugo-site.com/2015/06/19/introduction-to-rxjava-for-android-pt-2/" />
+
+    
+  	<meta property="og:type" content="article" />
+
+    <meta property="og:article:published_time" content="2015-06-19T12:19:14Z" />
+
+    
+    
+
+  <title>
+     Introduction to RxJava for Android (Pt. 2) &middot;  Philosophical Hacker
+  </title>
+
+    <meta name="description" content="Articles on android and go development" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="http://replace-this-with-your-hugo-site.com/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="http://replace-this-with-your-hugo-site.com/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="http://replace-this-with-your-hugo-site.com/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="http://replace-this-with-your-hugo-site.com/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+
+    
+      
+          <link href="http://replace-this-with-your-hugo-site.com/index.xml" rel="alternate" type="application/rss+xml" title="Philosophical Hacker" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.15" />
+
+    <link rel="canonical" href="http://replace-this-with-your-hugo-site.com/2015/06/19/introduction-to-rxjava-for-android-pt-2/" />
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+    </ul>
+    
+    
+    <a class="subscribe-button icon-feed" href="http://replace-this-with-your-hugo-site.com/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+
+<header class="main-header post-head no-cover">
+  <nav class="main-nav clearfix">
+
+
+  
+  
+      <a class="menu-button icon-feed" href="http://replace-this-with-your-hugo-site.com/index.xml">&nbsp;&nbsp;Subscribe</a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">Introduction to RxJava for Android (Pt. 2)</h1>
+        <small></small>
+
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2015-06-19T12:19:14Z">
+            Jun 19, 2015
+          </time>
+        
+         
+        </section>
+    </header>
+
+    <section class="post-content">
+      <p>I concluded my last post by summing up what we&rsquo;ve seen so far and what we still need to understand about RxJava:</p>
+
+<blockquote>We now know what an asynchronous data stream is and we know that RxJava uses the Observer pattern to deliver these streams to everyone that’s interested. We still don’t know, however, what it means for a data stream to be “functionally transformed” nor do we know how RxJava allows us to represent anything as an asynchronous data stream that can be created and consumed on any thread. These are questions I’ll have to tackle in the second part of this written version of my upcoming RxJava talk.</blockquote>
+
+<p>In this post, I&rsquo;ll fill in the missing gaps in our understanding of my initial statement of what RxJava allows us to do.</p>
+
+<p>Recall that that initial statement was this:</p>
+
+<p><a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_rxjava_def.jpg"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_rxjava_def-1024x791.jpg" alt="rxjava_prezi_rxjava_def" /></a></p>
+
+<p>Recall that a data-stream, as I&rsquo;ve defined it, is just sequential data that has a well-defined termination point and a way of notifying processors of that data that an error has occurred. RxJava lets us create asynchronous data streams out of anything. This might sound confusing until we remember that we are already familiar with a pattern that allows us to make synchronous data streams out of anything: the iterator pattern.</p>
+
+<p>The definition for an <code>Iterator</code> looks like this:</p>
+
+<p><a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_as_async_iterator.jpg"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_as_async_iterator-1024x791.jpg" alt="rxjava_as_async_iterator" /></a></p>
+
+<p>Notice that an Iterator fits the definition of a data-stream. Its ordered data that can be processed by calling <code>next()</code>. It has a well-defined stopping point: when <code>hasNext()</code> returns false. Finally, processors of an iterator&rsquo;s data can also be notified if there was an error processing the data: the iterator can simply throw an exception.</p>
+
+<p>You can make any class iterable as long as that class can supply an iterator with which to traverse its elements. This makes it possible to turn any class into a synchronous data stream. This is actually how the <a href="https://docs.oracle.com/javase/1.5.0/docs/guide/language/foreach.html">for-each syntax works in java</a>. All Collection classes can return an iterator that&rsquo;s used to sequentially traverse the data they contain.</p>
+
+<p>This shouldn&rsquo;t be surprising since the motivation for the iterator pattern according to the Gang of Four is to:</p>
+
+<blockquote>Provide a way to access elements of an aggregate object sequentially without exposing its underlying implementation.
+
+-GoF, Design Patterns</blockquote>
+
+<p>RxJava Observables can be created out of anything and remember that Observables are just asynchronous data streams. Because Observables are asynchronous data streams that can be created out of anything just as Iterators are synchronous datastreams that can be created out of (nearly) anything, the <a href="http://reactivex.io/intro.html">reactive x introduction refers</a> to Observables as the &ldquo;asynchronous/push dual to the synchronous/pull iterator.&rdquo;</p>
+
+<p>This will make more sense once we see what it looks like to create an Observable:</p>
+
+<p><a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_obserable_creation.jpg"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_obserable_creation-1024x791.jpg" alt="rxjava_obserable_creation" /></a></p>
+
+<p>Here we&rsquo;re creating an Observable that emits the data from a long-running operation performed by <code>userFetcher.fetchUsers()</code>. Once <code>fetchUsers()</code> returns with the Users, we call <code>onNext()</code> on the <code>Subscriber</code> that&rsquo;s passed in to <code>call()</code> method. Recall that a Subscriber is just a consumer of asynchronous data, so by calling <code>onNext()</code>, we are passing the users we&rsquo;ve fetched to the <code>Subscriber</code>. This call to <code>onNext()</code> as the asynchronous analog to the iterator&rsquo;s <code>next()</code> method.</p>
+
+<p>You&rsquo;ll notice that there&rsquo;s another call after <code>onNext()</code>: its the <code>onComplete()</code> call. This tells the <code>Subscriber</code>s that the asynchronous data stream has reached its end. This call is the asynchronous analogue of the iterator&rsquo;s <code>hasNext()</code> method returning false.</p>
+
+<p>Finally, note that if there&rsquo;s an exception thrown by the method that fetches the users, we call <code>onError()</code>. This, of course, is the asynchronous analog of the iterator throwing an exception while processing synchronous data.</p>
+
+<p>Alright, so hopefully at this point, we know what this means:</p>
+
+<p><a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/we_know_rxjava_is_observer_plus_iterator.jpg"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/we_know_rxjava_is_observer_plus_iterator-1024x791.jpg" alt="we_know_rxjava_is_observer_plus_iterator" /></a></p>
+
+<p>But we still don&rsquo;t know this:</p>
+
+<p><a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/still_dont_know_functional.jpg"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/still_dont_know_functional-1024x791.jpg" alt="still_dont_know_functional" /></a></p>
+
+<p>When I say &ldquo;functional transformation,&rdquo; I&rsquo;m using &ldquo;functional&rdquo; in the same sense that its used when people talk about functional programming. Functional transformations are transformations of data that don&rsquo;t rely on any data outside of the function that does the transformation and that don&rsquo;t have any side effects. We perform transformations of data all the time, but those transformations might not count as functional.</p>
+
+<p>If you&rsquo;ve ever written a filter for an list adapter, you&rsquo;ve probably had to do a transformation of the unfiltered data. Here&rsquo;s what this looks like in the Android Source&rsquo;s implementation of filtering for the <code>ArrayAdapter</code> class:</p>
+
+<p><a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/functional_transformations_are_not_new.jpg"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/functional_transformations_are_not_new-e1434712869664-1024x792.jpg" alt="functional_transformations_are_not_new" /></a></p>
+
+<p>This transformation, however, is not entirely functional. Its true that this method is creating a new Array to hold the filtered values rather than modifying the array of original values. This makes performFiltering() semi-functional since it doesn&rsquo;t modify data outside of the method. However, because this method relies on data from outside of the function, it fails to be an entirely functional transformation of the unfiltered values.</p>
+
+<p>RxJava, on the other hand, does perform completely functional transformations of asynchronous data. Here&rsquo;s what that looks like:</p>
+
+<p><a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/functional_transformations_are_not_new-e1434712869664.jpg">
+</a> <a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_full_on_functional_real.jpg"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_full_on_functional_real-e1434713514839-1024x300.jpg" alt="rxjava_full_on_functional_real" /></a></p>
+
+<p>Here we&rsquo;re creating an <code>Observable</code> out of an array. We then transform the data stream emitted by this <code>Observable</code> by calling <code>filter()</code> on the Observable created from the array. <code>filter()</code> takes a function that returns whether the items emitted by the source <code>Observable</code> should be included in the transformed data-stream. In this case, the function passed into <code>filter()</code> will return true for &ldquo;Going Global with Google Play&rdquo; and false for &ldquo;Keynote,&rdquo; so the former and not the latter will be emitted by the <code>Observable</code> returned by <code>filter()</code> and consumed by the <code>Subscriber</code>.</p>
+
+<p>The filter call is a functional transformation because the original Observable that was created from the array is not modified and because the <code>Func1</code> that performs the filtering operation does not operate on any data that exists outside of <code>Func1</code>.</p>
+
+<p>These functional transformations are called &ldquo;operators&rdquo;, and their functional nature is what allows us to chain together multiple operators to shape the asynchronous data stream so that it can be conveniently consumed by a <code>Subscriber</code>. We&rsquo;ll see what this chaining looks like later.</p>
+
+<p>At this point, if I&rsquo;ve done my job right, you should know that this means:</p>
+
+<p><a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/know_observable_subscriber_operators.jpg"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/know_observable_subscriber_operators-1024x791.jpg" alt="know_observable_subscriber_operators" /></a></p>
+
+<p>We still don&rsquo;t know, however, how RxJava let&rsquo;s us create and consume asynchronous data streams on any thread. This is accomplished through <code>Schedulers</code> and this is how <code>Schedulers</code> are applied to <code>Observables</code> and <code>Subscribers</code>.</p>
+
+<p><a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/schedulers.jpg"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/schedulers-e1434714320163-1024x443.jpg" alt="schedulers" /></a></p>
+
+<p>The key lines here are the <code>subscribeOn()</code> and <code>observeOn()</code> lines. These lines take <code>Schedulers</code> that determine the threads on which asynchronous data is created and consumed, respectively. We pass a <code>Scheduler</code> to <code>subscribeOn()</code> that schedules the asynchronous data to be created on a background io thread and we pass a <code>Scheduler</code> to the <code>observeOn()</code> method that ensures that the asynchronous data is consumed on the main thread.</p>
+
+<p>One quick thing to note here is that the <code>AndroidSchedulers.mainThread()</code> method is not actually a part of RxJava. Its a part of <a href="https://github.com/ReactiveX/RxAndroid">RxAndroid</a>.</p>
+
+<p>At this point, you should be in a pretty good position to understand all of my initial statement of what RxJava does:</p>
+
+<p><a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/we_know_it_all1.jpg"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/we_know_it_all1-1024x791.jpg" alt="we_know_it_all" /></a></p>
+
+<p>And now that you understand what RxJava is, you can understand how its able to make quick work of a task like the one I described in <a href="http://www.philosophicalhacker.com/2015/06/12/an-introduction-to-rxjava-for-android/">the first post in this series</a>. Recall that the task was to execute a query from a <code>SearchView</code> within an <code>Actionbar</code> only if that query consisted of three characters and only if there was at least a 100 millisecond delay before any additional characters were typed into the SearchView.</p>
+
+<p>This functionality exists already in Google&rsquo;s iosched app. Here is a reimplementation of that functionality using RxJava:</p>
+
+<p><a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/teaser_solution.jpg"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/teaser_solution-e1434715009899-1024x717.jpg" alt="teaser_solution" /></a></p>
+
+<p>I&rsquo;m only going to explain parts of this snippet, but if you want to check out the full source, you can do that <a href="https://github.com/kmdupr33/iosched/tree/feature/rxjava_rewrite">here</a>.</p>
+
+<p>Note that there are several operators here that I didn&rsquo;t mention before, namely, <code>debouce()</code> and <code>map()</code>. RxJava has <a href="https://github.com/ReactiveX/RxJava/wiki/Alphabetical-List-of-Observable-Operators">a ton of operators</a>, so be sure to check them all out. The <code>debounce()</code> operator is what allows us to only execute a search on a query only if there&rsquo;s been a 100 millisecond delay after the last text change in the query string.</p>
+
+<p>The <code>filter()</code> operator here is only used to make sure that there is a fragment available to display the data fetched from the search, but we could have easily added another <code>filter()</code> operator that would check the length of the query string.</p>
+
+<p>The <code>map()</code> operators transform the data emitted by their source <code>Observable</code>. The first <code>map()</code> operator converts the query string into an intent created from that query string. The second <code>map()</code> operator converts that intent into a <code>Bundle</code> that can be used by the <code>SessionsFragment</code> to load the appropriate sessions (based on the original query string).</p>
+
+<p>If I&rsquo;ve done my job right, hopefully now you know what RxJava is and why its awesome! Feel free to point out anything that was unclear or inaccurate.</p>
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+
+    
+
+
+
+
+
+<section class="author">
+  <h4><a href="http://replace-this-with-your-hugo-site.com/"></a></h4>
+  
+  <p>Read <a href="http://replace-this-with-your-hugo-site.com/">more posts</a> by this author.</p>
+  
+  <div class="author-meta">
+    
+    
+  </div>
+</section>
+
+
+
+    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Introduction%20to%20RxJava%20for%20Android%20%28Pt.%202%29&amp;url=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f06%2f19%2fintroduction-to-rxjava-for-android-pt-2%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f06%2f19%2fintroduction-to-rxjava-for-android-pt-2%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f06%2f19%2fintroduction-to-rxjava-for-android-pt-2%2f&amp;description=Introduction%20to%20RxJava%20for%20Android%20%28Pt.%202%29"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f06%2f19%2fintroduction-to-rxjava-for-android-pt-2%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+    
+
+
+
+
+  </footer>
+</article>
+
+</main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Philosophical Hacker</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/jquery.js"></script>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/index.js"></script>
+    
+</body>
+</html>
+

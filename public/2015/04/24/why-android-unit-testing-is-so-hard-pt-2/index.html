@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  	<meta property="og:title" content=" Why Android Unit Testing Is So Hard (Pt. 2) &middot;  Philosophical Hacker" />
+  	<meta property="og:site_name" content="Philosophical Hacker" />
+  	<meta property="og:url" content="http://replace-this-with-your-hugo-site.com/2015/04/24/why-android-unit-testing-is-so-hard-pt-2/" />
+
+    
+  	<meta property="og:type" content="article" />
+
+    <meta property="og:article:published_time" content="2015-04-24T11:44:49Z" />
+
+    
+    
+
+  <title>
+     Why Android Unit Testing Is So Hard (Pt. 2) &middot;  Philosophical Hacker
+  </title>
+
+    <meta name="description" content="Articles on android and go development" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="http://replace-this-with-your-hugo-site.com/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="http://replace-this-with-your-hugo-site.com/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="http://replace-this-with-your-hugo-site.com/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="http://replace-this-with-your-hugo-site.com/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+
+    
+      
+          <link href="http://replace-this-with-your-hugo-site.com/index.xml" rel="alternate" type="application/rss+xml" title="Philosophical Hacker" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.15" />
+
+    <link rel="canonical" href="http://replace-this-with-your-hugo-site.com/2015/04/24/why-android-unit-testing-is-so-hard-pt-2/" />
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+    </ul>
+    
+    
+    <a class="subscribe-button icon-feed" href="http://replace-this-with-your-hugo-site.com/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+
+<header class="main-header post-head no-cover">
+  <nav class="main-nav clearfix">
+
+
+  
+  
+      <a class="menu-button icon-feed" href="http://replace-this-with-your-hugo-site.com/index.xml">&nbsp;&nbsp;Subscribe</a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">Why Android Unit Testing Is So Hard (Pt. 2)</h1>
+        <small></small>
+
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2015-04-24T11:44:49Z">
+            Apr 24, 2015
+          </time>
+        
+         
+        </section>
+    </header>
+
+    <section class="post-content">
+      
+
+<p><strong>Edit:</strong> In <a href="http://philosophicalhacker.com/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/">the post that concludes this series</a>, I point out that making unit testable Android apps does not require us to remove compile-time dependencies on the Android SDK and that attempting to do so is impractical anyway. Ignore anything in this post that suggests otherwise.</p>
+
+<hr />
+
+<p>In my <a href="http://philosophicalhacker.com/2015/04/17/why-android-unit-testing-is-so-hard-pt-1/">last post</a>, I showed that even the (intelligent) engineers over at Google have written some Android code that is simply untestable. More specifically, I showed that there’s no way to unit test the <code>SessionDetailActivity</code>’s <code>onStop()</code> method. I also gave a specific diagnosis for the untestability of <code>onStop()</code>: we can’t complete the arrange- and assert-steps of a test against <code>onStop()</code> because there is no way to alter the pre-act-state, nor is there a way to access the post-act-state for a test of <code>onStop()</code>. I ended the last post by claiming that some properties of the Android SDK, along with the standard way we are encouraged to structure our android apps, encourage us to write code that is difficult/impossible to unit test and by promising that I’d elaborate more on that claim in this post.</p>
+
+<p>Before I do that, let me say again that showing that the difficulty of testing Android applications is caused by the standard structure of android apps is important for the overarching goal of this series of articles. This series is an attempt to argue that we should consider restructuring our applications so that they do not explicitly depend on the Android SDK and its an attempt to present a robust architecture that will enhance the testability of Android applications. You can read the introduction to this series <a href="http://philosophicalhacker.com/2015/04/10/against-android-unit-tests/">here</a>. With that said, I can move on to trying to demonstrate the central claim of this post.</p>
+
+<p>There’s a standard way of developing android applications. Sample code and open source code alike both place an app’s business logic within Android app component classes, namely, Activities, Services, and Fragments. Going forward, I’m going to refer to this practice as “the standard way.” Here’s the central claim of this post: As long as we follow the “standard way”, we’re going to write code that’s either difficult or impossible to unit test. In other words, the untestable code that I pointed out in my last article is not a fluke. The standard way prevents us from unit testing key pieces of our applications.</p>
+
+<h1 id="the-standard-way-makes-some-unit-tests-impossible:2b8d10b9cb0657a2cfe2d2be3f314595">The Standard Way Makes (some) Unit Tests Impossible</h1>
+
+<p>To begin to see why the standard way leads to untestable app components, let’s briefly recall some of the points I made in my last post. Unit testing consists of three steps: arrange, act, and assert. In order to complete the arrange step of the process we need to be able to alter the pre-act-state of the code we’re testing, and accessing the post-act-state of our program is required to complete the assert-step of a test.</p>
+
+<p>With those points in mind, we can see that dependency injection, in some cases, is really the only acceptable way to write code whose pre-act-state can be altered and whose post-act-state is accessible. Let’s look at a non-android example of this:</p>
+
+<script src="//gist.github.com/kmdupr33/b0e31bfca58e8acb9465.js"></script>
+
+<p>Dependency injection is really the only way to unit test <code>doIntenseCalculation()</code>. <code>doIntenseCalculation()</code> doesn’t have a return value. Moreover, there’s no property on <code>MathNerd</code> that will allow us to determine the validity of our post-act-state. We could get the post-act-state in a test from the <code>mCalcCache</code> like this:</p>
+
+<script src="//gist.github.com/kmdupr33/554cc7afe27cdc5e6426.js"></script>
+
+<p>If we did this, however, we would no longer be writing a unit test for <code>MathNerd</code>. We’d be writing an integration test that checks the behavior of a <code>MathNerd</code> and whatever class is responsible for updating the <code>CalcCache</code> with the results from doIntenseCalculationInBackground().</p>
+
+<p>Dependency injection is really the only way that we can verify our post-act-state for a unit test. We inject mocks and verify that methods are called in the right circumstances:</p>
+
+<script src="//gist.github.com/kmdupr33/528c6094c43a74f8c0be.js"></script>
+
+<p>There are many instances in which unit testing an Android class requires the same thing: dependency injection. Here’s the problem: key android classes have dependencies that we cannot inject. The <code>SessionCalendarService</code> that’s launched by the <code>SessionDetailActivity</code> I talked about last time is an example of this:</p>
+
+<script src="//gist.github.com/kmdupr33/02f61591f40f459ae40c.js"></script>
+
+<p>The <code>SessionCalendarService</code> has a ContentResolver as a dependency. This dependency, however, is not one that we can inject, so there’s simply no way for us to write a unit test for onHandleIntent(). onHandleIntent() doesn’t have a return method and there’s no property on <code>SessionCalendarService</code> that would allow us to check the validity of our post-act-state. To verify our post-act-state, we could actually query the ContentProvider to see if the requested data has been inserted, but then we wouldn’t be writing a unit test for a <code>SessionCalendarService</code>. Instead, we’d be writing an integration test that tests both our <code>SessionCalendarService</code> and whatever ContentProvider handles session calendar data.</p>
+
+<p>So, if you put business logic into an Android class whose dependencies cannot be injected, then you’re going to wind up with some code that’s impossible to unit test. There are several examples of dependencies like this: An <code>Activity</code> and <code>Fragment</code>’s <code>FragmentManager</code> is one example. An <code>Activity</code> and <code>Fragment</code>’s <code>LoaderManager</code> is another example. Thus, the standard way of building android applications, insofar as that way instructs us to put our business logic in app component classes, encourages us to write untestable code.</p>
+
+<h1 id="the-standard-way-makes-unit-testing-difficult:2b8d10b9cb0657a2cfe2d2be3f314595">The Standard Way Makes Unit Testing Difficult</h1>
+
+<p>In some cases, the standard way will only make it very difficult to unit test your code. If we return to the <code>onStop()</code> method within the <code>SessionDetailActivity</code> that we examined in the last article, we’ll see this:</p>
+
+<script src="//gist.github.com/kmdupr33/4c90e155dcaf6c4e0147.js"></script>
+
+<p>There is no publically accessible property that will tell us whether the <code>SessionCalendarService</code> has been launched with the right parameters. Morover, <code>onStop()</code> is a protected method whose return value cannot be modified. Thus, the only way we can access post-act-state is to check the state of a dependency injected into <code>onStop()</code>.</p>
+
+<p>At this point, you’ll notice that the code within <code>onStop()</code> that launches the <code>SessionCalendarService</code> doesn’t actually belong to a single object at all. In other words, there is no dependency to inject into <code>onStop()</code> that would allow us to access the post-act-state for a test that checks if the Service has been launched under the right conditions with the right arguments. To put the point a third way, in order to start making <code>onStop()</code> testable, it needs to look something like this:</p>
+
+<script src="//gist.github.com/kmdupr33/84a4a4c92affc3910536.js"></script>
+
+<p>This isn’t the cleanest way of refactoring <code>onStop()</code>, but something like this is necessary if we want to make the code unit testable while adhering to the standard practice of keeping our business logic in Activities. Now, think for a second about how counter-intuitive this refactor is: Instead of simply calling startService(), a method that belongs to Context and, by extension, the <code>SessionDetailActivity</code>, we are using a <code>ServiceLauncher</code>, an object that depends on a Context to start the service. The SesionDetailActivity that is-a Context is using an object that has-a Context to launch the <code>SessionCalendarService</code>.</p>
+
+<p>Unfortunately, even if we refactored <code>onStop()</code> to look like this, we still wouldn’t guarantee that we could write a unit test for it. The problem, of course, is that the <code>ServiceLauncher</code> is not injected, so there’s no way to inject a mock <code>ServiceLauncher</code> that we can use to verify that the correct method has been called for testing purposes.</p>
+
+<p>Injecting a <code>ServiceLauncher</code>, moreover, is complicated by the fact that the <code>ServiceLauncher</code> itself depends on a Context, an object that is not Parcelable. Because of this, you can’t inject a <code>ServiceLauncher</code> simply by passing one into the intent that launches the <code>SessionDetailActivity</code>, so you’ll have to do something clever to inject the <code>ServiceLauncher</code> or you could just use a dependency injection library like Dagger.¹ This is a lot of work to make our code unit testable, and, as we’ll see in the next post, even if we use a library like Dagger for dependency injection, unit testing an Activity can still be painful.</p>
+
+<p>In order to make <code>onStop()</code> unit testable, the standard way forces us to make a counter-intuitive refactor and then choose between creating clever workarounds to its painful intent-based dependency injection mechanism or using a third-party dependency injection library. By making it difficult and counter-intuitive to write testable code, the standard way makes it more likely that we won’t make our code testable. This is what I mean when I say that the standard way discourages us from writing testable code.</p>
+
+<h1 id="conclusion:2b8d10b9cb0657a2cfe2d2be3f314595">Conclusion</h1>
+
+<p>Throughout this series, I’ve been saying that an examination of why Android unit testing is so difficult will help us see why its a good idea to restructure our applications so that they don’t explicitly depend on the Android SDK. Now we are finally at a point where we can start to see why it might be a good idea to get away from the Android SDK entirely.</p>
+
+<p>I’ve just shown that placing our business logic in application components classes makes it difficult or impossible to unit test our applications. In the next post, I’ll suggest that we start delegating business logic to classes that make proper use of dependency injection. If we’re going to go through the trouble of defining these classes, however, we might as well make these class’s dependencies android-agnostic interfaces. This step in the process of enhancing our application’s testability is trivial compared to the first step, and completing this second step will enable us to write fast unit tests without having to rely on android-specific testing tools (e.g, Roboletric, Instrumented Tests).</p>
+
+<p><strong>Notes</strong></p>
+
+<ol>
+<li>Of course, you could pass the <code>ServiceLauncher</code> in as a Serializable. This is not a particularly robust solution since it only works if you don’t care about the performance hit that results from using Serializable.</li>
+</ol>
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+
+    
+
+
+
+
+
+<section class="author">
+  <h4><a href="http://replace-this-with-your-hugo-site.com/"></a></h4>
+  
+  <p>Read <a href="http://replace-this-with-your-hugo-site.com/">more posts</a> by this author.</p>
+  
+  <div class="author-meta">
+    
+    
+  </div>
+</section>
+
+
+
+    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Why%20Android%20Unit%20Testing%20Is%20So%20Hard%20%28Pt.%202%29&amp;url=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f04%2f24%2fwhy-android-unit-testing-is-so-hard-pt-2%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f04%2f24%2fwhy-android-unit-testing-is-so-hard-pt-2%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f04%2f24%2fwhy-android-unit-testing-is-so-hard-pt-2%2f&amp;description=Why%20Android%20Unit%20Testing%20Is%20So%20Hard%20%28Pt.%202%29"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f04%2f24%2fwhy-android-unit-testing-is-so-hard-pt-2%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+    
+
+
+
+
+  </footer>
+</article>
+
+</main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Philosophical Hacker</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/jquery.js"></script>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/index.js"></script>
+    
+</body>
+</html>
+

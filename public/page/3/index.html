@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  	<meta property="og:title" content=" Philosophical Hacker" />
+  	<meta property="og:site_name" content="Philosophical Hacker" />
+  	<meta property="og:url" content="http://replace-this-with-your-hugo-site.com/" />
+
+    
+    <meta property="og:type" content="website" />
+    
+
+  <title>
+     Philosophical Hacker
+  </title>
+
+    <meta name="description" content="Articles on android and go development" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="http://replace-this-with-your-hugo-site.com/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="http://replace-this-with-your-hugo-site.com/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="http://replace-this-with-your-hugo-site.com/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="http://replace-this-with-your-hugo-site.com/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+
+    
+      
+      
+        <link href="http://replace-this-with-your-hugo-site.com/index.xml" rel="alternate" type="application/rss+xml" title="Philosophical Hacker" />
+      
+    
+    <meta name="generator" content="Hugo 0.15" />
+
+    <link rel="canonical" href="http://replace-this-with-your-hugo-site.com/" />
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+    </ul>
+    
+    
+    <a class="subscribe-button icon-feed" href="http://replace-this-with-your-hugo-site.com/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+<header class="main-header " style="background-image: url(http://replace-this-with-your-hugo-site.com/images/the-thinker.jpg)">
+
+
+    <nav class="main-nav overlay clearfix">
+        
+        
+            
+              <a class="menu-button icon-feed" href="http://replace-this-with-your-hugo-site.com/index.xml">&nbsp;&nbsp;Subscribe</a>
+            
+        
+    </nav>
+    <div class="vertical">
+        <div class="main-header-content inner">
+            
+                <a class="bloglogo" href="https://www.linkedin.com/in/k-matthew-dupree-44672178" target="_blank">
+                    <span class="icon-linkedin" style="color:white;font-size:2em"></span>
+                </a>
+            &nbsp;
+            
+            
+            
+                <a class="bloglogo" href="https://twitter.com/philosohacker" target="_blank">
+                    <span class="icon-twitter" style="color:white;font-size:2em"></span>
+                </a>
+            &nbsp;
+            
+            
+                <a class="bloglogo" href="https://www.facebook.com/philosophicalhacker" target="_blank">
+                    <span class="icon-facebook" style="color:white;font-size:2em"></span>
+                </a>
+            &nbsp;
+            
+            
+            
+            
+
+            <h1 class="page-title">Philosophical Hacker</h1>
+            <h2 class="page-description">Articles on android and go development</h2>
+        </div>
+    </div>
+    <a class="scroll-down icon-arrow-left" href="#content"><span class="hidden">Scroll Down</span></a>
+</header>
+
+
+<main id="content" class="content" role="main">
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    
+        
+            
+        
+    
+    
+    
+    
+    
+
+    <div class="extra-pagination inner">
+        <nav class="pagination" role="navigation">
+	
+	    <a class="newer-posts" href="/page/2/">&larr; Newer Posts</a>
+	
+	<span class="page-number">Page 3 of 4</span>
+	
+	    <a class="older-posts" href="/page/4/">Older Posts &rarr;</a>
+	
+</nav>
+
+    </div>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2015/04/17/why-android-unit-testing-is-so-hard-pt-1/">Why Android Unit Testing is so Hard (Pt 1)</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p><p><strong>Edit:</strong> In <a href="http://philosophicalhacker.com/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/">the post that concludes this series</a>, I point out that making unit testable Android apps does not require us to remove compile-time dependencies on the Android SDK and that attempting to do so is impractical anyway. Ignore anything in this post that suggests otherwise.</p>
+
+<hr />
+
+<p>Unit testing your Android apps can be extremely difficult. As I suggested in <a href="http://philosophicalhacker.com/2015/04/10/against-android-unit-tests/">the introduction to this series,</a> it seems clear that there’s widespread agreement on this. The many folks who responded to my introductory post, moreover, seemed to reinforce my claim that Android unit testing is tough:</p>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">What he said! RT <a href="https://twitter.com/philosohacker">@philosohacker</a>: New post on how we can better test our Android apps <a href="http://t.co/gQCJKIOrSN">http://t.co/gQCJKIOrSN</a></p>&mdash; Andy Dyer (@dammitandy) <a href="https://twitter.com/dammitandy/status/587629744188829699">April 13, 2015</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr"><a href="https://twitter.com/corey_latislaw">@corey_latislaw</a> Yay! Maybe I can finally figuring out how to test Android apps properly. Also, this. <a href="http://t.co/8gIqfoFVnL">http://t.co/8gIqfoFVnL</a></p>&mdash; Vinay Shenoy (@vinaysshenoy) <a href="https://twitter.com/vinaysshenoy/status/587608070131290112">April 13, 2015</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Fully agree: &quot;Against Android Unit Tests&quot;. Structure your code to have as little contact with the SDK as possible. <a href="http://t.co/rLZlpGrCD5">http://t.co/rLZlpGrCD5</a></p>&mdash; Pascal Hartig (@passy) <a href="https://twitter.com/passy/status/587336731260751875">April 12, 2015</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>So, Android unit testing is hard. That much is clear. Why Android unit testing is so difficult, however, is less clear. Its true that a part of the difficulty with Android unit testing has to do with the nonsense that you have to overcome to get Roboletric started so that you can run your tests at a decent speed, but I think that there’s a deeper reason why we are having a hard time testing our applications: the way that Google has written the Android SDK and the way that Google encourages us to structure our applications makes testing difficult and, in some cases, impossible.</p>
+
+<p>I realize that this is a bold claim, so I will spend the entire post trying to establish it. In the following post, I’ll try to say more about how the “standard” way of developing Android applications encourages us to write code that is difficult/impossible to write sensible unit tests against. These posts are a part of a series in which I’m exploring the viability of enhancing the testability of Android applications by restructuring them so that application code does not directly depend on the Android SDK. Showing why the standard architecture for Android development makes testing difficult will both motivate and inform my alternative proposal for structuring Android applications, a proposal that I will outline in the fourth post of the series.</p>
+ <a class="read-more" href="/2015/04/17/why-android-unit-testing-is-so-hard-pt-1/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        
+        <time class="post-date" datetime="2015-04-17T13:46:58Z">
+            17 Apr 2015
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2015/04/16/is-mark-zuckerberg-a-douche-bag/">Is Mark Zuckerberg a Douche-bag?</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p><p>Facebook has been catching a lot of heat in Europe lately. A <a href="http://www.law.kuleuven.be/icri/en/news/item/facebooks-revised-policies-and-terms-v1-2.pdf">61 page critical analysis of Facebook&rsquo;s data use policy</a> was recently produced by Katholieke Universiteit Leuven, Belgium&rsquo;s designated privacy watchdog. The report claimed that Facebook&rsquo;s Data Use Policy (DUP) was violating European privacy law, or, to put the claim more crudely (and less accurately), that Mark Zuckerberg is a douche-bag for creating Facebook.</p>
+
+<p>In this post, I present an <em>imaginary</em> (philosophical) dialog between Belgium and Mark Zuckerberg. <em>Imaginary</em> Zuckerberg will try to fend off the specific criticisms lodged by Belgium. I&rsquo;m hoping the dialog will kick off a discussion on whether imaginary Zuckerberg&rsquo;s defense was successful and what other responses Zuckerberg might have that could be philosophically compelling. In other words, I want this post to kick off a discussion in which we&rsquo;ll try to settle the question of whether Zuckerberg is a douche-bag.</p>
+ <a class="read-more" href="/2015/04/16/is-mark-zuckerberg-a-douche-bag/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        
+        <time class="post-date" datetime="2015-04-16T11:58:48Z">
+            16 Apr 2015
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2015/04/11/against-android-unit-tests/">Against Android Unit Tests</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p>Edit: Since I&rsquo;ve written this, I&rsquo;ve come to realize that making unit testable Android apps does not require us to remove compile-time dependencies on the Android SDK. I talk about this realization in the post that concludes this series. Even the best among us admit that they struggle with testing their Android apps. Jake Wharton has said explicitly that the Android platform has traditionally been very difficult to test.¹ In the inaugural episode of their (excellent) podcast, Don Felker and Kaushik Gopal have echoed similar sentiments. <a class="read-more" href="/2015/04/11/against-android-unit-tests/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        
+        <time class="post-date" datetime="2015-04-11T03:35:55Z">
+            11 Apr 2015
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2015/04/06/dont-call-it-mvp/">Don&#39;t call it &#34;MVP&#34;</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p>Lately there&rsquo;s been a lot of discussion about an alternative architectural pattern for Android development. The acronym that&rsquo;s being used to denote this alternative pattern is &rdquo;MVP.&rdquo; I think that &ldquo;MVP&rdquo; is an inaccurate and confusing designation for this pattern. In this post, I will say why I think &ldquo;MVP&rdquo; is a bad name for the pattern, and I&rsquo;ll suggest a different name for referring to it. What is &rdquo;MVP?&rdquo; There are plenty of blog posts out there that describe the &ldquo;MVP&rdquo; pattern, so I&rsquo;m not going to do that here. <a class="read-more" href="/2015/04/06/dont-call-it-mvp/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        on
+            
+                <a href="http://replace-this-with-your-hugo-site.com/tags/android/">#android</a>,
+            
+        
+        <time class="post-date" datetime="2015-04-06T03:39:02Z">
+            6 Apr 2015
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2015/03/24/how-to-keep-your-rxjava-subscribers-from-leaking/">How to Keep your RxJava Subscribers from Leaking</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p>Edit: Shortly after writing this, I realized that the solution that I present here isn&rsquo;t very good. I&rsquo;m leaving it here just in case it can serve as a building block for better solutions. Sometimes you don&rsquo;t have control over the lifecycle of your Subscribers. In these cases, to avoid leaking your Subscriber, you have to unsubscribe from your Observable when you&rsquo;re notified that your Subscriber is about to be destroyed. <a class="read-more" href="/2015/03/24/how-to-keep-your-rxjava-subscribers-from-leaking/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        
+        <time class="post-date" datetime="2015-03-24T23:56:32Z">
+            24 Mar 2015
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2015/02/22/why-pirating-is-probably-wrong-java/">Why Pirating is Probably Wrong (.java)</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p> <a class="read-more" href="/2015/02/22/why-pirating-is-probably-wrong-java/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        
+        <time class="post-date" datetime="2015-02-22T17:02:40Z">
+            22 Feb 2015
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2015/01/24/why-ayn-rands-psychology-is-probably-wrong/">Why Ayn Rand&#39;s Psychology is Probably Wrong (or trivial)</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p>Edit: Some have pointed out that I&rsquo;ve misrepresented Ayn Rand&rsquo;s position in this post. From what I can tell, they are right. Either way, I still think the argument presented here is interesting and accurate as long as we change the conclusion to &rdquo;Psychological egoism is probably wrong (or trivial)&rdquo; I’ve met a surprising number of people in my life who believe that no one is capable of altruism. These people believe that everyone always acts to further their own interests. <a class="read-more" href="/2015/01/24/why-ayn-rands-psychology-is-probably-wrong/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        on
+            
+                <a href="http://replace-this-with-your-hugo-site.com/tags/coding/">#coding</a>,
+            
+                <a href="http://replace-this-with-your-hugo-site.com/tags/philosophy/">#philosophy</a>,
+            
+                <a href="http://replace-this-with-your-hugo-site.com/tags/programming/">#programming</a>,
+            
+        
+        <time class="post-date" datetime="2015-01-24T05:20:31Z">
+            24 Jan 2015
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2015/01/18/build-apps-smarter-with-archiva-and-gradle/">Build Apps Smarter With Archiva and Gradle</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p>Dependency management in both Eclipse and Android Studio can be a serious pain. Now that we have gradle, there’s a better way to build android apps: we can configure our library projects to publish maven artifacts to a maven repository and we can configure our app projects to consume those artifacts. Once projects are setup to produce and consume maven artifacts, building an app with many dependencies becomes much more manageable. <a class="read-more" href="/2015/01/18/build-apps-smarter-with-archiva-and-gradle/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        
+        <time class="post-date" datetime="2015-01-18T13:32:20Z">
+            18 Jan 2015
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2014/10/03/an-alternative-multiproject-setup-for-android-studio/">An Alternative Multiproject Setup for Android Studio</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p>Google&rsquo;s Gradle Plugin user guide recommends a method for configuring your gradle files to build multiple projects. That method has some shortcomings. In this post, I will briefly explain Google&rsquo;s recommended configuration, note its shortcomings, and recommend a different way to configure your gradle files to support multi-project setups in Android Studio. The Google Way This picture illustrates how Google suggests we handle multi-project setups: our main &ldquo;app&rdquo; module is supposed to depend on library modules that reside within the project directory. <a class="read-more" href="/2014/10/03/an-alternative-multiproject-setup-for-android-studio/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        on
+            
+                <a href="http://replace-this-with-your-hugo-site.com/tags/android/">#android</a>,
+            
+                <a href="http://replace-this-with-your-hugo-site.com/tags/android-studio/">#android studio</a>,
+            
+                <a href="http://replace-this-with-your-hugo-site.com/tags/multiproject-setups/">#multiproject setups</a>,
+            
+        
+        <time class="post-date" datetime="2014-10-03T03:02:54Z">
+            3 Oct 2014
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2014/05/27/some-responses-to-your-comments-on-why-paul-graham-is-sort-of-wrong-about-philosophy/">A response to Your Comments on &#34;Why Paul Graham is (sort of) wrong about philosophy&#34;</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p>First, I want to thank you guys for reading, criticizing, and commenting on my post. Given that there&rsquo;s so many other excellent things you could have been reading, I&rsquo;m honored that you spent a little time on what I&rsquo;ve written. Now, let&rsquo;s respond to some comments: Credentials A couple of comments came up about my &ldquo;credentials.&rdquo; Here&rsquo;s some info: I studied philosophy and religion as an undergrad at the University of Central Florida. <a class="read-more" href="/2014/05/27/some-responses-to-your-comments-on-why-paul-graham-is-sort-of-wrong-about-philosophy/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        on
+            
+                <a href="http://replace-this-with-your-hugo-site.com/tags/paul-graham/">#paul graham</a>,
+            
+                <a href="http://replace-this-with-your-hugo-site.com/tags/philosophy/">#philosophy</a>,
+            
+        
+        <time class="post-date" datetime="2014-05-27T23:18:56Z">
+            27 May 2014
+        </time>
+    </footer>
+</article>
+
+    
+
+    <nav class="pagination" role="navigation">
+	
+	    <a class="newer-posts" href="/page/2/">&larr; Newer Posts</a>
+	
+	<span class="page-number">Page 3 of 4</span>
+	
+	    <a class="older-posts" href="/page/4/">Older Posts &rarr;</a>
+	
+</nav>
+
+
+</main>
+
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Philosophical Hacker</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/jquery.js"></script>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/index.js"></script>
+    
+</body>
+</html>
+

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Networking on Philosophical Hacker</title>
+    <link>http://replace-this-with-your-hugo-site.com/tags/networking/</link>
+    <description>Recent content in Networking on Philosophical Hacker</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 22 May 2014 23:47:26 +0000</lastBuildDate>
+    <atom:link href="http://replace-this-with-your-hugo-site.com/tags/networking/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>How to Break into a Mobile Dev Career in 10 months or less</title>
+      <link>http://replace-this-with-your-hugo-site.com/2014/05/22/how-to-break-into-a-mobile-dev-career-in-10-months-or-less/</link>
+      <pubDate>Thu, 22 May 2014 23:47:26 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/2014/05/22/how-to-break-into-a-mobile-dev-career-in-10-months-or-less/</guid>
+      <description>&lt;p&gt;A little less than a year ago, I decided that &lt;a href=&#34;https://philosophicalhacker.com/2014/04/21/why-im-glad-my-dream-job-didnt-work-out/&#34;&gt;the philosophy professor scam&lt;/a&gt; was too risky for my wife and I. Instead, I decided to pursue a career in app development (and maybe do a tech startup). About 10 months after that decision, I got two internships at two companies as an Android Developer.¹ Hopefully, one of these internships will turn in to a full-time gig (and I have some reason to think that this will happen). At this point, I think its safe to say that I have successfully broken into a mobile dev career with a master&amp;rsquo;s degree in a philosophy. What follows is a combination of programming resources and advice that helped me pull this off. I&amp;rsquo;m hoping that other non-traditional hackers like me will find these resources useful, but before I get in to that, a disclaimer:&lt;/p&gt;
+
+&lt;p&gt;Breaking into a mobile dev career may not be as easy for others as it has been for me. Orlando&amp;rsquo;s tech scene is growing crazy fast, so its possible that luck was the primary factor that contributed to success in snagging a mobile dev internship.&lt;/p&gt;
+
+&lt;p&gt;With that said, let&amp;rsquo;s get the advice/resources:&lt;/p&gt;
+
+&lt;p&gt;First, I want to say a little about my weekly time commitment to making the transition from a philosophy-focused career to a career in mobile development. I spent about 40 hours a week for about 8 weeks of the summer learning to code. After the summer, I had to calm down a bit because I was finishing up my master&amp;rsquo;s degree and prepping to get married. For three months, I probably only managed 10-15 hours a week of coding. After the wedding, I worked about 55 hours a week for about 3 weeks before I finished the app that landed me a seat in some interview rooms. I wish I could give you an exact hour count on how long I spent a la &lt;a href=&#34;https://www.rescuetime.com/&#34;&gt;rescuetime&lt;/a&gt;, but I can&amp;rsquo;t because I&amp;rsquo;m not a premium user.²&lt;/p&gt;
+
+&lt;p&gt;Learning to code isnt too hard because there are a ton of resources. Here are some resources that I found helpful:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.edx.org/course/harvardx/harvardx-cs50x-introduction-computer-1022&#34;&gt;Edx - Introduction to Computer Science&lt;/a&gt; - they cover really basic, really helpful computer science stuff (binary, datatypes, algorithms, etc.) They cover programming in C and the webstack (HTML/CSS/Javascript). You&amp;rsquo;ll also get some experience using a Linux operating system. I&amp;rsquo;ve love it. Still taking the course. I would definitely start here.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://raywenderlich.com/&#34;&gt;raywenderlich.com&lt;/a&gt; - This is awesome if you want to learn iOS dev specifically. They have some really basic tutorials for teaching you how to program too.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://itunes.apple.com/us/course/developing-ios-7-apps-for/id733644550&#34;&gt;Coding together&lt;/a&gt; - Stanfords itunesU course on iphone/ipad dev (I would wait on this unless you are already familiar with object oriented programming.)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.vogella.com/tutorials/android.html&#34;&gt;vogella.com&lt;/a&gt; - Android development tutorials&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.codecademy.com/&#34;&gt;Codeacademy&lt;/a&gt; - really hands-on and interactive. Assumes no prior programming knowledge. I dig it a lot. I used it to help learn HTML/CSS/Javascript.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/&#34;&gt;Stackoverflow &lt;/a&gt;- a site for asking any programming questions. There&amp;rsquo;s a bunch of ridiculously smart/nice people who will help you with your questions. If you create an account, let me know you username so that I can keep up with any questions you have and potentially answer them.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.codeschool.com/courses&#34;&gt;Codeschool&lt;/a&gt; - another awesome hands-on resource for learning programming, but it costs ya money.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.pluralsight.com/training/&#34;&gt;Pluralsight&lt;/a&gt; - site full of video lectures/tutorials on all sorts of programming topics. cost money. I&amp;rsquo;ve used it a little. Its less interactive than, say, CodeSchool.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.hackerschool.com/&#34;&gt;HackerSchool&lt;/a&gt; - free coding school in NY. The school connects students with employers.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://thecodepath.com/&#34;&gt;CodePath&lt;/a&gt; - similar to HackerSchool, but in CA&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If you find yourself wanting &lt;a href=&#34;https://www.youtube.com/watch?v=B-eGgQuYicM&#34;&gt;to punt a dog&lt;/a&gt; at some point while you&amp;rsquo;re learning how to code, that&amp;rsquo;s how I felt too. It doesn&amp;rsquo;t mean you aren&amp;rsquo;t cut out for it. A buddy of mine says programming is 10% intelligence, 90% patience. That sounds about right to me.&lt;/p&gt;
+
+&lt;p&gt;In addition to learning how to code, you&amp;rsquo;ll also want to &lt;strong&gt;learn how to use git&lt;/strong&gt;. &lt;a href=&#34;http://try.github.io/levels/1/challenges/1&#34;&gt;Here&lt;/a&gt; is a nice tutorial that&amp;rsquo;ll get you started. Don&amp;rsquo;t get too caught up in all the advanced stuff. Just know how to add, commit, push, pull, merge, and reset.&lt;/p&gt;
+
+&lt;p&gt;After you feel like you have a decent grasp on android or iOS, I&amp;rsquo;d start working on building an app. Here are some things to keep in mind when selecting a project:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Make sure your project shows that you know how to do network operations and how to persist data on your platform.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;I think you&amp;rsquo;ll get bonus points in the eyes of potential employers if use 3rd party APIs in your app (e.g., &lt;a href=&#34;https://developers.google.com/maps/documentation/ios/&#34;&gt;Google Maps SDK&lt;/a&gt;, &lt;a href=&#34;https://developers.facebook.com/docs/android/&#34;&gt;Facebook SDK&lt;/a&gt;, etc.)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Make sure your project looks fairly polished in terms of the UI design. &lt;a href=&#34;https://play.google.com/store/apps/details?id=com.duapps.metracker&#34;&gt;Here&amp;rsquo;s&lt;/a&gt; the project that got me talking with potential employers. No need to pay umpteen million dollars on photoshop. I used &lt;a href=&#34;http://www.inkscape.org/en/&#34;&gt;inkscape&lt;/a&gt; to make my graphics.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Make sure your project utilizes new APIs or technologies. This will come in handy when its time to network and show off your app. In my experience, event organizers are especially anxious to have demos of apps that use the latest APIs.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;After you&amp;rsquo;ve built your project, you&amp;rsquo;re ready &lt;strong&gt;to start networking and looking for a job.&lt;/strong&gt; I spent very little time searching for jobs online. In fact, I wasn&amp;rsquo;t even looking for a job when I was approached by my current supervisors. Instead, I attended &lt;a href=&#34;http://www.meetup.com/&#34;&gt;meetups&lt;/a&gt; in my area 2-4 times a month. I also attended an event called &amp;ldquo;&lt;a href=&#34;http://startupweekend.org/&#34;&gt;Startup Weekend&lt;/a&gt;,&amp;rdquo; and I made some really good contacts there. Finally, I had pretty good luck with &amp;ldquo;head hunters&amp;rdquo; from companies like &lt;a href=&#34;http://www.teksystems.com/&#34;&gt;TEKSystems&lt;/a&gt;. Eventually, I was able to present my app at one of the local meetups, and that&amp;rsquo;s what got my foot in the door at these internships.&lt;/p&gt;
+
+&lt;p&gt;Interestingly, no one seemed to care that I didn&amp;rsquo;t have a degree in computer science. Once I showed them an app that worked, they were interested. I told them straight up that I didn&amp;rsquo;t have a degree, but that I had taken a few computer science courses in high school, a math class in which we used Matlab, one Comp Sci course in mobile UI design last semester, and that I had recently been taking advantage of a lot of resources online to help me learn. That seemed good enough.&lt;/p&gt;
+
+&lt;p&gt;Hopefully, people reading this will be as lucky as I have been. Although I was initially worried that I would hate my life once I gave up my dream of becoming a philosophy professor, I&amp;rsquo;ve been having a good time. I love my two internships, and I&amp;rsquo;m looking forward to working at one of these companies for a while.&lt;/p&gt;
+
+&lt;p&gt;Feel free to drop me a line if you have any questions.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Notes:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;The app that got me interview at companies was something that I built 6 months after starting to learn to program. That&amp;rsquo;s why the title is &amp;ldquo;How to break into a mobile dev career in 10 months or less.&amp;rdquo;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;If you decided to try to break into a mobile dev career, consider keeping track of how long it takes you with RescueTime. I&amp;rsquo;d be interested to know the exact number.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

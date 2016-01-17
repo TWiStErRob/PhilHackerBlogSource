@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  	<meta property="og:title" content=" How to Keep your RxJava Subscribers from Leaking &middot;  Philosophical Hacker" />
+  	<meta property="og:site_name" content="Philosophical Hacker" />
+  	<meta property="og:url" content="http://replace-this-with-your-hugo-site.com/2015/03/24/how-to-keep-your-rxjava-subscribers-from-leaking/" />
+
+    
+  	<meta property="og:type" content="article" />
+
+    <meta property="og:article:published_time" content="2015-03-24T23:56:32Z" />
+
+    
+    
+
+  <title>
+     How to Keep your RxJava Subscribers from Leaking &middot;  Philosophical Hacker
+  </title>
+
+    <meta name="description" content="Articles on android and go development" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="http://replace-this-with-your-hugo-site.com/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="http://replace-this-with-your-hugo-site.com/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="http://replace-this-with-your-hugo-site.com/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="http://replace-this-with-your-hugo-site.com/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+
+    
+      
+          <link href="http://replace-this-with-your-hugo-site.com/index.xml" rel="alternate" type="application/rss+xml" title="Philosophical Hacker" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.15" />
+
+    <link rel="canonical" href="http://replace-this-with-your-hugo-site.com/2015/03/24/how-to-keep-your-rxjava-subscribers-from-leaking/" />
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+    </ul>
+    
+    
+    <a class="subscribe-button icon-feed" href="http://replace-this-with-your-hugo-site.com/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+
+<header class="main-header post-head no-cover">
+  <nav class="main-nav clearfix">
+
+
+  
+  
+      <a class="menu-button icon-feed" href="http://replace-this-with-your-hugo-site.com/index.xml">&nbsp;&nbsp;Subscribe</a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">How to Keep your RxJava Subscribers from Leaking</h1>
+        <small></small>
+
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2015-03-24T23:56:32Z">
+            Mar 24, 2015
+          </time>
+        
+         
+        </section>
+    </header>
+
+    <section class="post-content">
+      <p><strong>Edit:</strong> Shortly after writing this, I realized that the solution that I present here isn&rsquo;t very good. I&rsquo;m leaving it here just in case it can serve as a building block for better solutions.</p>
+
+<p>Sometimes you don&rsquo;t have control over the lifecycle of your <code>Subscribers</code>. In these cases, to avoid leaking your <code>Subscriber</code>, you have to unsubscribe from your <code>Observable</code> when you&rsquo;re notified that your <code>Subscriber</code> is about to be destroyed. It can be really annoying to have to worry about unsubscribing your <code>Subscriptions</code>to avoid memory leaks, so in this post, I&rsquo;ll show how, with a few lines of code, you can stop worrying about leaking your <code>Subscribers</code>.</p>
+
+<p>Before I try to show how to memory-leak-proof your <code>Subscribers</code>, I want to give a concrete example that shows when memory-leak-proof <code>Subscribers</code> might be useful. This example will also clarify the problem that memory-leak-proof <code>Subscribers</code> are trying to solve. I spend most of my time doing Android development these days, so an Android example is the most natural way for me to elaborate on this problem, so here&rsquo;s an Android-specific use-case: You&rsquo;d probably want want a memory-leak-proof <code>Subscriber</code> when you&rsquo;re writing an <code>Activity</code>.</p>
+
+<p>An Android <code>Activity</code> is basically a screen that you see when you&rsquo;re using an Android app. The Android framework manages the lifecycle of <code>Activities</code>. <code>Activities</code>, moreover, are also often responsible for responding to touch events.</p>
+
+<p>Sometimes you want to fetch some data and then update the UI with that data in response to a touch event, and sometimes fetching data can&rsquo;t be done on the main thread. <code>Observables</code> can be a nice way to handle this problem:</p>
+
+<script src="//gist.github.com/kmdupr33/ef8023275ca36d201360.js"></script>
+
+<p>However, if the Android framework wants to destroy your <code>Activity</code> while your <code>Observable</code> is doing its thing, you run into a problem: The <code>Observable</code> will keep your Activity from being garbage collected, because your <code>Activity</code> contains a reference to an anonymous inner <code>Subscriber</code> and this <code>Subscriber</code> implicitly contains a reference to your <code>Activity</code>.</p>
+
+<p>The straightforward solution to this is to unsubscribe from your <code>Observable</code> when the <code>Activity</code> is about to be destroyed:</p>
+
+<script src="//gist.github.com/kmdupr33/338f863a42f53b736bdd.js"></script>
+
+<p>Although this solution is straightforward, it puts you in an unfortunate dilemma:</p>
+
+<ul>
+<li>Horn 1: You have to worry about unsubscribing from your <code>Observer</code> in all of your <code>Activities</code> in your app</li>
+</ul>
+
+<p><strong>OR</strong></p>
+
+<ul>
+<li>Horn 2: You have to unsubscribe in a base <code>Activity</code> class that calls unsubscribe on a <code>CompositeSubscription</code>, have subclasses add <code>Subscriptions</code> to the base <code>Activity</code>&rsquo;s <code>CompositeSubscription</code>, and make all of your <code>Activities</code> extend that base class.¹</li>
+</ul>
+
+<p>I think there might be a better solution: If we subclass <code>Observable</code> to wrap our <code>Subscribers</code> in a <code>Subscriber</code> <a href="http://en.wikipedia.org/wiki/Decorator_pattern">decorator</a> that delegates work to its weakly held, wrapped <code>Subscriber</code>, we can keep clients from having to worry about leaking their <code>Subscribers</code> <em>without forcing them to write boilerplate code.</em></p>
+
+<p>To see how this would work, let&rsquo;s start by defining the <code>Subscriber</code> decorator:</p>
+
+<script src="//gist.github.com/kmdupr33/b5fe4b2a67a3473e20c7.js"></script>
+
+<p>Next, we define the Observable subclass that adds a <code>safeSubscribe()</code> method to wrap the <code>Subscriber</code> passed in:</p>
+
+<script src="//gist.github.com/kmdupr33/057612a1d383cc196c9a.js"></script>
+
+<p>And that&rsquo;s it. Now, clients can subscribe to an <code>Observable</code> without having to worry about leaking an object with a big memory footprint. Instead, only the <code>Subscriber</code> decorator is leaked, and since the Subscriber decorator doesn&rsquo;t have a big memory footprint, its not a huge deal if it sticks around until the <code>Observer</code> is done doing its thing.</p>
+
+<p>I would love to hear what you all think about this approach.</p>
+
+<p><strong>Edit: </strong>Conversation with jackhexen on the Reddit machine has made me realize that this solution is not as clean as I&rsquo;ve presented it here. Activities won&rsquo;t maintain strong references to their anonymous inner classes unless you store those classes in an instance variable, so technically, you&rsquo;d have to store your <code>Subscribers</code> in instance variables to prevent them for being garbage collected. This makes the solution presented here seem significantly less appealing because I was hoping to offer a solution that kept clients from having to worry about memory management. This solution clearly doesn&rsquo;t do that.</p>
+
+<p>Notes:</p>
+
+<ol>
+<li>This solution is discussed in <a href="http://blog.danlew.net/2014/10/08/grokking-rxjava-part-4/">the 4th part of Dan Lew&rsquo;s helpful introduction to RxJava for Android</a>.</li>
+</ol>
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+
+    
+
+
+
+
+
+<section class="author">
+  <h4><a href="http://replace-this-with-your-hugo-site.com/"></a></h4>
+  
+  <p>Read <a href="http://replace-this-with-your-hugo-site.com/">more posts</a> by this author.</p>
+  
+  <div class="author-meta">
+    
+    
+  </div>
+</section>
+
+
+
+    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=How%20to%20Keep%20your%20RxJava%20Subscribers%20from%20Leaking&amp;url=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f03%2f24%2fhow-to-keep-your-rxjava-subscribers-from-leaking%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f03%2f24%2fhow-to-keep-your-rxjava-subscribers-from-leaking%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f03%2f24%2fhow-to-keep-your-rxjava-subscribers-from-leaking%2f&amp;description=How%20to%20Keep%20your%20RxJava%20Subscribers%20from%20Leaking"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f03%2f24%2fhow-to-keep-your-rxjava-subscribers-from-leaking%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+    
+
+
+
+
+  </footer>
+</article>
+
+</main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Philosophical Hacker</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/jquery.js"></script>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/index.js"></script>
+    
+</body>
+</html>
+

@@ -1,0 +1,1090 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Philosophical Hacker</title>
+    <link>http://replace-this-with-your-hugo-site.com/</link>
+    <description>Recent content on Philosophical Hacker</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 14 Jan 2016 02:20:53 +0000</lastBuildDate>
+    <atom:link href="http://replace-this-with-your-hugo-site.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Should we use mocking libraries for go testing?</title>
+      <link>http://replace-this-with-your-hugo-site.com/2016/01/14/should-we-use-mocking-libraries-for-go-testing/</link>
+      <pubDate>Thu, 14 Jan 2016 02:20:53 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/2016/01/14/should-we-use-mocking-libraries-for-go-testing/</guid>
+      <description>
+
+&lt;p&gt;A few weeks ago, I started learning go. Since I&amp;rsquo;m a wannabe TDD-er, I took at look at some resources on testing go code. I stumbled upon &lt;a href=&#34;https://talks.golang.org/2014/testing.slide#1&#34;&gt;Andrew Gerrand&amp;rsquo;s excellent Testing Techniques talk&lt;/a&gt; in which he says this:&lt;/p&gt;
+
+&lt;blockquote&gt;Go eschews a lot of things, including mocks and fakes.&lt;/blockquote&gt;
+
+&lt;p&gt;&amp;ldquo;Alright cool,&amp;rdquo; I thought to myself. I&amp;rsquo;m down to &amp;ldquo;do as the gophers do&amp;rdquo; and eschew mocks. Later on during his talk, Andrew Gerrand mentions &lt;a href=&#34;https://github.com/golang/mock&#34;&gt;gomock&lt;/a&gt;, a mocking library, and reluctantly says&lt;/p&gt;
+
+&lt;blockquote&gt;[mocking libraries like gomock] are fine, but I find that on balance the hand-written fakes tend be easier to reason about and clearer to see what&#39;s going on, but I&#39;m not an enterprise go programmer so maybe people do need that so I don&#39;t know, but that&#39;s my advice.&lt;/blockquote&gt;
+
+&lt;p&gt;Of course, after hearing that, I felt a little confused and unsure whether I should refrain from using mocking libraries in go. To make matters worse, I took a look at gomock and was surprised to find that its written by two engineers at Google.&lt;/p&gt;
+
+&lt;p&gt;At that point, it seemed that the question of whether we should use a mocking library while testing go code is a bit of a contentious question, even within Google. I found the seeming contentious nature of this question pretty unhelpful and confusing when I was trying to get a handle on how to write good go code. However, it led me to do some research on the pros and cons of mocking libraries vs hand-written mocks, and in this post, I present the conclusions I came to based on my research:&lt;/p&gt;
+
+&lt;p&gt;1. The apparent contentiousness about whether to use use a mocking library if probably partially due to vague terminology.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;If we are clear about our terms, the argument against using mocking libraries is not very compelling.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&#34;vague-terms:ddbbd3dd2c8fffb08367af59a48776ea&#34;&gt;Vague Terms&lt;/h1&gt;
+
+&lt;p&gt;I think the terms &amp;ldquo;mock&amp;rdquo; and &amp;rdquo;fake,&amp;rdquo; like many terms in software, are vague. I think, moreover, that the vagueness of the terms makes the question of whether to use a mocking library more difficult and more apparently contentious than it actually is.&lt;/p&gt;
+
+&lt;p&gt;Before I say more, let me start by giving a clear definition of a &amp;ldquo;mock.&amp;ldquo; I like Martin Fowler&amp;rsquo;s definition of mocks, a definition that he takes from Gerard Meszaros, the author of &lt;a href=&#34;http://www.amazon.com/xUnit-Test-Patterns-Refactoring-Code/dp/0131495054&#34;&gt;xUnit Test Patterns&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;objects pre-programmed with expectations which form a specification of the calls they are expected to receive [during the test]&lt;/blockquote&gt;
+
+&lt;p&gt;Here&amp;rsquo;s what a quick and dirty (hand-rolled) mock might look like in go:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;type&lt;/span&gt; mockEmailSender &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;struct&lt;/span&gt; {
+	test        &lt;span style=&#34;color: #666666&#34;&gt;*&lt;/span&gt;testing.T
+	sendCalled  &lt;span style=&#34;color: #B00040&#34;&gt;bool&lt;/span&gt;
+	sendSubject &lt;span style=&#34;color: #B00040&#34;&gt;string&lt;/span&gt;
+	sendBody    &lt;span style=&#34;color: #B00040&#34;&gt;string&lt;/span&gt;
+}
+
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;func&lt;/span&gt; (m &lt;span style=&#34;color: #666666&#34;&gt;*&lt;/span&gt;mockEmailSender) Send(subject &lt;span style=&#34;color: #B00040&#34;&gt;string&lt;/span&gt;, body &lt;span style=&#34;color: #B00040&#34;&gt;string&lt;/span&gt;) {
+	m.sendCalled = &lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;true&lt;/span&gt;
+	m.sendSubject = subject
+	m.sendBody = body
+}
+
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;func&lt;/span&gt; (m mockEmailSender) verifyExpectation() {
+	&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;if&lt;/span&gt; !m.sendCalled {
+		m.test.Error(&lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;Expected call to Send()&amp;quot;&lt;/span&gt;)
+	}
+
+	&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;if&lt;/span&gt; m.sendSubject &lt;span style=&#34;color: #666666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;Should we use mocking libraries?&amp;quot;&lt;/span&gt; {
+		m.test.Errorf(&lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;Expeced Send() with subject: %s, received: %s&amp;quot;&lt;/span&gt;, &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;Should we use mocking libraries?&amp;quot;&lt;/span&gt;, m.sendSubject)
+	}
+
+	&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;if&lt;/span&gt; m.sendBody &lt;span style=&#34;color: #666666&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;Probably&amp;quot;&lt;/span&gt; {
+		m.test.Errorf(&lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;Expected Send() with body: %s, received: %s&amp;quot;&lt;/span&gt;, &lt;span style=&#34;color: #BA2121&#34;&gt;&amp;quot;Probably&amp;quot;&lt;/span&gt;, m.sendBody)
+	}
+
+}
+
+&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;func&lt;/span&gt; TestEmailSender(t &lt;span style=&#34;color: #666666&#34;&gt;*&lt;/span&gt;testing.T) {
+	m &lt;span style=&#34;color: #666666&#34;&gt;:=&lt;/span&gt; mockEmailSender{test: t}
+	&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;defer&lt;/span&gt; m.verifyExpectation()
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Of course, this is a contrived example, but its enough to help convey the idea of a mock. As you can see, the test will fail if the mock doesn&amp;rsquo;t receive a call with the appropriate arguments. The mock has been &amp;ldquo;pre-programmed&amp;rdquo; to expect a call to Send() with specify arguments and that expectation must be fulfilled in order for the test to pass.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s quickly define another word: &amp;ldquo;test double.&amp;rdquo; Test doubles are objects that are used instead of a &amp;ldquo;real object&amp;rdquo; to facilitate testing. A mock is a test double, but not all test doubles are mocks.&lt;/p&gt;
+
+&lt;p&gt;Now that I&amp;rsquo;ve clarified the terms &amp;ldquo;mock&amp;rdquo; and &amp;ldquo;test double,&amp;rdquo; let me say a little about why I think these terms are confused in Gerrand&amp;rsquo;s testing techniques talk. I think that Gerrand is using the terms &amp;ldquo;mock&amp;rdquo; and &amp;ldquo;fake&amp;rdquo; to refer to test doubles in general rather than mocks in Fowler&amp;rsquo;s sense of the word. If people are using the word &amp;ldquo;mock&amp;rdquo; to talk about different things, then we have to be careful about how we interpret their arguments for or against &amp;ldquo;mocking&amp;rdquo; libraries.&lt;/p&gt;
+
+&lt;p&gt;A part of the reason I think that Gerrand is using the term &amp;ldquo;mock&amp;rdquo; and &amp;ldquo;fake&amp;rdquo; differently from mock enthusiasts is that there&amp;rsquo;s been some confusion about the term &amp;ldquo;mock&amp;rdquo; in the past, even among seasoned, intelligent software engineers like Andrew Gerrand. For example, Martin Fowler wrote &lt;a href=&#34;http://martinfowler.com/articles/mocksArentStubs.html&#34;&gt;&amp;ldquo;Mocks aren&amp;rsquo;t Stubs&amp;rdquo;&lt;/a&gt; to clear up some confusion about the distinction between &amp;ldquo;mocks&amp;rdquo; and &amp;ldquo;stubs.&amp;rdquo; Moreover, Steve Freeman, the author of &lt;a href=&#34;http://www.amazon.com/Growing-Object-Oriented-Software-Guided-Tests/dp/0321503627&#34;&gt;Growing Object Oriented Software Guided by Tests&lt;/a&gt;, accuses Robert Martin of conflating mocks with stubs in his &lt;a href=&#34;https://sites.google.com/site/unclebobconsultingllc/blogs-by-robert-martin/manual-mocking-resisting-the-invasion-of-dots-and-parentheses&#34;&gt;&amp;ldquo;Manual Mocking: Resisting the Invasion of Dots and Parentheses.&amp;ldquo;¹&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Another reason I think that Gerrand uses the word &amp;ldquo;mock&amp;rdquo; or &amp;ldquo;fake,&amp;rdquo; to refer to what Fowler would call a &amp;rdquo;test double,&amp;rdquo; is that he says,&lt;/p&gt;
+
+&lt;blockquote&gt;We just have small fakes like the [httptest.]ResponseRecorder that allow us to inspect how they were used. There are frameworks that generate those kinds of fakes. One of them is called &#34;gomock...&#34;&lt;/blockquote&gt;
+
+&lt;p&gt;However, the &amp;ldquo;fakes&amp;rdquo; generated by gomock are importantly different from ResponseRecorder. Gomock generates mocks in Fowler&amp;rsquo;s sense of the word, which means that the test that contains the mock will only pass if the the object being tested &lt;em&gt;calls the expected methods of the mock object&lt;/em&gt;. (Think back to above &amp;ldquo;hand-rolled&amp;rdquo; mock.)&lt;/p&gt;
+
+&lt;p&gt;This isn&amp;rsquo;t how tests with a ResponseRecorder work out of the box. In fact, the ResponseRecorder is basically a Recorder with some &amp;ldquo;getters&amp;rdquo; that allow us to perform state-based verification for our testing, a verification technique that, according to Martin Fowler, is a verification technique that&amp;rsquo;s used when you &lt;em&gt;aren&amp;rsquo;t&lt;/em&gt; working with a mock.&lt;/p&gt;
+
+&lt;h1 id=&#34;the-argument-against-gomock:ddbbd3dd2c8fffb08367af59a48776ea&#34;&gt;The Argument against Gomock&lt;/h1&gt;
+
+&lt;p&gt;Regardless of whether there&amp;rsquo;s any confusion of terms in Gerrand&amp;rsquo;s remarks about mocking, if we&amp;rsquo;re clear about what we mean by mocks, I think we can see that his reasons against using a mocking library aren&amp;rsquo;t very compelling. Recall that his reason to write hand-written mocks is that they tend to be:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;easier to reason about&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;easier to read&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This argument raises two questions. First, is it really the case the handwritten mocks are easier to read and reason about? Second, even if they are easier to read and reason about, is it worth hand writing the mocks when they can generated by a library?&lt;/p&gt;
+
+&lt;p&gt;The first question raises hard questions about how you would &amp;ldquo;objectively&amp;rdquo; measure the readability and &amp;ldquo;reasonableness&amp;rdquo; of code. I&amp;rsquo;m not prepared to answer those questions here. I can say, however, that, in my experience, mocks whose expectations can be set within the test body are easier to read and reason about. Gomock lets you generate these kinds of mocks, so that&amp;rsquo;s a point for gomock in my book.&lt;/p&gt;
+
+&lt;p&gt;The second question is easier for me to answer. Of all the test doubles, mocks are probably the most tedious to write. Its not implausible that increased readability might justify hand-rolling other kinds of test doubles, but mocks aren&amp;rsquo;t completely trivial to write, so I&amp;rsquo;d rather have a library that does that for me, &lt;em&gt;even if the library mocks are a little less readable.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;conclusion:ddbbd3dd2c8fffb08367af59a48776ea&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;So, that&amp;rsquo;s where I stand for now. I think that if you&amp;rsquo;re going to use mocks for your tests, using a mocking library is probably a good idea. Moreover, I think that a part of the reason why it can be difficult to come to this conclusion is that we often aren&amp;rsquo;t very clear about how we use words like &amp;ldquo;mock&amp;rdquo; and &amp;ldquo;fake.&amp;rdquo;&lt;/p&gt;
+
+&lt;h2 id=&#34;notes:ddbbd3dd2c8fffb08367af59a48776ea&#34;&gt;Notes&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Steve Freeman claims that Robert Martin conflates mocks with stubs in the comments of Robert Martin&amp;rsquo;s article.&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Making a TDD-based HackerNews client for Android</title>
+      <link>http://replace-this-with-your-hugo-site.com/2015/07/17/making-a-tdd-based-hackernews-client-for-android/</link>
+      <pubDate>Fri, 17 Jul 2015 11:53:55 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/2015/07/17/making-a-tdd-based-hackernews-client-for-android/</guid>
+      <description>
+
+&lt;p&gt;I&amp;rsquo;m using TDD to write a HackerNews client for Android. This post (and the ones that will likely follow it) share a little bit about some of the techniques I used to follow a TDD-based work-flow for developing this application. It also discusses the architecture that arises when Android apps are built with testability in mind from the ground up.&lt;/p&gt;
+
+&lt;h2 id=&#34;testing-a-walking-skeleton:3782b8d1a760da7b5dd9b3f3d0554607&#34;&gt;Testing a Walking Skeleton&lt;/h2&gt;
+
+&lt;p&gt;The first step in kick-starting a TDD workflow, according to Steve Freeman and Nat Pryce in &lt;em&gt;Growing Object Oriented Software Guided by Tests&lt;/em&gt;, is to &amp;ldquo;test a walking skeleton.&amp;rdquo; A walking skeleton, as they define it, is this:&lt;/p&gt;
+
+&lt;blockquote&gt;A “walking skeleton” is an implementation of the thinnest possible slice of real functionality that we can automatically build, deploy, and test end-to-end.
+
+pg. 69-70&lt;/blockquote&gt;
+
+&lt;p&gt;A walking skeleton for a HackerNews client, as I see it, should just display a list of HackerNews story ids. To implement this test, I use a simple espresso test that looks like this:&lt;/p&gt;
+
+&lt;script src=&#34;//gist.github.com/kmdupr33/a25db0930e583db05535.js&#34;&gt;&lt;/script&gt;
+
+&lt;h3 id=&#34;how-i-got-consistent-test-data:3782b8d1a760da7b5dd9b3f3d0554607&#34;&gt;How I Got Consistent Test Data&lt;/h3&gt;
+
+&lt;p&gt;Here&amp;rsquo;s a question that arose immediately when writing this test: How can we ensure that the MainActivity was fetching the same data for every test run so that the value 9897306 that we&amp;rsquo;re checking against is always appropriate. &lt;a href=&#34;https://www.google.com/webhp?sourceid=chrome-instant&amp;amp;ion=1&amp;amp;espv=2&amp;amp;ie=UTF-8#q=jake%20wharton%20dagger%20parley&#34;&gt;Jake Wharton&amp;rsquo;s discussion&lt;/a&gt; on Dagger modules that can override the dependencies that are injected into your Android objects came to mind here, so I decided to use this approach to ensure that the data the test uses is always the same.&lt;/p&gt;
+
+&lt;p&gt;Let me briefly describe how I used this approach in my application.&lt;/p&gt;
+
+&lt;p&gt;Objects in PhilHackerNews access the Dagger object graph from the &lt;code&gt;PhilHackerNewsApplication&lt;/code&gt; subclass. That class is responsible for making the &lt;code&gt;ObjectGraph&lt;/code&gt;:&lt;/p&gt;
+
+&lt;script src=&#34;//gist.github.com/kmdupr33/eb4565747da03d9f1309.js&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;So, when I&amp;rsquo;m running a test, I use a custom test runner that creates a subclass of &lt;code&gt;PhilHackerNewsApplication&lt;/code&gt; to create the &lt;code&gt;ObjectGraph&lt;/code&gt; with the overridden module:&lt;/p&gt;
+
+&lt;script src=&#34;//gist.github.com/kmdupr33/d8a344157014e3cf0c8a.js&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;The &lt;code&gt;TestApplication&lt;/code&gt; class creates the &lt;code&gt;ObjectGraph&lt;/code&gt; with a module that overrides the dependencies responsible for fetching HackerNews data:&lt;/p&gt;
+
+&lt;script src=&#34;//gist.github.com/kmdupr33/36c1e516b335092057c2.js&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;&lt;code&gt;TestLoaderModule&lt;/code&gt; is the module that provides the overridden dependency. It provides a HackerNewsRestAdapter that simply loads HackerNews data from memory instead of the server:&lt;/p&gt;
+
+&lt;h3 id=&#34;the-current-state-of-app-s-architecture:3782b8d1a760da7b5dd9b3f3d0554607&#34;&gt;The Current State of App&amp;rsquo;s Architecture&lt;/h3&gt;
+
+&lt;p&gt;Let me point out a few things about the architecture needed to get this test to pass. First off, I want to say that this architecture is likely to change for the same reasons that Pryce and Freeman point out:&lt;/p&gt;
+
+&lt;blockquote&gt;[When testing a walking skeleton, w]e’re not trying to elaborate the whole design down to classes and algorithms before we start coding. Any ideas we have now are likely to be wrong, so we prefer to discover those details as we grow the system.
+
+Pg. 73&lt;/blockquote&gt;
+
+&lt;p&gt;Here&amp;rsquo;s something interesting about the state of the architecture currently: it uses a combination of RxJava and Loaders to ensure that&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;The network calls are made and delivered properly even if the MainActivity and its Fragment are destroyed because of a configuration change&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The classes in the &amp;ldquo;Application Layer&amp;rdquo; of this app are freed from having to worry about the Android-specific problem of asynchronous data loading for app components that can be destroyed and recreated at any time.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The inspiration for this decision comes from Freeman and Pryce&amp;rsquo;s advice:&lt;/p&gt;
+
+&lt;blockquote&gt;We don’t want technical concepts to leak into the application model, so we write interfaces to describe its relationships with the outside world in its terminology (Cockburn’s ports ). Then we write bridges between the application core and each technical domain (Cockburn’s adapters ).
+
+Pg. 90&lt;/blockquote&gt;
+
+&lt;p&gt;The problem that Loaders attempt to solve, as I see it, is a technical one that doesn&amp;rsquo;t belong in the Application Layer. To shield application layer objects from this technical detail, I&amp;rsquo;ve created and pass around an Observable that, upon subscription, initializes a load from a Loader using a LoaderManager:&lt;/p&gt;
+
+&lt;script src=&#34;//gist.github.com/kmdupr33/c6c1641ed1a24e07e062.js&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;Rather than dealing with loaders directly, clients that want to consume the &amp;ldquo;loaded&amp;rdquo; data subscribe to the &lt;code&gt;Observable&lt;/code&gt; that&amp;rsquo;s created with a &lt;code&gt;LoaderInitializingOnSubscribe&lt;/code&gt;. In my application, Activities/Fragments/Presenters will not interact with this Observable directly, however. Instead, they&amp;rsquo;ll interact with a StoryRepository that will (eventually) be responsible for deciding whether data gets loaded from the cache or from the network. Here&amp;rsquo;s what that class looks like at the moment:&lt;/p&gt;
+
+&lt;script src=&#34;//gist.github.com/kmdupr33/378997639d5bac95a392.js&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;And here&amp;rsquo;s a relevant snippet of the Fragment that uses this class to load the HackerNews data:&lt;/p&gt;
+
+&lt;p&gt;&lt;script src=&#34;//gist.github.com/kmdupr33/fb1c638f2fdbe6a8bd68.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;If you want to have a closer look at what I&amp;rsquo;ve done, feel free to take a look at &lt;a href=&#34;https://github.com/kmdupr33/PhilHackerNews&#34;&gt;the repo for this project&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Why Having Global Static References to Application Contexts is Probably not the Best Idea</title>
+      <link>http://replace-this-with-your-hugo-site.com/2015/07/14/why-static-references-to-application-contexts-are-probably-not-the-best-idea/</link>
+      <pubDate>Tue, 14 Jul 2015 18:35:40 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/2015/07/14/why-static-references-to-application-contexts-are-probably-not-the-best-idea/</guid>
+      <description>
+
+&lt;p&gt;In my last post, I went over &lt;a href=&#34;http://www.philosophicalhacker.com/2015/07/09/6-things-i-wish-i-knew-before-i-wrote-my-first-android-app/&#34;&gt;6 things I wish I knew before I wrote my first Android app&lt;/a&gt;. One of the things I listed in that post was this:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;Don’t have static references to Contexts&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The reason I warned against this is that static references to Contexts can cause memory leaks. An astute reader pointed out that a static reference to an application Context wouldn&amp;rsquo;t cause a memory leak since the application Context is around for the lifetime the app is running anyway. I then qualified my warning by saying:&lt;/p&gt;
+
+&lt;blockquote&gt;Note: Technically, you can hold a static reference to an application Context without causing a memory leak, but I wouldn’t recommend that you do that either.&lt;/blockquote&gt;
+
+&lt;p&gt;In this post, I want to say a little more about why think having and using a static reference to an application Context is &lt;em&gt;less-than-ideal&lt;/em&gt;. I emphasize &amp;ldquo;less-than-ideal&amp;rdquo; in the previous sentence as a way of highlighting what I&amp;rsquo;m not saying: I&amp;rsquo;m not saying that a kitten dies every time you use a static reference to an application Context. Once again, @codestandards is hilarious and relevant here:&lt;/p&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Please, for the sake of the kittens. &lt;a href=&#34;http://t.co/xaj7pNDVfH&#34;&gt;pic.twitter.com/xaj7pNDVfH&lt;/a&gt;&lt;/p&gt;&amp;mdash; Code Standards (@codestandards) &lt;a href=&#34;https://twitter.com/codestandards/status/570224843536277504&#34;&gt;February 24, 2015&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;Instead, all I&amp;rsquo;m doing in this post is offering a few points that suggest that using static references to Contexts is probably not the cleanest way of coding Android apps.&lt;/p&gt;
+
+&lt;h2 id=&#34;1-classes-methods-that-use-static-references-to-an-application-context-are-liars:6a3c9eb7cf87cbdba814526f02f72f7a&#34;&gt;1. Classes/Methods that use static references to an application Context are &amp;ldquo;Liars&amp;rdquo;&lt;/h2&gt;
+
+&lt;p&gt;This point is taken from &lt;a href=&#34;http://misko.hevery.com/code-reviewers-guide/flaw-brittle-global-state-singletons/&#34;&gt;Google&amp;rsquo;s Guide to Writing testable code&lt;/a&gt;. In that guide, they point out that&lt;/p&gt;
+
+&lt;blockquote&gt;
+Accessing global state statically doesn’t clarify those shared dependencies to readers of the constructors and methods that use the Global State. Global State and Singletons make APIs lie about their true dependencies. To really understand the dependencies, developers must read every line of code.
+&lt;/blockquote&gt;
+
+&lt;p&gt;Global static references to an application &lt;code&gt;Context&lt;/code&gt; are no exception to this point: readers of that class cannot know that the class actually depends on a &lt;code&gt;Context&lt;/code&gt; just by looking at its API. When a class has an expressive, &amp;ldquo;truthful&amp;rdquo; API that tells us about its dependencies, its easier to understand both that class&amp;rsquo; (or method&amp;rsquo;s) responsibility and how it goes about fulfilling that responsibility.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s a quick example to illustrate this. Suppose you run across this method signature while you&amp;rsquo;re looking at code:&lt;/p&gt;
+
+&lt;p&gt;When you encounter this signature, you have no idea how this method displays the string passed in as a parameter. Now, suppose instead that you encountered this signature:&lt;/p&gt;
+
+&lt;p&gt;With this signature you have a hint that maybe this method uses a &lt;code&gt;Toast&lt;/code&gt; to display the string. Because &lt;code&gt;Context&lt;/code&gt; is a god-object, knowing that a particular class or method depends on it doesn&amp;rsquo;t always shed much light on what that class/method does or how it does it, but a little help in understanding what a class/method does is better than no help. &lt;/p&gt;
+
+&lt;h2 id=&#34;2-classes-that-use-static-references-to-an-application-context-are-not-encapsulated:6a3c9eb7cf87cbdba814526f02f72f7a&#34;&gt;2. Classes that use static references to an application Context are not encapsulated.&lt;/h2&gt;
+
+&lt;p&gt;Encapsulation is one of those words that gets thrown around a lot without a precise definition. I&amp;rsquo;m not trying to add to that mess. When I say &amp;ldquo;encapsulation,&amp;rdquo; I mean what Steve Freeman and Nat Pryce mean in &lt;em&gt;Growing Object Oriented Software Guided by Tests&lt;/em&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+[It] Ensures that the behavior of an object can only be affected through its API. It lets us control how much a change to one object will impact other parts of the system by ensuring that there are no unexpected dependencies between unrelated components. -Pg. 92
+&lt;/blockquote&gt;
+
+&lt;p&gt;Because classes that use static references to application Contexts are accessing a globally available dependency, the behavior of instances of that class can be affected by changes to the shared Application Context. Because the shared application Context isn&amp;rsquo;t a part of that class&amp;rsquo; API, this means that there can be changes to the object&amp;rsquo;s behavior that aren&amp;rsquo;t caused by an interaction with that object&amp;rsquo;s API. It means, in other words, that using static references to application Contexts breaks encapsulation.&lt;/p&gt;
+
+&lt;p&gt;For the vast majority of cases, breaking encapsulation in this way probably wouldn&amp;rsquo;t be a problem. In fact, the only examples I can imagine in which this would be a problem seem rather contrived. Still, I think that, all other things being equal, we ought to prefer architectures that work in all cases over architectures that work 99% of the time. Again, you&amp;rsquo;re not killing a kitten if you use static references to application Contexts and break encapsulation, but you aren&amp;rsquo;t using the most robust architecture either.&lt;/p&gt;
+
+&lt;h2 id=&#34;3-classes-that-use-static-references-to-an-application-context-might-be-harder-to-unit-test:6a3c9eb7cf87cbdba814526f02f72f7a&#34;&gt;3. Classes that use static references to an application Context might be Harder to Unit Test&lt;/h2&gt;
+
+&lt;p&gt;If one of your classes calls a method on an application Context and you would like to verify that that method has been called in a unit test, using an static reference will not make your life easy. As I&amp;rsquo;ve pointed out in &lt;a href=&#34;http://www.philosophicalhacker.com/2015/04/24/why-android-unit-testing-is-so-hard-pt-2/&#34;&gt;this post&lt;/a&gt;, there are cases where you&amp;rsquo;ll probably want to do this. Suppose you&amp;rsquo;ve got an ServiceLauncher object that launches an Android Service. If you&amp;rsquo;ve used dependency injection to pass in the Context upon which the ServiceLauncher depends, unit testing is easy:&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;If the ServiceLauncher used a static reference to an application Context, this class would more difficult to unit test. In this particular case, you could use the testing support library to verify that intents are sent with a UI test, but UI tests are slower than unit tests, and, in any case, there are methods on a Context that you might want to verify that don&amp;rsquo;t use intents, so injecting a Context into a target object will give you more flexibility when testing than using a globally accessible static reference, even if you leverage the testing support library to help you verify that certain intents were sent.&lt;/p&gt;
+
+&lt;h2 id=&#34;4-classes-that-use-static-references-to-an-application-context-might-be-more-likely-to-violate-the-law-of-demeter:6a3c9eb7cf87cbdba814526f02f72f7a&#34;&gt;4. Classes that use static references to an application Context might be more likely to violate the Law of Demeter&lt;/h2&gt;
+
+&lt;p&gt;We often use a Context to get a hold of some other object we need. A particular object might need a Resources, SharedPreferences, or a PackageManager to exercise its responsibility. When we have a globally accessible application Context, we might be tempted to get a hold of these objects by doing something like this:This violates &lt;a href=&#34;https://en.wikipedia.org/wiki/Law_of_Demeter&#34;&gt;the Law of Demeter&lt;/a&gt;. I was actually just complaining the other day about how law of demeter violations make apps harder to unit test:&lt;/p&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Trying to make the IO app unit testable, but law of demeter violations are a problem. AS can help you can avoid this: &lt;a href=&#34;http://t.co/GX8GOvFUMp&#34;&gt;http://t.co/GX8GOvFUMp&lt;/a&gt;&lt;/p&gt;&amp;mdash; Matt Dupree (@philosohacker) &lt;a href=&#34;https://twitter.com/philosohacker/status/619470887536996352&#34;&gt;July 10, 2015&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;But even if you don&amp;rsquo;t care about unit testing, law of demeter violations are generally considered to be a code smell.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion:6a3c9eb7cf87cbdba814526f02f72f7a&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;I don&amp;rsquo;t think I&amp;rsquo;ve said anything too controversial here. I see myself as simply applying general programming lessons learned from people who are smarter than me. Of course, as always, I&amp;rsquo;m open to being wrong about this.&lt;/p&gt;
+
+&lt;p&gt;If you are convinced that you should get rid of your static references to application Contexts, it really shouldn&amp;rsquo;t be too difficult for you to inject your classes and methods with the Context they need to do their job. You might even find that you have a bunch of law of demeter violations that you can clean up along the way. Android Studio&amp;rsquo;s intentions and refactoring capabilities make this kind of work trivial, even if it is a bit tedious.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>6 Things I wish I Knew before I Wrote my first Android App</title>
+      <link>http://replace-this-with-your-hugo-site.com/2015/07/09/6-things-i-wish-i-knew-before-i-wrote-my-first-android-app/</link>
+      <pubDate>Thu, 09 Jul 2015 21:07:51 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/2015/07/09/6-things-i-wish-i-knew-before-i-wrote-my-first-android-app/</guid>
+      <description>
+
+&lt;p&gt;My first app was terrible. It was so terrible, in fact, that I removed it from the store and I don&amp;rsquo;t even bother listing it on my resume&amp;rsquo; anymore. That app wouldn&amp;rsquo;t have been so terrible if I knew a few things about Android development before I wrote it.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s a list of things to keep in mind as you&amp;rsquo;re writing your first Android apps. These lessons are derived from actual mistakes that I made in the source code of my first app, mistakes that I&amp;rsquo;ll be showing below. Keeping these things in mind will help you write an app that you can be a little prouder of.&lt;/p&gt;
+
+&lt;p&gt;Of course, if you&amp;rsquo;re doing your job right as a student of Android development, you&amp;rsquo;ll probably hate your app later regardless. As @codestandards says,&lt;/p&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;If the code you wrote a year ago doesn&amp;#39;t seem bad to you, you&amp;#39;re probably not learning enough.&lt;/p&gt;&amp;mdash; Code Standards (@codestandards) &lt;a href=&#34;https://twitter.com/codestandards/status/601373392059518976&#34;&gt;May 21, 2015&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;If you&amp;rsquo;re an experienced Java developer, items 1, 2, and 5 probably won&amp;rsquo;t be interesting to you. Items 3 and 4, on the other hand, might show you some cool stuff you can do with Android Studio that you might not have known about, even if you&amp;rsquo;ve never been guilty of making the mistakes I demo in those items.&lt;/p&gt;
+
+&lt;h2 id=&#34;1-don-t-have-static-references-to-contexts:252a31459148d28701172cdc4197120e&#34;&gt;1. Don&amp;rsquo;t have static references to Contexts&lt;/h2&gt;
+
+&lt;p&gt;This might seem like an impossible mistake for anyone to make. Its not. I made this mistake. I&amp;rsquo;ve seen others make this mistake, and I&amp;rsquo;ve interviewed people who weren&amp;rsquo;t very quick at figuring out why this is a mistake in the first place. Don&amp;rsquo;t do this. Its a n00b move.&lt;/p&gt;
+
+&lt;p&gt;If MeTrackerStore keeps a reference to the Activity passed into its constructor, the Activity will never be garbage collected. (Unless the static variable is reassigned to a different Activity.) This is because mMeTrackerStore is static, and the memory for static variables isn&amp;rsquo;t reclaimed until the process in which the application is running quits. If you find yourself tempted to do this, there&amp;rsquo;s probably something seriously wrong with your code. Find help. Maybe looking at Google&amp;rsquo;s Udacity course on &lt;a href=&#34;https://www.udacity.com/course/android-development-for-beginners--ud837&#34;&gt;&amp;ldquo;Android Development for Beginners&amp;rdquo;&lt;/a&gt; will help you out.&lt;/p&gt;
+
+&lt;p&gt;Note: Technically, you can hold a static reference to an application Context without causing a memory leak, but &lt;a href=&#34;http://www.philosophicalhacker.com/2015/07/14/why-static-references-to-application-contexts-are-probably-not-the-best-idea/&#34;&gt;I wouldn&amp;rsquo;t recommend that you do that either&lt;/a&gt;. &lt;/p&gt;
+
+&lt;h2 id=&#34;2-beware-of-implicit-references-to-objects-whose-lifecycle-you-do-not-control:252a31459148d28701172cdc4197120e&#34;&gt;2. Beware of &amp;ldquo;implicit references&amp;rdquo; to objects whose lifecycle you do not control&lt;/h2&gt;
+
+&lt;p&gt;There&amp;rsquo;s multiple problems with this code. I&amp;rsquo;m only going to focus on one of those problems. In Java, (non-static) inner classes have an implicit reference to the instances of the class that encloses them.&lt;/p&gt;
+
+&lt;p&gt;In this example, any GetLatAndLongAndUpdateMapCameraAsyncTask would have a reference to the DefineGeofenceFragment that contains it. The same thing is true for anonymous classes: they have an implicit reference to instances of the class that contains the anonymous class.&lt;/p&gt;
+
+&lt;p&gt;The GetLatAndLongAndUpdateMapCameraAsyncTask has an implicit reference to a Fragment, an object whose lifecycle we don&amp;rsquo;t control. The Android SDK is responsible for creating and destroying Fragments appropriately and if GetLatAndLongAndUpdateCameraAsyncTask can&amp;rsquo;t be garbage collected because its still executing, the DefineGeofenceFragment that it implicitly refers to will also be kept from being garbage collected.&lt;/p&gt;
+
+&lt;p&gt;There&amp;rsquo;s a great Google IO video &lt;a href=&#34;https://www.youtube.com/watch?v=_CruQY55HOk&#34;&gt;that explains why this sort of thing happens&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;3-make-android-studio-work-for-you:252a31459148d28701172cdc4197120e&#34;&gt;3. Make Android Studio work for You&lt;/h2&gt;
+
+&lt;p&gt;This snippet is what Android Studio generated when I used the &amp;ldquo;Generate Getter&amp;rdquo; code completion in Android Studio. The getter keeps the &amp;rsquo;m&amp;rsquo; prefixed to the instance variable and uses it when generating a getter method name. This is not ideal.&lt;/p&gt;
+
+&lt;p&gt;(In case you&amp;rsquo;re wondering why &amp;rsquo;m&amp;rsquo; is prefixed to the instance variable name in the first place: the &amp;rsquo;m&amp;rsquo; is often prefixed to instance variables by convention. It stands for &amp;lsquo;member.&amp;rsquo;)&lt;/p&gt;
+
+&lt;p&gt;Regardless of whether you think prefixing &amp;rsquo;m&amp;rsquo; to your instance variables is a good idea, there&amp;rsquo;s a lesson here: Android studio can help you code to whatever convention you adopt. For example, you can use the code style dialog in Android Studio to make Android Studio automatically prepend &amp;rsquo;m&amp;rsquo; to your instance variable and automatically remove the &amp;rsquo;m&amp;rsquo; when its generating getters, setters, and constructor params for the instance variables.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/07/Screen-Shot-2015-07-09-at-4.16.13-PM.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/07/Screen-Shot-2015-07-09-at-4.16.13-PM-1024x714.png&#34; alt=&#34;Screen Shot 2015-07-09 at 4.16.13 PM&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Android Studio can do a lot more than that too. &lt;a href=&#34;http://www.developerphil.com/android-studio-tips-of-the-day-roundup-1/&#34;&gt;Learning shortcuts&lt;/a&gt; and learning about &lt;a href=&#34;https://www.jetbrains.com/idea/help/live-templates.html&#34;&gt;live templates&lt;/a&gt; are good places to start.&lt;/p&gt;
+
+&lt;h2 id=&#34;4-methods-should-do-one-thing:252a31459148d28701172cdc4197120e&#34;&gt;4. Methods should do one thing&lt;/h2&gt;
+
+&lt;p&gt;There&amp;rsquo;s a method in one of the classes that I wrote that&amp;rsquo;s over 100 lines long. Such methods are hard to read, modify, and reuse. Try to write methods that only do one thing. Typically, this means that you should be suspicious of methods that are over 20 lines long. Here you can recruit Android Studio to help you spot problematic methods:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/07/Screen-Shot-2015-07-09-at-4.25.00-PM.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/07/Screen-Shot-2015-07-09-at-4.25.00-PM-1024x718.png&#34; alt=&#34;Screen Shot 2015-07-09 at 4.25.00 PM&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;5-learn-from-other-people-who-are-smarter-and-more-experienced-than-you:252a31459148d28701172cdc4197120e&#34;&gt;5. Learn from other people who are smarter and more experienced than you.&lt;/h2&gt;
+
+&lt;p&gt;This might sound trivial, but its a mistake that I made when I wrote my first app.&lt;/p&gt;
+
+&lt;p&gt;When you&amp;rsquo;re writing an app you&amp;rsquo;re going to make mistakes. Other people have already made those mistakes. Learn from those people. You&amp;rsquo;re wasting your time if you repeat the avoidable mistakes of others. I wasted a ton of time on my first app making mistakes that I could have avoided if I just spent a little more time learning from experienced software developers.&lt;/p&gt;
+
+&lt;p&gt;Read &lt;a href=&#34;http://www.amazon.com/The-Pragmatic-Programmer-Journeyman-Master/dp/020161622X&#34;&gt;Pragmatic Programmer&lt;/a&gt;. Then read &lt;a href=&#34;http://www.amazon.com/Effective-Java-Edition-Joshua-Bloch/dp/0321356683&#34;&gt;Effective Java&lt;/a&gt;. These two books will help you avoid making common mistakes that we make as novice developers. After you done with those books, keep looking for smart people to learn from.&lt;/p&gt;
+
+&lt;h2 id=&#34;6-use-libraries:252a31459148d28701172cdc4197120e&#34;&gt;6. Use Libraries&lt;/h2&gt;
+
+&lt;p&gt;When you&amp;rsquo;re writing an app, you&amp;rsquo;re probably going to encounter problems that smarter and more experienced people have already solved. Moreover, a lot of these solutions are available as open source libraries. Take advantage of them.&lt;/p&gt;
+
+&lt;p&gt;In my first app, I wrote code that provided functionality that&amp;rsquo;s already provided by libraries. Some of those libraries are standard java ones. Others are third-party libraries like Retrofit and Picasso. If you&amp;rsquo;re not sure what libraries you should be using you can do three things:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Listen to the &lt;a href=&#34;http://fragmentedpodcast.com/episodes/9/&#34;&gt;Google IO Fragmented podcast episode&lt;/a&gt;. In this episode the ask developers what 3rd party libraries they see as essential for Android development. Spoiler: its mostly Dagger, Retrofit, Picasso, and Mockito.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Subscribe &lt;a href=&#34;http://androidweekly.net/&#34;&gt;to Android Weekly&lt;/a&gt;. They&amp;rsquo;ve got a section that contains the latest libraries that are coming out. Keep an eye out for what seems useful to you.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Look for open source applications that solve problems similar to the ones that you are solving with your app. You might find one that uses a third-party library that you want to use or you might find that they&amp;rsquo;ve used a standard java library that you were unaware of.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;conclusion:252a31459148d28701172cdc4197120e&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Writing good Android apps can be very difficult. Don&amp;rsquo;t make it harder on yourself by repeating the mistakes I made. If you found a mistake in what I&amp;rsquo;ve written, please let me know in the comments. (Misleading comments are worse than no comments at all.) If you think this&amp;rsquo;ll be useful for a new developer, share it. Save them some headache.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>My Response to Hannes Dorfmann on &#34;the Circular Dependency Problem&#34;</title>
+      <link>http://replace-this-with-your-hugo-site.com/2015/07/08/my-response-to-hannes-dorfmann-on-the-circular-dependency-problem/</link>
+      <pubDate>Wed, 08 Jul 2015 13:42:14 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/2015/07/08/my-response-to-hannes-dorfmann-on-the-circular-dependency-problem/</guid>
+      <description>&lt;p&gt;In &lt;a href=&#34;http://www.philosophicalhacker.com/2015/07/07/mvpr-a-flexible-testable-architecture-for-android-pt-1/&#34;&gt;my last post&lt;/a&gt;, I argued that there are two disadvantages to &lt;code&gt;Activities&lt;/code&gt; and Presenters. The first disadvantage is that they are often bloated classes. The second disadvantage is that these classes often have a circular dependency between themselves and their Views. Yesterday, Hannes Dorfmann made a comment on my post that was so thoughtful and excellent that I think its worth dedicating an entire post to responding to it.&lt;/p&gt;
+
+&lt;p&gt;Specifically, Hannes&amp;rsquo; comments challenge my claim that the circular dependency between Activities/Fragments/Presenters and their Views are a problem.&lt;/p&gt;
+
+&lt;blockquote&gt;...Regarding circular dependencies: Imho I don’t think that circular dependencies are a bad thing as long as you program against an interface and not the implementation:
+
+1. Presenter program against View interface. This makes your presenter easily testable since you can replace the view with a mock view while unit testing
+
+2. View program against Presenter interface. During testing you can replace the presenter with a mock presenter easily. Therefore view is testable. I guess the problem you face here is that the view (like Activity) is creating a presenter with new Presenter(). But with dependency injection you can inject a MockPresenter while unit testing.&lt;/blockquote&gt;
+
+&lt;p&gt;These are interesting points. I think I agree that programming against interfaces makes code more unit testable in certain situations, but I&amp;rsquo;m not sure that this addresses the disadvantage created by the circular dependencies between Activities/Presenters and their Views. Here&amp;rsquo;s why: if an MVP-View is instantiating a concrete implementation of a Presenter, then the only way for us to swap out its dependency is by using setter injection. Setter injection, as I pointed out in the last post is generally less preferable to constructor injection. Steve Freeman and Nat Pryce say this in &lt;a href=&#34;http://www.amazon.com/Growing-Object-Oriented-Software-Guided-Tests/dp/0321503627&#34;&gt;their book&lt;/a&gt;. Martin Fowler, following Kent Beck, says something similar in &lt;a href=&#34;http://martinfowler.com/articles/injection.html#ConstructorVersusSetterInjection&#34;&gt;his article on dependency injection&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Hannes&amp;rsquo; comment challenges my claim here too, however:&lt;/p&gt;
+
+&lt;blockquote&gt;...Actually, also the Observer pattern has circular dependencies. I.e. Activity implements OnClickListener and displays a Button and registers himself as OnClickListener on the button. Activity has dependency to Button since Activity needs the reference to the Button to register himself. On the other side Button has a reference to the OnClickListener, which actually is the Activity.
+
+From my point of view its completely fine since Button programs against the OnClickInterface. Therefore, it’s not a „hard“ dependency to the Activity (which is the OnClickListener) and I wouldn’t call it circular dependency. This is the same as View and Presenter. Presenter is programming against the View interface and therefore completely fine.&lt;/blockquote&gt;
+
+&lt;p&gt;This is a great argument. Hannes builds on the argument later in his comment:&lt;/p&gt;
+
+&lt;blockquote&gt;Regarding invalid state of an object:
+That’s open to dispute. [Is] a presenter...in an invalid state without a View? [Is] a Button...in an invalid state without having set an OnClickListener?&lt;/blockquote&gt;
+
+&lt;p&gt;I see Hannes as making two parallel arguments from analogy here, both of which support the conclusion that there&amp;rsquo;s no problem with the circular dependency between Activities/Presenters and Views. Here&amp;rsquo;s the first argument:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;There really isn&amp;rsquo;t a problematic circular dependency between an &lt;code&gt;Activity&lt;/code&gt; and a &lt;code&gt;Button&lt;/code&gt; because the &lt;code&gt;Button&lt;/code&gt; only sees the &lt;code&gt;Activity&lt;/code&gt; as an &lt;code&gt;OnClickListener&lt;/code&gt; interface.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;A &lt;code&gt;Presenter&lt;/code&gt; programs against a &lt;code&gt;View&lt;/code&gt; interface in the same way that a &lt;code&gt;Button&lt;/code&gt; programs against the &lt;code&gt;OnClickListener&lt;/code&gt; interface.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;So, the circular dependency between an &lt;code&gt;Presenter&lt;/code&gt; and a &lt;code&gt;View&lt;/code&gt; is just as unproblematic as the circular dependency between the &lt;code&gt;Activity&lt;/code&gt; and the &lt;code&gt;Button&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the second argument:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;A &lt;code&gt;Button&lt;/code&gt; isn&amp;rsquo;t in an invalid state just because its created without a click listener.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;A &lt;code&gt;Presenter&lt;/code&gt; programs against an &lt;code&gt;View&lt;/code&gt; interface just as a &lt;code&gt;Button&lt;/code&gt; programs against a &lt;code&gt;OnClickListener&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;So, a &lt;code&gt;Presenter&lt;/code&gt; isn&amp;rsquo;t in an invalid state just because its created without its &lt;code&gt;View&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I have a response to these arguments, but I&amp;rsquo;m not quite sure how well it stands up to Hannes&amp;rsquo; arguments. I&amp;rsquo;m sure further discussion will help us hash all of this out.&lt;/p&gt;
+
+&lt;p&gt;I think that a good response to both arguments requires us to get clearer on how we&amp;rsquo;re using the word &amp;rdquo;dependency.&amp;ldquo; My definition of a dependency is basically the one offered by Freeman and Pryce in their book:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Services that the object requires from its peers so it can perform its responsibilities. The object cannot function without these services. It should not be possible to create the object without them. For example, a graphics package will need something like a screen or canvas to draw on—it doesn’t make sense without one.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Growing Object Oriented Software Guided by Tests,&lt;/em&gt; pg. 94&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;A dependency, however, is only one of three different types of &amp;ldquo;peers&amp;rdquo; that an object may have. There&amp;rsquo;s also something called a &amp;ldquo;notification,&amp;rdquo; which they define in the following passage:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Peers that need to be kept up to date with the object’s activity. The object will notify interested peers whenever it changes state or performs a significant action. Notifications are “fire and forget”; the object neither knows nor cares which peers are listening. Notifications are so useful because they decouple objects from each other. For example, in a user interface system, a button component promises to notify any registered listeners when it’s clicked, but does not know what those listeners will do.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Ibid.,&lt;/em&gt; pg. 94&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;With this distinction in mind, we can now start to respond to Hannes&amp;rsquo; arguments. The OnClickListener, from a &lt;code&gt;Button&#39;s&lt;/code&gt; perspective, is really a notification, not a dependency, so I agree with the first premise in Hannes&amp;rsquo; argument: there&amp;rsquo;s nothing &lt;em&gt;necessarily&lt;/em&gt; problematic with creating a &lt;code&gt;Button&lt;/code&gt; without a click listener. I also agree with Hannes&amp;rsquo; second premise: A &lt;code&gt;Presenter&lt;/code&gt; can program against a &lt;code&gt;View&lt;/code&gt; interface just as a &lt;code&gt;Button&lt;/code&gt; can program against an &lt;code&gt;OnClickListener&lt;/code&gt; interface.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s where we may start to disagree: there&amp;rsquo;s a key difference between an &lt;code&gt;OnClickListener&lt;/code&gt; and an MVP-View. An MVP-View, from the perspective of a Presenter within a particular application, is &lt;em&gt;necessarily&lt;/em&gt; a dependency, not a notification. A Presenter shouldn&amp;rsquo;t exist at all if its not going to present a View because that&amp;rsquo;s its &lt;em&gt;sole responsibility&lt;/em&gt;. To create a Presenter without a View is to create an object that cannot fulfill its responsibility. On the other hand, a Button without a click listener can still perform its responsibilities without a click listener. Its responsibility is to draw itself to the screen and notify any &lt;em&gt;registered&lt;/em&gt; listeners that the button has been clicked. If there aren&amp;rsquo;t any registered listeners, then a Button can still exercise its responsibility of drawing itself to the screen and it can still notify any listeners that may register with it in the future.&lt;/p&gt;
+
+&lt;p&gt;I should qualify what I&amp;rsquo;ve just said. I used and emphasized the word &amp;ldquo;necessarily&amp;rdquo; above because whether something is a dependency or a notification is often context-dependent. I agree with Freeman and Pryce when they say:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;What matters most is the context in which the collaborating objects are used. For example, in one application an auditing log could be a dependency, because auditing is a legal requirement for the business and no object should be created without an audit trail. Elsewhere, it could be a notification, because auditing is a user choice and objects will function perfectly well without it.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Ibid.&lt;/em&gt;, pg. 94-95&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So, its possible that, depending on the context, an &lt;code&gt;OnClickListener&lt;/code&gt; could be either a dependency or a notification. I think that in the context of the design of the Android framework, an &lt;code&gt;OnClickListener&lt;/code&gt; is a notification. I think, however, that in the context of the development of an application, a button&amp;rsquo;s &lt;code&gt;OnClickListener&lt;/code&gt; can often actually be a dependency. When we create a &lt;code&gt;Button&lt;/code&gt; in our application, we plug in the domain-specific responsibilities we have in mind for it. We might say, for example, &amp;ldquo;this button registers the user for our service and takes them to a welcome screen.&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;Once we&amp;rsquo;ve added this domain-specific responsibility to a &lt;code&gt;Button&lt;/code&gt;, it doesn&amp;rsquo;t make sense for the &lt;code&gt;Button&lt;/code&gt; to exist without its &lt;code&gt;OnClickListener&lt;/code&gt;, the object it needs to fulfill its (now) domain-specific responsibility. Of course, we can&amp;rsquo;t modify the &lt;code&gt;Button&#39;s&lt;/code&gt; api to accommodate this fact that the &lt;code&gt;Button&lt;/code&gt;, in the context of our application, now has a dependency on a particular &lt;code&gt;OnClickListener&lt;/code&gt;, but we can wrap the Android button into a new domain-specific Button object that reflects the fact that, in the context of our application, it doesn&amp;rsquo;t make sense for this Button to exist without its click listener. There&amp;rsquo;s actually a strong relationship between this suggestion and the suggestion that I&amp;rsquo;ll make in my next post when I present the MVPR architecture.&lt;/p&gt;
+
+&lt;p&gt;By now, you can probably guess what I would say to Hannes&amp;rsquo; first argument: I would deny its first premise. I would say, in other words, that there&amp;rsquo;s something fishy about the circular dependency between an &lt;code&gt;Activity&lt;/code&gt; and its &lt;code&gt;Button&lt;/code&gt; in the first place and I think there&amp;rsquo;s something fishy about it, regardless of whether the &lt;code&gt;Button&lt;/code&gt; programs against an interface. Whether the &lt;code&gt;Button&lt;/code&gt; programs against an interface has nothing to do with the fact that, in the context of our application, it has a dependency on a click listener and that setting an &lt;code&gt;Activity&lt;/code&gt; as a Button&amp;rsquo;s click listener makes it more difficult for the button to have a different click listener, a difficulty we might want to avoid if we want to take full advantage of polymorphism in implementing ui-related business logic.&lt;/p&gt;
+
+&lt;p&gt;Regardless of whether I&amp;rsquo;m right or wrong to criticize the circular dependency between Activities/Presenters and their Views, I&amp;rsquo;ve learned a lot by thinking about this and by engaging with Hannes in this discussion. So thanks, Hannes, and thanks to everyone who takes the time to make thoughtful comments on what I&amp;rsquo;ve written. I owe you.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>MVPR: A Flexible, Testable Architecture for Android (Pt. 1)</title>
+      <link>http://replace-this-with-your-hugo-site.com/2015/07/07/mvpr-a-flexible-testable-architecture-for-android-pt-1/</link>
+      <pubDate>Tue, 07 Jul 2015 18:29:16 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/2015/07/07/mvpr-a-flexible-testable-architecture-for-android-pt-1/</guid>
+      <description>
+
+&lt;blockquote&gt;Thorough unit testing helps us improve the internal quality because, to be tested, a unit has to be structured to run outside the system in a test fixture. A unit test for an object needs to create the object, provide its dependencies, interact with it, and check that it behaved as expected. So, for a class to be easy to unit-test, the class must have explicit dependencies that can easily be substituted and clear responsibilities that can easily be invoked and verified. In software engineering terms, that means that the code must be loosely coupled and highly cohesive —in other words, well-designed.
+
+Steve Freeman and Nat Pryce, _Growing Object Oriented Software Guided by Tests_&lt;/blockquote&gt;
+
+&lt;p&gt;Lately, I&amp;rsquo;ve been working towards making Google&amp;rsquo;s IO app unit testable. A part of the reason I&amp;rsquo;m doing this is to test the claims that Freeman and Pryce make in the above quotation about unit testing. Although I&amp;rsquo;m still not even done with refactoring one Activity in Google&amp;rsquo;s IOSched app, I&amp;rsquo;m already finding some truth to what they&amp;rsquo;re saying.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;Activity&lt;/code&gt; that I&amp;rsquo;ve been working on is the &lt;code&gt;SessionDetailActivity&lt;/code&gt;. If you&amp;rsquo;ve been following me for a while, you know exactly what Activity I&amp;rsquo;m talking about, but if you&amp;rsquo;re tuning in the first time, here&amp;rsquo;s what the &lt;code&gt;SessionDetailActivity&lt;/code&gt; UI looks like:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-04.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-04.png&#34; alt=&#34;IO Testing Talk-04&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;As I mentioned in &lt;a href=&#34;http://www.philosophicalhacker.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/&#34;&gt;the post that introduced this series&lt;/a&gt;, there have been several challenges to making the &lt;code&gt;SessionDetailActivity&lt;/code&gt; unit testable. Unit testing its dynamically constructed views was a challenge that I discussed in &lt;a href=&#34;http://www.philosophicalhacker.com/2015/06/06/unit-testing-dynamically-constructed-views/&#34;&gt;my last post in this series&lt;/a&gt;, but in that post, I noted that my strategy for testing dynamically constructed views wasn&amp;rsquo;t entirely clean because of a circular dependency between &lt;code&gt;Views&lt;/code&gt; and &lt;code&gt;Presenters&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;This circular dependency is a symptom of a larger problem with how we structure our Android applications: both &lt;code&gt;Activities&lt;/code&gt; and &lt;code&gt;Presenters&lt;/code&gt; violate the principle of single responsibility. They are often responsible for at least two things: binding data to a &lt;code&gt;View&lt;/code&gt; and responding to user input. This is a part of the reason why &lt;a href=&#34;https://github.com/google/iosched/blob/master/android/src/main/java/com/google/samples/apps/iosched/ui/SessionDetailActivity.java&#34;&gt;the &lt;code&gt;SessionDetailActivity&lt;/code&gt;&lt;/a&gt;, a class that&amp;rsquo;s supposed to serve as a model for Android development, is over 1000 lines long.&lt;/p&gt;
+
+&lt;p&gt;I think there&amp;rsquo;s a better way to structure our applications. In the next few posts, I&amp;rsquo;ll propose a new architecture that has the following properties:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;It breaks up the multiple responsibilities typically handled by &lt;code&gt;Presenters&lt;/code&gt; and &lt;code&gt;Activities&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;It breaks the circular dependency that traditionally exists between Views on the one hand and Activities or Presenters on the other hand.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;It enables us to use constructor dependency injection for all of our objects that present data to the user and respond to user input.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;It makes our ui-related business logic classes easier to unit test, impossible to construct without the dependencies necessary to fulfill their responsibilities, and (slightly) more amenable to the use of composition and polymorphism to extend and/or modify object behavior.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;In this post, I will try to give some reasons why we might consider a new architecture for Android development in the first place.&lt;/p&gt;
+
+&lt;h2 id=&#34;why-a-new-architecture:25be7690f1d98142cd41730b0d055142&#34;&gt;Why a New Architecture?&lt;/h2&gt;
+
+&lt;h3 id=&#34;activities-fragments-presenters-can-become-bloated:25be7690f1d98142cd41730b0d055142&#34;&gt;Activities/Fragments/Presenters can become Bloated&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;Activities&lt;/code&gt; and &lt;code&gt;Fragments&lt;/code&gt; (I&amp;rsquo;m just going say &amp;ldquo;Activities&amp;rdquo; from now on, but what I say applies equally to &lt;code&gt;Fragments&lt;/code&gt;.) are egregious violators of the principle of single responsibility. At Droidcon Montreal, Richa Khandelwal &lt;a href=&#34;https://speakerdeck.com/richk/clean-android-architecture&#34;&gt;listed the responsibilities&lt;/a&gt; that often wind up in an &lt;code&gt;Activity&lt;/code&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Handle View Events&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Update Model&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Invoke another View&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Interact with System Components&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Handle System Events&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Update View based on System Events&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;As Richa shows later in the presentation, many of these responsibilities can be moved out of Activities, but even if we do that, Activities still violate the principle of single responsibility. Even the slimmest Activities are still responsible for binding a model&amp;rsquo;s data to the View and for responding to user input. Here&amp;rsquo;s an example:&lt;/p&gt;
+
+&lt;p&gt;The SessionDetailActivity in Google&amp;rsquo;s IOSched app is actually a good example of how bloated an Activity can get even if its only concerned with the two responsibilities of binding data to views and responding to user input. ~70% of the 1000+ lines of SessionDetailActivity are only concerned with these two responsibilities, so even if we moved all other code out of the SessionDetailActivity, we&amp;rsquo;d still have a class that&amp;rsquo;s about 700 lines long. Don&amp;rsquo;t believe me? Take a look at &lt;a href=&#34;https://github.com/google/iosched/blob/master/android/src/main/java/com/google/samples/apps/iosched/ui/SessionDetailActivity.java&#34;&gt;the source code&lt;/a&gt;. Presenters can become bloated for the same reason an Activity does: Presenters are typically responsible for binding data to a View and for responding to user input, so a Presenter would be just as long as an Activity that&amp;rsquo;s slimmed down by removing all of its other extra responsibilities. &lt;/p&gt;
+
+&lt;h3 id=&#34;activities-fragments-presenters-often-have-a-circular-dependency-on-their-views:25be7690f1d98142cd41730b0d055142&#34;&gt;Activities/Fragments/Presenters often have a Circular Dependency on their Views&lt;/h3&gt;
+
+&lt;p&gt;Activities typically fulfill their responsibilities of binding data to views and responding to user input by creating a circular dependency between themselves and the Views that make up their Content View (i.e., the view passed in to the setContentView() method). There&amp;rsquo;s a piece of code in the same gist that I showed above that provides an example of this.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;SessionDetailActivity&lt;/code&gt; has a reference to &lt;code&gt;mAddScheduleButton&lt;/code&gt; and &lt;code&gt;mAddSchedule&lt;/code&gt; button has a reference to &lt;code&gt;SessionDetailActivity&lt;/code&gt;. As we&amp;rsquo;ll see later, this circular dependency limits the approaches we can take to implementing the UI-related business logic that&amp;rsquo;s typically found in Activities.&lt;/p&gt;
+
+&lt;p&gt;MVP Presenters have basically the same circular dependency between themselves and their Views. Before I can explain this in more detail, I have to make a brief distinction between MVP-Views and Android-Views.&lt;/p&gt;
+
+&lt;p&gt;An MVP-View, as I&amp;rsquo;m defining it, is just an object that&amp;rsquo;s a part of the MVP triad. It&amp;rsquo;s typically defined as an interface, and it may be implemented by an Activity, Fragment, or an Android-View. An Android-View, as the name implies, is a class that is a part of the Android framework. More specifically, it&amp;rsquo;s a subclass of the &lt;code&gt;View&lt;/code&gt; class.&lt;/p&gt;
+
+&lt;p&gt;Using MVP-Views and Presenters just recreates virtually the same circular dependency between MVP-Views and Presenters that exists between Android-Views and Activities.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/07/CircularDependency-011.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/07/CircularDependency-011-300x222.png&#34; alt=&#34;CircularDependency-01&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/07/CircularDependency-021.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/07/CircularDependency-021-300x222.png&#34; alt=&#34;CircularDependency-02&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Presenters need MVP-Views so that they can bind data to the MVP-View. The MVP-View needs a reference to the Presenter so that it can forward clicks and other ui-related events to the Presenter. Square&amp;rsquo;s &lt;a href=&#34;https://corner.squareup.com/2014/10/advocating-against-android-fragments.html&#34;&gt;post against Fragments&lt;/a&gt; has an MVP implementation that exhibits this circular dependency. Hannes Dorfmann&amp;rsquo;s &lt;a href=&#34;http://hannesdorfmann.com/android/mosby/&#34;&gt;post introducing his library to help implement MVP&lt;/a&gt; also has some code that has this circular dependency.&lt;/p&gt;
+
+&lt;p&gt;Circular dependencies pose a problem when you try to construct objects for unit testing (or in general). However, typically, we don&amp;rsquo;t see the circular dependency between MVP-Views and Presenters or Activities and their Android-Views as a problem because Activities and Fragments are instantiated by the system and because we don&amp;rsquo;t usually use dependency injection to inject an Activity and/or Fragment&amp;rsquo;s dependencies. Instead, we just instantiate whatever dependences the Activity needs in onCreate():&lt;/p&gt;
+
+&lt;p&gt;Instantiating concrete classes of our dependencies in onCreate(), however, limits our ability to use composition and polymorphism to implement our ui-related business logic. Here&amp;rsquo;s an example where you might wish you could use polymorphism to implement ui-related business logic: Suppose your implementing an application that has users. Suppose further that the users have different privileges based on the level they attain. They might attain higher levels by verifying an email or by answering a question that others users have asked (StackOverflow style). Finally, suppose that the user interface that&amp;rsquo;s presented to the user is largely dependent on the level they have attained as a user. We might imagine that there a many buttons that do different things depending on the level the user has achieved or that the initial state of the view depends on the user&amp;rsquo;s level.&lt;/p&gt;
+
+&lt;p&gt;Polymorphism provides us with a clean, scalable way to implement this kind of logic: we can have a Presenter for each level the user can attain. Regardless of the level the user has attained, we can pass the same MVP-View to into a particular Presenter subclass and let that particular subclass appropriately handle clicks or present the initial UI based on the user&amp;rsquo;s level. Of course, there are ways of architecting Android apps so that we can take advantage of polymorphism in spite of the circular dependency between Presenters and MVP-Views, but none of the approaches that I&amp;rsquo;ve seen are particularly pretty, nor do they do a great job of facilitating unit testing. &lt;/p&gt;
+
+&lt;p&gt;I don&amp;rsquo;t have the space here to go over all of those different solutions that I have in mind, but I can briefly say why one easy way of resolving the circular dependency between MVP-Views and Presenters is not ideal. You might think that we can just create an MVP-View or Presenter without the dependencies they need to fulfill their responsibilities. We could, in other words, do something like this:&lt;/p&gt;
+
+&lt;p&gt;This would allow us to use polymorphism to solve problems like the one I mentioned above, but it doesn&amp;rsquo;t really break the circular dependency between MVP-Views and Presenters. All it does is allow us to create an object in an invalid state. This isn&amp;rsquo;t cleanest solution. To put the point in Freeman and Pryce&amp;rsquo;s words:&lt;/p&gt;
+
+&lt;blockquote&gt;“New or new not, there is no try”
+
+We try to make sure that we always create a valid object…Partially creating an object and then finishing it off by setting its properties is brittle…&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;conclusion:25be7690f1d98142cd41730b0d055142&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Presenters and Activities violate the principle of single responsibility. They are often responsible for binding data to a View and for responding to user input/actions. This can cause both Activities and Presenters to become bloated.&lt;/p&gt;
+
+&lt;p&gt;Presenters and Activities often carry out their multiple responsibilities by creating a circular dependency between themselves and their Views. Although this circular reference doesn&amp;rsquo;t appear to be a problem, it can make it more difficult to unit test our Views and/or Presenters and it can limit our ability to use polymorphism to implement ui-related business logic.&lt;/p&gt;
+
+&lt;p&gt;As I said before, I think there&amp;rsquo;s a way of structuring our applications that doesn&amp;rsquo;t have these disadvantages, and in the next post, I&amp;rsquo;ll go over this alternative architecture.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Below, Hannes Dorfmann has a great comment to this article. I&amp;rsquo;ve responded to that &lt;a href=&#34;http://www.philosophicalhacker.com/2015/07/08/my-response-to-hannes-dorfmann-on-the-circular-dependency-problem/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>I&#39;m taking a brief hiatus from blogging here...</title>
+      <link>http://replace-this-with-your-hugo-site.com/2015/06/26/im-taking-a-brief-hiatus-from-blogging-here/</link>
+      <pubDate>Fri, 26 Jun 2015 12:48:20 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/2015/06/26/im-taking-a-brief-hiatus-from-blogging-here/</guid>
+      <description>&lt;p&gt;&amp;hellip;so that I can focus on ensuring that &lt;a href=&#34;http://droidjournal.com&#34;&gt;Droid Journal&lt;/a&gt; has a successful inaugural edition. I did, however, just post on &lt;a href=&#34;http://www.droidjournal.com/blog/reviews/2015/06/26/review-advocating-against-android-fragments.html&#34;&gt;Droid Journal&amp;rsquo;s blog&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Taylor Swift, Photographers, and &#34;working for nothing&#34;</title>
+      <link>http://replace-this-with-your-hugo-site.com/2015/06/25/taylor-swift-photographers-and-working-for-nothing/</link>
+      <pubDate>Thu, 25 Jun 2015 01:44:15 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/2015/06/25/taylor-swift-photographers-and-working-for-nothing/</guid>
+      <description>
+
+&lt;p&gt;If you don&amp;rsquo;t already know, here&amp;rsquo;s a quick run down of what&amp;rsquo;s happening with the whole Taylor Swift/Apple/Indie Artists debacle: Last month, Apple released its streaming service and offered a three month trial period to users for free. During the trial period, they weren&amp;rsquo;t planning on paying the artists whose music was streamed by the service. Last week, Taylor Swift published &lt;a href=&#34;http://taylorswift.tumblr.com/post/122071902085/to-apple-love-taylor&#34;&gt;an open letter to Apple&lt;/a&gt; in which she basically claimed that Apple was wronging artists by not paying them for three months. Two days ago, Jason Sheldon produced a contract that he had to sign to photograph one of Swift&amp;rsquo;s older tours, and because the contract allows for his work to be used indefinitely without compensating him for each use, &lt;a href=&#34;http://petapixel.com/2015/06/22/an-open-response-to-taylor-swifts-rant-against-apple/&#34;&gt;he basically calls Swift a hypocrite&lt;/a&gt;. &lt;a href=&#34;http://money.cnn.com/2015/06/23/media/taylor-swift-photographer-response/&#34;&gt;Swift&amp;rsquo;s spokesman said that Sheldon is misrepresenting the contract&lt;/a&gt;. A few hours ago, Joel Goodman, another freelance photographer, &lt;a href=&#34;http://consequenceofsound.net/2015/06/newly-leaked-contract-stipulates-taylor-swift-can-destroy-equipment-of-defiant-photographers/&#34;&gt;leaked a contract for the 1989 tour that contains even stricter rules&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This debacle raises two philosophical questions:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Is Swift a hypocrite?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Have musicians like Swift or photographers like Sheldon even given a compelling argument for why they&amp;rsquo;ve been treated wrongly in the first place?&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I do think Swift is a hypocrite, but I don&amp;rsquo;t think that it really matters because neither Swift nor Sheldon has given us a good reason to think that artists are being wronged by companies like Apple and Firefly Entertainment. Let me try to convince you to see things my way.&lt;/p&gt;
+
+&lt;h2 id=&#34;is-swift-a-hypocrite:105d7ab9390e847e5115b017b22e4f79&#34;&gt;Is Swift a hypocrite?&lt;/h2&gt;
+
+&lt;p&gt;Like I said, I think the answer to this question is &amp;ldquo;yes.&amp;rdquo; Here&amp;rsquo;s why: Swift claims that &amp;ldquo;it is unfair to ask anyone to work for nothing&amp;rdquo; and the contract that Swift has her photographers sign asks photographers to &amp;ldquo;work for nothing&amp;rdquo; in the same way that Apple&amp;rsquo;s plan to refrain from paying artists during the 3 month trail period does.&lt;/p&gt;
+
+&lt;p&gt;We can see this if we pay closer attention to Swift&amp;rsquo;s central claim in her letter to Apple. Again, that claim is that its &amp;ldquo;unfair to ask someone to work for nothing.&amp;rdquo; What does Swift mean by this? She can&amp;rsquo;t mean that artists are literally doing work in exchange for nothing. The artists will receive some form of payment eventually. Even Swift admits this when she says, &amp;ldquo;3 months is a long time to &lt;em&gt;wait to get paid&lt;/em&gt;.&amp;rdquo; She also can&amp;rsquo;t mean that artists are literally working to produce the music that people are streaming during the three months and getting paid nothing for it. Its not like they&amp;rsquo;ve got Swift and other artists locked in a room somewhere and they&amp;rsquo;re live streaming their music into our Apple earbuds.&lt;/p&gt;
+
+&lt;p&gt;I don&amp;rsquo;t mean to nitpick here. I really do think its important that we get clear on what Swift means when she says its &amp;ldquo;unfair to ask someone to work for nothing.&amp;rdquo; If we don&amp;rsquo;t know what she means, we can&amp;rsquo;t know if she&amp;rsquo;s a hypocrite, nor can we know whether she&amp;rsquo;s made a plausible moral case that Apple did something wrong in the first place. Humor me a little more as we try to figure out exactly what she might be saying.&lt;/p&gt;
+
+&lt;p&gt;One thing that we have to pay attention to if we&amp;rsquo;re going to understand Swift&amp;rsquo;s claim is that Swift and other musicians produce art and that companies want to monetize that art. That&amp;rsquo;s obvious, I know, but its important. Swift and other musicians, in this case, are not offering a _service_ that Apple wants to monetize. Rather, they have &lt;em&gt;already put the work in&lt;/em&gt; to produce the art that Apple wants to monetize.&lt;/p&gt;
+
+&lt;p&gt;With this in mind, I think we can see that Swift didn&amp;rsquo;t choose the best words to express her claim. _1989 _has already been produced and released. There&amp;rsquo;s no more &amp;ldquo;work&amp;rdquo; to be done with it. If Swift gets 1$ from Apple&amp;rsquo;s streaming of _1989, _it will_ _no longer be true, strictly speaking, that she worked for nothing.&lt;/p&gt;
+
+&lt;p&gt;I think Swift&amp;rsquo;s complaint has to have something to do with the fact that someone is benefiting from an artist&amp;rsquo;s work while the artist herself is not receiving a share in that benefit. If that&amp;rsquo;s true, then maybe she should have rephrased her claim as follows:&lt;/p&gt;
+
+&lt;blockquote&gt;Its unfair for anyone to be benefit from the creation of a valuable good if the creator of that good does not herself receive a portion of that benefit.&lt;/blockquote&gt;
+
+&lt;p&gt;But even if Swift put her claim this way, it still wouldn&amp;rsquo;t be obvious that Apple did something wrong. After all, if Apple makes 100 million this year because of their streaming service and if every artist gets paid 1 dollar, it will still be true that each artist received a portion of the benefit that Apple has gained from the valuable goods (i.e., songs) that the artists have produced.&lt;/p&gt;
+
+&lt;p&gt;Maybe Swift should have been even more specific and said something like this:&lt;/p&gt;
+
+&lt;blockquote&gt;For any occasion on which anyone benefits from the creation of a valuable good, fairness demands that the creator of that good herself receive a portion of the benefit that was gained on that occasion.&lt;/blockquote&gt;
+
+&lt;p&gt;If Swift put her claim this way, we could easily see that Apple, according to her claim, was doing something that&amp;rsquo;s unfair. The three month trial period during which Apple would not pay musicians was an occasion on which they were benefiting from the creation of valuable goods without sharing a portion of that benefit with the creators of those goods.&lt;/p&gt;
+
+&lt;p&gt;Now that we finally have a better idea of what Swift meant when she said, &amp;ldquo;it is unfair to ask anyone to work for nothing,&amp;rdquo; we can see pretty straightforwardly, that Swift is a hypocrite, or, at the very least, that she has hired people who are performing actions that are morally equivalent to Apple&amp;rsquo;s attempt to skip out on paying artist royalties for 3 months.  Photographers produce a valuable good. Firefly Media&amp;rsquo;s contract states that Swift can benefit from the creation of that good on many occasions after the good has been produced without compensating the photographer who created that good.&lt;/p&gt;
+
+&lt;h2 id=&#34;did-swift-or-sheldon-give-a-good-argument-for-why-they-re-being-wronged:105d7ab9390e847e5115b017b22e4f79&#34;&gt;Did Swift or Sheldon give a good argument for why they&amp;rsquo;re being wronged?&lt;/h2&gt;
+
+&lt;p&gt;I think the answer to this question is, &amp;ldquo;no.&amp;ldquo; The claim that Swift seem to be making is far from obvious. Again, recall that the claim is this:&lt;/p&gt;
+
+&lt;blockquote&gt;For any occasion on which anyone benefits from the creation of a valuable good, fairness demands that the creator of that good herself receive a portion of the benefit that was gained on that occasion.&lt;/blockquote&gt;
+
+&lt;p&gt;Philosophers like to come up with names for claims. It might seem weird, but its also helpful. I&amp;rsquo;ll call this claim, &amp;ldquo;Swift&amp;rsquo;s claim.&amp;ldquo; We can see that Swift&amp;rsquo;s claim is unlikely to be true by noting that if we assume that it is true, we&amp;rsquo;ll be forced to condemn some actions that are probably perfectly okay morally speaking.&lt;/p&gt;
+
+&lt;p&gt;For example, suppose I found a company. Suppose further that I make millions of dollars from that company. Finally, suppose that I get tired of running the company and since I&amp;rsquo;m rich, I decide to sell my entire company and retire.&lt;/p&gt;
+
+&lt;p&gt;If Swift&amp;rsquo;s claim is true, then whomever I sell my company to would be morally obligated to compensate me for any money they make off of the company that I created. That seems false though. If I agreed to a contract that stated that the new owner of my company would be 100% entitled to its profits, then it seems crazy to think that I&amp;rsquo;d somehow be entitled to a portion of future profits after the sale.  Swift&amp;rsquo;s claim, then, is probably false.&lt;/p&gt;
+
+&lt;p&gt;Obviously, there&amp;rsquo;s a big difference between a millionaire selling his company and a struggling artist trying to earn a decent living from their art career, but here&amp;rsquo;s the thing: Swift&amp;rsquo;s claim, as I&amp;rsquo;ve stated it above applied equally to both of them. Its a very strong claim because of the phrase &amp;rdquo;For &lt;em&gt;any&lt;/em&gt; occasion on which &lt;em&gt;anyone&amp;hellip;&lt;/em&gt;&amp;ldquo;&lt;/p&gt;
+
+&lt;p&gt;Although Swift&amp;rsquo;s claim is too strong, there might be another claim that more plausibly supports an argument against Apple and Swift. In &lt;a href=&#34;http://petapixel.com/2015/06/22/an-open-response-to-taylor-swifts-rant-against-apple/&#34;&gt;Sheldon&amp;rsquo;s response to Swift&lt;/a&gt;, we see the beginnings of such a claim:&lt;/p&gt;
+
+&lt;blockquote&gt;You say in your letter to Apple that “Three months is a long time to go unpaid”. But you seem happy to restrict us to being paid once, and never being able to earn from our work ever again, while granting you the rights to exploit our work for your benefit for all eternity.
+
+How are you any different to Apple? If you don’t like being exploited, that’s great — make a huge statement about it, and you’ll have my support. But how about making sure you’re not guilty of the very same tactic before you have a pop at someone else?
+
+Photographers need to earn a living as well.&lt;/blockquote&gt;
+
+&lt;p&gt;In this excerpt, Sheldon seems to complain that he only agrees to contracts that allow companies to &amp;ldquo;exploit [his] work for [their] benefit for all eternity&amp;rdquo; because he just needs to earn a living. He seems to suggest, in other words, that because of his relative lack of wealth and power, he is unfairly forced into a contract that he would not otherwise agree to.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion:105d7ab9390e847e5115b017b22e4f79&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Sheldon&amp;rsquo;s claim is more plausible, but I don&amp;rsquo;t have the time right now to examine it or really say whether it holds up in this particular instance, and in any case, I doubt you have the desire to read more of my ramblings on this subject, so let me conclude with this: it seems like the moral issue in this debacle is more fundamentally about morality in a world with huge disparities in wealth and power than it is about getting compensated for work. Indeed, I wouldn&amp;rsquo;t be surprised if the Swift/Apple piece of this debacle itself was little more than a power play masquerading as a sincere moral plea met with heartfelt repentance.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Introduction to RxJava for Android (Pt. 2)</title>
+      <link>http://replace-this-with-your-hugo-site.com/2015/06/19/introduction-to-rxjava-for-android-pt-2/</link>
+      <pubDate>Fri, 19 Jun 2015 12:19:14 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/2015/06/19/introduction-to-rxjava-for-android-pt-2/</guid>
+      <description>&lt;p&gt;I concluded my last post by summing up what we&amp;rsquo;ve seen so far and what we still need to understand about RxJava:&lt;/p&gt;
+
+&lt;blockquote&gt;We now know what an asynchronous data stream is and we know that RxJava uses the Observer pattern to deliver these streams to everyone that’s interested. We still don’t know, however, what it means for a data stream to be “functionally transformed” nor do we know how RxJava allows us to represent anything as an asynchronous data stream that can be created and consumed on any thread. These are questions I’ll have to tackle in the second part of this written version of my upcoming RxJava talk.&lt;/blockquote&gt;
+
+&lt;p&gt;In this post, I&amp;rsquo;ll fill in the missing gaps in our understanding of my initial statement of what RxJava allows us to do.&lt;/p&gt;
+
+&lt;p&gt;Recall that that initial statement was this:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_rxjava_def.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_rxjava_def-1024x791.jpg&#34; alt=&#34;rxjava_prezi_rxjava_def&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Recall that a data-stream, as I&amp;rsquo;ve defined it, is just sequential data that has a well-defined termination point and a way of notifying processors of that data that an error has occurred. RxJava lets us create asynchronous data streams out of anything. This might sound confusing until we remember that we are already familiar with a pattern that allows us to make synchronous data streams out of anything: the iterator pattern.&lt;/p&gt;
+
+&lt;p&gt;The definition for an &lt;code&gt;Iterator&lt;/code&gt; looks like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_as_async_iterator.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_as_async_iterator-1024x791.jpg&#34; alt=&#34;rxjava_as_async_iterator&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Notice that an Iterator fits the definition of a data-stream. Its ordered data that can be processed by calling &lt;code&gt;next()&lt;/code&gt;. It has a well-defined stopping point: when &lt;code&gt;hasNext()&lt;/code&gt; returns false. Finally, processors of an iterator&amp;rsquo;s data can also be notified if there was an error processing the data: the iterator can simply throw an exception.&lt;/p&gt;
+
+&lt;p&gt;You can make any class iterable as long as that class can supply an iterator with which to traverse its elements. This makes it possible to turn any class into a synchronous data stream. This is actually how the &lt;a href=&#34;https://docs.oracle.com/javase/1.5.0/docs/guide/language/foreach.html&#34;&gt;for-each syntax works in java&lt;/a&gt;. All Collection classes can return an iterator that&amp;rsquo;s used to sequentially traverse the data they contain.&lt;/p&gt;
+
+&lt;p&gt;This shouldn&amp;rsquo;t be surprising since the motivation for the iterator pattern according to the Gang of Four is to:&lt;/p&gt;
+
+&lt;blockquote&gt;Provide a way to access elements of an aggregate object sequentially without exposing its underlying implementation.
+
+-GoF, Design Patterns&lt;/blockquote&gt;
+
+&lt;p&gt;RxJava Observables can be created out of anything and remember that Observables are just asynchronous data streams. Because Observables are asynchronous data streams that can be created out of anything just as Iterators are synchronous datastreams that can be created out of (nearly) anything, the &lt;a href=&#34;http://reactivex.io/intro.html&#34;&gt;reactive x introduction refers&lt;/a&gt; to Observables as the &amp;ldquo;asynchronous/push dual to the synchronous/pull iterator.&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;This will make more sense once we see what it looks like to create an Observable:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_obserable_creation.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_obserable_creation-1024x791.jpg&#34; alt=&#34;rxjava_obserable_creation&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Here we&amp;rsquo;re creating an Observable that emits the data from a long-running operation performed by &lt;code&gt;userFetcher.fetchUsers()&lt;/code&gt;. Once &lt;code&gt;fetchUsers()&lt;/code&gt; returns with the Users, we call &lt;code&gt;onNext()&lt;/code&gt; on the &lt;code&gt;Subscriber&lt;/code&gt; that&amp;rsquo;s passed in to &lt;code&gt;call()&lt;/code&gt; method. Recall that a Subscriber is just a consumer of asynchronous data, so by calling &lt;code&gt;onNext()&lt;/code&gt;, we are passing the users we&amp;rsquo;ve fetched to the &lt;code&gt;Subscriber&lt;/code&gt;. This call to &lt;code&gt;onNext()&lt;/code&gt; as the asynchronous analog to the iterator&amp;rsquo;s &lt;code&gt;next()&lt;/code&gt; method.&lt;/p&gt;
+
+&lt;p&gt;You&amp;rsquo;ll notice that there&amp;rsquo;s another call after &lt;code&gt;onNext()&lt;/code&gt;: its the &lt;code&gt;onComplete()&lt;/code&gt; call. This tells the &lt;code&gt;Subscriber&lt;/code&gt;s that the asynchronous data stream has reached its end. This call is the asynchronous analogue of the iterator&amp;rsquo;s &lt;code&gt;hasNext()&lt;/code&gt; method returning false.&lt;/p&gt;
+
+&lt;p&gt;Finally, note that if there&amp;rsquo;s an exception thrown by the method that fetches the users, we call &lt;code&gt;onError()&lt;/code&gt;. This, of course, is the asynchronous analog of the iterator throwing an exception while processing synchronous data.&lt;/p&gt;
+
+&lt;p&gt;Alright, so hopefully at this point, we know what this means:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/we_know_rxjava_is_observer_plus_iterator.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/we_know_rxjava_is_observer_plus_iterator-1024x791.jpg&#34; alt=&#34;we_know_rxjava_is_observer_plus_iterator&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;But we still don&amp;rsquo;t know this:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/still_dont_know_functional.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/still_dont_know_functional-1024x791.jpg&#34; alt=&#34;still_dont_know_functional&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;When I say &amp;ldquo;functional transformation,&amp;rdquo; I&amp;rsquo;m using &amp;ldquo;functional&amp;rdquo; in the same sense that its used when people talk about functional programming. Functional transformations are transformations of data that don&amp;rsquo;t rely on any data outside of the function that does the transformation and that don&amp;rsquo;t have any side effects. We perform transformations of data all the time, but those transformations might not count as functional.&lt;/p&gt;
+
+&lt;p&gt;If you&amp;rsquo;ve ever written a filter for an list adapter, you&amp;rsquo;ve probably had to do a transformation of the unfiltered data. Here&amp;rsquo;s what this looks like in the Android Source&amp;rsquo;s implementation of filtering for the &lt;code&gt;ArrayAdapter&lt;/code&gt; class:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/functional_transformations_are_not_new.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/functional_transformations_are_not_new-e1434712869664-1024x792.jpg&#34; alt=&#34;functional_transformations_are_not_new&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This transformation, however, is not entirely functional. Its true that this method is creating a new Array to hold the filtered values rather than modifying the array of original values. This makes performFiltering() semi-functional since it doesn&amp;rsquo;t modify data outside of the method. However, because this method relies on data from outside of the function, it fails to be an entirely functional transformation of the unfiltered values.&lt;/p&gt;
+
+&lt;p&gt;RxJava, on the other hand, does perform completely functional transformations of asynchronous data. Here&amp;rsquo;s what that looks like:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/functional_transformations_are_not_new-e1434712869664.jpg&#34;&gt;
+&lt;/a&gt; &lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_full_on_functional_real.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_full_on_functional_real-e1434713514839-1024x300.jpg&#34; alt=&#34;rxjava_full_on_functional_real&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Here we&amp;rsquo;re creating an &lt;code&gt;Observable&lt;/code&gt; out of an array. We then transform the data stream emitted by this &lt;code&gt;Observable&lt;/code&gt; by calling &lt;code&gt;filter()&lt;/code&gt; on the Observable created from the array. &lt;code&gt;filter()&lt;/code&gt; takes a function that returns whether the items emitted by the source &lt;code&gt;Observable&lt;/code&gt; should be included in the transformed data-stream. In this case, the function passed into &lt;code&gt;filter()&lt;/code&gt; will return true for &amp;ldquo;Going Global with Google Play&amp;rdquo; and false for &amp;ldquo;Keynote,&amp;rdquo; so the former and not the latter will be emitted by the &lt;code&gt;Observable&lt;/code&gt; returned by &lt;code&gt;filter()&lt;/code&gt; and consumed by the &lt;code&gt;Subscriber&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The filter call is a functional transformation because the original Observable that was created from the array is not modified and because the &lt;code&gt;Func1&lt;/code&gt; that performs the filtering operation does not operate on any data that exists outside of &lt;code&gt;Func1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;These functional transformations are called &amp;ldquo;operators&amp;rdquo;, and their functional nature is what allows us to chain together multiple operators to shape the asynchronous data stream so that it can be conveniently consumed by a &lt;code&gt;Subscriber&lt;/code&gt;. We&amp;rsquo;ll see what this chaining looks like later.&lt;/p&gt;
+
+&lt;p&gt;At this point, if I&amp;rsquo;ve done my job right, you should know that this means:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/know_observable_subscriber_operators.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/know_observable_subscriber_operators-1024x791.jpg&#34; alt=&#34;know_observable_subscriber_operators&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;We still don&amp;rsquo;t know, however, how RxJava let&amp;rsquo;s us create and consume asynchronous data streams on any thread. This is accomplished through &lt;code&gt;Schedulers&lt;/code&gt; and this is how &lt;code&gt;Schedulers&lt;/code&gt; are applied to &lt;code&gt;Observables&lt;/code&gt; and &lt;code&gt;Subscribers&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/schedulers.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/schedulers-e1434714320163-1024x443.jpg&#34; alt=&#34;schedulers&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The key lines here are the &lt;code&gt;subscribeOn()&lt;/code&gt; and &lt;code&gt;observeOn()&lt;/code&gt; lines. These lines take &lt;code&gt;Schedulers&lt;/code&gt; that determine the threads on which asynchronous data is created and consumed, respectively. We pass a &lt;code&gt;Scheduler&lt;/code&gt; to &lt;code&gt;subscribeOn()&lt;/code&gt; that schedules the asynchronous data to be created on a background io thread and we pass a &lt;code&gt;Scheduler&lt;/code&gt; to the &lt;code&gt;observeOn()&lt;/code&gt; method that ensures that the asynchronous data is consumed on the main thread.&lt;/p&gt;
+
+&lt;p&gt;One quick thing to note here is that the &lt;code&gt;AndroidSchedulers.mainThread()&lt;/code&gt; method is not actually a part of RxJava. Its a part of &lt;a href=&#34;https://github.com/ReactiveX/RxAndroid&#34;&gt;RxAndroid&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;At this point, you should be in a pretty good position to understand all of my initial statement of what RxJava does:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/we_know_it_all1.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/we_know_it_all1-1024x791.jpg&#34; alt=&#34;we_know_it_all&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;And now that you understand what RxJava is, you can understand how its able to make quick work of a task like the one I described in &lt;a href=&#34;http://www.philosophicalhacker.com/2015/06/12/an-introduction-to-rxjava-for-android/&#34;&gt;the first post in this series&lt;/a&gt;. Recall that the task was to execute a query from a &lt;code&gt;SearchView&lt;/code&gt; within an &lt;code&gt;Actionbar&lt;/code&gt; only if that query consisted of three characters and only if there was at least a 100 millisecond delay before any additional characters were typed into the SearchView.&lt;/p&gt;
+
+&lt;p&gt;This functionality exists already in Google&amp;rsquo;s iosched app. Here is a reimplementation of that functionality using RxJava:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/teaser_solution.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/teaser_solution-e1434715009899-1024x717.jpg&#34; alt=&#34;teaser_solution&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;m only going to explain parts of this snippet, but if you want to check out the full source, you can do that &lt;a href=&#34;https://github.com/kmdupr33/iosched/tree/feature/rxjava_rewrite&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Note that there are several operators here that I didn&amp;rsquo;t mention before, namely, &lt;code&gt;debouce()&lt;/code&gt; and &lt;code&gt;map()&lt;/code&gt;. RxJava has &lt;a href=&#34;https://github.com/ReactiveX/RxJava/wiki/Alphabetical-List-of-Observable-Operators&#34;&gt;a ton of operators&lt;/a&gt;, so be sure to check them all out. The &lt;code&gt;debounce()&lt;/code&gt; operator is what allows us to only execute a search on a query only if there&amp;rsquo;s been a 100 millisecond delay after the last text change in the query string.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;filter()&lt;/code&gt; operator here is only used to make sure that there is a fragment available to display the data fetched from the search, but we could have easily added another &lt;code&gt;filter()&lt;/code&gt; operator that would check the length of the query string.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;map()&lt;/code&gt; operators transform the data emitted by their source &lt;code&gt;Observable&lt;/code&gt;. The first &lt;code&gt;map()&lt;/code&gt; operator converts the query string into an intent created from that query string. The second &lt;code&gt;map()&lt;/code&gt; operator converts that intent into a &lt;code&gt;Bundle&lt;/code&gt; that can be used by the &lt;code&gt;SessionsFragment&lt;/code&gt; to load the appropriate sessions (based on the original query string).&lt;/p&gt;
+
+&lt;p&gt;If I&amp;rsquo;ve done my job right, hopefully now you know what RxJava is and why its awesome! Feel free to point out anything that was unclear or inaccurate.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Introduction to RxJava for Android: The Talk</title>
+      <link>http://replace-this-with-your-hugo-site.com/2015/06/17/introduction-to-rxjava-for-android-the-talk/</link>
+      <pubDate>Wed, 17 Jun 2015 01:48:45 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/2015/06/17/introduction-to-rxjava-for-android-the-talk/</guid>
+      <description>&lt;p&gt;Earlier today, I gave my Intro To RxJava talk. I&amp;rsquo;m not thrilled at how clear I was at explaining certain aspects of RxJava, but here&amp;rsquo;s the video nonetheless. My talk starts at 28:32. Hopefully, I&amp;rsquo;ll do a better job when I finish &lt;a href=&#34;http://www.philosophicalhacker.com/2015/06/12/an-introduction-to-rxjava-for-android/&#34;&gt;the written version of this talk&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you want to hear a hilarious take down of the design of the new Pizza Hut app, check out &lt;a href=&#34;https://www.linkedin.com/profile/view?id=51923912&amp;amp;trk=hp-feed-member-name&#34;&gt;Ian&amp;rsquo;s&lt;/a&gt; talk that happens before mine.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://prezi.com/xby6mpyb_4uo/?utm_campaign=share&amp;amp;utm_medium=copy&#34;&gt;Here&lt;/a&gt; are the slides that I used.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/kmdupr33/iosched/tree/feature/rxjava_rewrite&#34;&gt;Here&amp;rsquo;s&lt;/a&gt; the source for the rxjava rewrite of the session search functionality. I&amp;rsquo;m particularly interested in what experienced RxJava-ers think of how I created an Observable from the SearchActivity&amp;rsquo;s search widget text listener.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>An Introduction to RxJava for Android (Pt. 1)</title>
+      <link>http://replace-this-with-your-hugo-site.com/2015/06/12/an-introduction-to-rxjava-for-android/</link>
+      <pubDate>Fri, 12 Jun 2015 12:34:53 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/2015/06/12/an-introduction-to-rxjava-for-android/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m taking a brief break from talking about testing. I&amp;rsquo;ll resume my discussion of how &lt;a href=&#34;http://www.philosophicalhacker.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/&#34;&gt;I&amp;rsquo;m making Google&amp;rsquo;s IOSched app unit testable&lt;/a&gt; after I&amp;rsquo;ve posted the content from &lt;a href=&#34;http://www.meetup.com/University-Android/events/222048562/&#34;&gt;my upcoming talk on RxJava&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt; &lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_rxjava_def.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_rxjava_def-1024x791.jpg&#34; alt=&#34;rxjava_prezi_rxjava_def&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;RxJava is a library that let&amp;rsquo;s you represent anything as an asynchronous data-stream that can be created on any thread, functionally transformed, and consumed by everyone on any thread.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_outline_talk.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_outline_talk-1024x791.jpg&#34; alt=&#34;rxjava_prezi_outline_talk&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I don&amp;rsquo;t expect that definition to mean much to you at this point, but don&amp;rsquo;t worry. During this presentation, we&amp;rsquo;re going to break down each piece of the statement I just made, and by the time we&amp;rsquo;re through, you&amp;rsquo;ll understand what RxJava is and why its awesome.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_teaser.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_teaser-1024x791.jpg&#34; alt=&#34;rxjava_prezi_teaser&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Before we start trying to understand what RxJava is, let me give you a small teaser that will give you some idea of what RxJava can do. This screenshot is from Google&amp;rsquo;s IOSched app. On this screen, you can search through the various IO sessions. Whenever users type in text into the the &lt;code&gt;SearchWidget&lt;/code&gt; in the &lt;code&gt;Actionbar&lt;/code&gt;, the database is re-queried using the entered text and the results are displayed in a list below the &lt;code&gt;Actionbar&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now, suppose that you&amp;rsquo;re supposed to implement something like this for an app you&amp;rsquo;re building, but suppose that there are some further requirements, namely, that the query should only execute if:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;there are at least three characters entered into the &lt;code&gt;SearchWidget&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;there has been at least a 100 millisecond delay before any other characters have been entered into the &lt;code&gt;SearchWidget&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;How many lines of code do you think it would take to implement something like this? If you look at the &lt;a href=&#34;https://github.com/kmdupr33/iosched/blob/master/android/src/main/java/com/google/samples/apps/iosched/ui/SearchActivity.java&#34;&gt;IOSched source code&lt;/a&gt;, you&amp;rsquo;ll get an idea of what it would take. If you followed the strategy in the IOSched app, you&amp;rsquo;d probably set a listener on the &lt;code&gt;SearchWidget&lt;/code&gt; text and use an if-statement to check to see if the text is at least three characters long. If it is, you&amp;rsquo;d call a method that uses a &lt;code&gt;Handler&lt;/code&gt; to remove any messages that have been scheduled to execute in the last 100 milliseconds and that schedules a new message to be sent at the end of a 100 millisecond delay.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s what&amp;rsquo;s awesome about RxJava: Once you have an RxJava &lt;code&gt;Observable&lt;/code&gt; that&amp;rsquo;s set up to report events about text changes in the SearchWidget, you can do the equivalent of all of this in three lines of code. The RxJava way of doing this, moreover, will provide you with more flexibility that will help you cope with any subsequent changes you&amp;rsquo;ll need to make to this portion of the code.&lt;/p&gt;
+
+&lt;p&gt;Hopefully, that&amp;rsquo;s enough to keep you interested in learning about RxJava in case I&amp;rsquo;ve failed to make my introduction to it easy to understand.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_async_data.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_async_data-1024x791.jpg&#34; alt=&#34;rxjava_prezi_async_data&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s start with something that&amp;rsquo;s familiar. RxJava let&amp;rsquo;s you deliver asynchronous data to anyone who&amp;rsquo;s interested in receiving it. Of course, RxJava does more than that, but, this is definitely something that you can do with RxJava. This is something that you do all the time without RxJava. Here&amp;rsquo;s a snippet that shows how how changes in the search query string for an IO session are delivered to a &lt;code&gt;OnQueryTextListener&lt;/code&gt;, a consumer of asynchronous data.&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_async_data_code.jpg&#34;&gt;
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_async_data_code1.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_async_data_code1-1024x791.jpg&#34; alt=&#34;rxjava_prezi_async_data_code&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s what this would look like with RxJava:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_async_data_rxjava_code.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_async_data_rxjava_code-1024x791.jpg&#34; alt=&#34;rxjava_prezi_async_data_rxjava_code&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;In this snippet, we have an &lt;code&gt;Observable&lt;/code&gt; that represents the data stream produced by changes in the text of the &lt;code&gt;SearchWidget&lt;/code&gt;. We also have a &lt;code&gt;Subscriber&lt;/code&gt; (created from the &lt;code&gt;Action1&lt;/code&gt; passed into the &lt;code&gt;subscribe()&lt;/code&gt; method) who&amp;rsquo;s interested in any changes in the text of the &lt;code&gt;SearchWidget&lt;/code&gt;. Let&amp;rsquo;s get a little clearer on the definitions of &lt;code&gt;Observable&lt;/code&gt;s and &lt;code&gt;Subscriber&lt;/code&gt;s.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_define_observer_subscriber.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_define_observer_subscriber-1024x791.jpg&#34; alt=&#34;rxjava_prezi_define_observer_subscriber&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Notice that an &lt;code&gt;Observable&lt;/code&gt; represents a &lt;em&gt;data stream&lt;/em&gt; and that there can be &lt;em&gt;multiple Subscribers&lt;/em&gt; who are interested in consuming this asynchronous data stream. I&amp;rsquo;ll say more about what I mean by the phrase &amp;ldquo;data stream&amp;rdquo; later. For now, let&amp;rsquo;s focus on the fact that RxJava let&amp;rsquo;s multiple &lt;code&gt;Subscribers&lt;/code&gt; consume asynchronous data.&lt;/p&gt;
+
+&lt;p&gt;By itself, this fact isn&amp;rsquo;t really a big deal. Its basically just the observer pattern. You work with objects that leverage the observer pattern to deliver asynchronous data to multiple recipients all the time. Anytime you call &lt;code&gt;RecyclerView.Adapter.notifyDatasetChanged()&lt;/code&gt; (or the &lt;code&gt;ListView&lt;/code&gt; equivalent), you&amp;rsquo;re taking advantage of the observer pattern.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;RecyclerView&lt;/code&gt; is an observer of any changes to the &lt;code&gt;Adapter&lt;/code&gt;&amp;rsquo;s data, but you could have more than one observer. Any object that wants to be an observer of the &lt;code&gt;Adapter&lt;/code&gt;&amp;rsquo;s data would just have to call &lt;code&gt;registerDatasetObserver()&lt;/code&gt; just like the &lt;code&gt;RecyclerView&lt;/code&gt; does.&lt;/p&gt;
+
+&lt;p&gt;If you want to use RxJava to deliver asynchronous data to multiple &lt;code&gt;Subscribers&lt;/code&gt; here&amp;rsquo;s what that might look like:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/Screen-Shot-2015-06-12-at-7.18.56-AM.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/Screen-Shot-2015-06-12-at-7.18.56-AM-e1434108030545-1024x397.png&#34; alt=&#34;Screen Shot 2015-06-12 at 7.18.56 AM&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Ignore the &lt;code&gt;publish()&lt;/code&gt; and &lt;code&gt;connect()&lt;/code&gt; method calls for a moment. We&amp;rsquo;ll talk about those later. The important thing here is that there are multiple &lt;code&gt;Subscribers&lt;/code&gt; set up to be notified of any changes in the &lt;code&gt;SearchWidget&lt;/code&gt;&amp;rsquo;s query string text. (By the way, if you&amp;rsquo;re not familiar with &lt;a href=&#34;https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#syntax&#34;&gt;lambda expressions&lt;/a&gt;, you should probably get familiar before continuing.)&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/?attachment_id=440&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/RxJavaTalk-02-e1434108825723-300x72.png&#34; alt=&#34;RxJavaTalk-02&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Alright, so we&amp;rsquo;ve just established that RxJava let&amp;rsquo;s you deliver asynchronous data to everyone who&amp;rsquo;s interested. The data delivered to &lt;code&gt;Subscriber&lt;/code&gt;&amp;rsquo;s, however, has a specific structure. &amp;rdquo;Data stream&amp;rdquo; is the phrase that I&amp;rsquo;ve been using to refer to that specific structure. We&amp;rsquo;re now in a position to see precisely what I&amp;rsquo;ve meant by this phrase.&lt;/p&gt;
+
+&lt;p&gt;A data stream, as Im defining it, is just ordered data that has a well-defined stopping point and a way of notifying processors of the data that an error has occurred.  Java&amp;rsquo;s &lt;code&gt;Reader&lt;/code&gt; would count as a data stream in the sense that I&amp;rsquo;m defining it here because its &lt;code&gt;read()&lt;/code&gt; method returns -1 once its reached the end of a byte[] and because it throws exceptions if there&amp;rsquo;s an error with processing the data.&lt;/p&gt;
+
+&lt;p&gt;I admit that this is might be an unnatural definition of the phrase &amp;rdquo;data stream,&amp;rdquo; but my primary goal here is to have a succinct phrase for referring to the structured data delivered by Observables rather than to come up with a definition for the phrase &amp;ldquo;data stream&amp;rdquo; that fits our ordinary usage, so don&amp;rsquo;t get philosophical on me. Just know that when I say &amp;ldquo;data stream,&amp;rdquo; I mean an ordered data that has a well-defined stopping point and a way of notifying processors of the data that an error has occurred.&lt;/p&gt;
+
+&lt;p&gt;The fact that RxJava deals with data streams rather than just data is reflected in their use of marble diagrams to represent Observables. I&amp;rsquo;ve been using these diagrams throughout the presentation. Let me briefly explain them:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/RxJavaTalk_as-a-data-stream.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/RxJavaTalk_as-a-data-stream-300x58.png&#34; alt=&#34;RxJavaTalk_as a data stream&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Each circle along this line represents a piece of data emitted by an Observable. The arrow at the end of the line represents the fact that the data is ordered. The solid line following the word &amp;ldquo;stream&amp;rdquo; indicates that the Observable stream has successfully emitted all of its items. An &amp;ldquo;X&amp;rdquo; at any point along the line, however, indicates that an error has occurred while attempting to emit the asynchronous data:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/RxJavaTalk_wtf-is-he-saying.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/RxJavaTalk_wtf-is-he-saying-300x58.png&#34; alt=&#34;RxJavaTalk_wtf is he saying&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;You saw this digram earlier. Its was a (bad) joke that represented your stream of consciousness as an Observable sequence that&amp;rsquo;s experienced an error because your mind was just blown by my initial summary of RxJava. Terrible jokes aside, that&amp;rsquo;s how you represent errors on a marble diagram.&lt;/p&gt;
+
+&lt;p&gt;Technically, these marble diagrams could represent synchronous data streams, but RxJava is really all about &lt;em&gt;asynchronous&lt;/em&gt; data streams. Asynchronous data streams are just data streams that are processed by consumers who aren&amp;rsquo;t going to just wait around for all of the data to be available. Consumers of a synchronous data stream say, &amp;ldquo;I&amp;rsquo;m not going anywhere until you give me that data!&amp;rdquo; Consumers of asynchronous data say, &amp;ldquo;Fetching the data sounds like it could take a while. I&amp;rsquo;m going to go about my day. Why don&amp;rsquo;t you notify me when you get that data for me.&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s recap. We started off with this statement of what RxJava does:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_rxjava_def.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_rxjava_def-1024x791.jpg&#34; alt=&#34;rxjava_prezi_rxjava_def&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;We now know what an asynchronous data stream is and we know that RxJava uses the Observer pattern to deliver these streams to everyone that&amp;rsquo;s interested. We still don&amp;rsquo;t know, however, what it means for a data stream to be &amp;ldquo;functionally transformed&amp;rdquo; nor do we know how RxJava allows us to represent anything as an asynchronous data stream that can be created and consumed on any thread. These are questions I&amp;rsquo;ll have to tackle in &lt;a href=&#34;http://www.philosophicalhacker.com/2015/06/19/introduction-to-rxjava-for-android-pt-2/&#34;&gt;the second part&lt;/a&gt; of this written version of &lt;a href=&#34;http://www.philosophicalhacker.com/2015/06/16/introduction-to-rxjava-for-android-the-talk/&#34;&gt;my upcoming RxJava talk&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Developer Golf</title>
+      <link>http://replace-this-with-your-hugo-site.com/2015/06/07/developer-golf/</link>
+      <pubDate>Sun, 07 Jun 2015 13:16:29 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/2015/06/07/developer-golf/</guid>
+      <description>
+
+&lt;h2 id=&#34;developer-golf-http-www-philosophicalhacker-com-wp-content-uploads-2015-06-developer-golf-png-http-www-philosophicalhacker-com-wp-content-uploads-2015-06-developer-golf-png:eb9f68c5ab418835dc2b3f836f4898aa&#34;&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/Developer-golf.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/Developer-golf.png&#34; alt=&#34;Developer golf&#34; /&gt;&lt;/a&gt;&lt;/h2&gt;
+
+&lt;h2 id=&#34;what-is-developer-golf:eb9f68c5ab418835dc2b3f836f4898aa&#34;&gt;What is Developer Golf?&lt;/h2&gt;
+
+&lt;p&gt;Developer golf is a fun way to measure developer performance. It turns our job into a game of producing the most lines of high quality (bug free) code.&lt;/p&gt;
+
+&lt;h2 id=&#34;how-do-you-play:eb9f68c5ab418835dc2b3f836f4898aa&#34;&gt;How do you play?&lt;/h2&gt;
+
+&lt;p&gt;You win developer golf in the same way that you win any golf game: by having the least amount of **strokes &lt;strong&gt;at the end of&lt;/strong&gt; a course**.&lt;/p&gt;
+
+&lt;p&gt;A &lt;strong&gt;stroke&lt;/strong&gt; in developer golf is a bug that makes it past the developer, whether that bug is found by QA or by users (in production). Once the cause of the bug is found, &lt;code&gt;git-blame&lt;/code&gt; can be used to determine which developer gains a stroke for the bug.&lt;/p&gt;
+
+&lt;p&gt;A &lt;strong&gt;course &lt;/strong&gt;in developer golf could be a sprint or a release. &lt;strong&gt;Par&lt;/strong&gt; for the course is calculated by averaging out the ratio of story points to bugs for all previous sprints and/or releases and then dividing that number by the number of developers on a team. Here&amp;rsquo;s an example:&lt;/p&gt;
+
+&lt;blockquote&gt;Sprint 1: 140 story points/14 bugs
+
+Sprint 2: 160 story points/16 bugs
+
+Sprint 3: 130 story points/ 13 bugs
+
+Average story point to bug ratio: 10
+
+Number of devs on a team: 2
+
+Par for the next course: 5&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Mulligans&lt;/strong&gt; can be earned by contributing significantly more code than your team members. Mulligans are earned prior to the start of a course. In order to determine how many mulligans a developer has:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;For every developer, calculate her average number of contributions (additions and deletions) per week.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Calculate the standard deviation for weekly team member contributions.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The number of mulligans a developer has earned is equal to the square of the number of standard deviations her average weekly contribution is above the average weekly contribution for all developers. (You can&amp;rsquo;t have negative mulligans.)&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Here&amp;rsquo;s an example:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Average weekly contributions:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Bob: 1000 contributions&lt;/p&gt;
+
+&lt;p&gt;Barbara: 2000 contributions&lt;/p&gt;
+
+&lt;p&gt;Billy: 3000 contributions&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Standard deviation: 1000&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Billy gets a mulligan.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Team play:&lt;/strong&gt; You could introduce team play simply by treating teams as you would individuals.&lt;/p&gt;
+
+&lt;p&gt;Happy golfing!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Unit Testing Dynamically Constructed Views</title>
+      <link>http://replace-this-with-your-hugo-site.com/2015/06/06/unit-testing-dynamically-constructed-views/</link>
+      <pubDate>Sat, 06 Jun 2015 11:08:03 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/2015/06/06/unit-testing-dynamically-constructed-views/</guid>
+      <description>
+
+&lt;p&gt;Some view hierarchies in Android are specified statically. The structure of these hierarchies does not change at run-time. Occasionally, we need to have dynamically constructed view hierarchies, hierarchies whose structure change at run-time. We might need to, for example, add or remove a view depending on some data we&amp;rsquo;ve fetched or in response to some input. The &lt;code&gt;SessionDetailActivity&lt;/code&gt; in Google&amp;rsquo;s IOSched app has a dynamically constructed view hierarchy. The number of tags associated with a particular IO session determines how many tag views are added to the &lt;code&gt;SessionDetailActivity&lt;/code&gt;&amp;rsquo;s view hierarchy.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-04.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-04.png&#34; alt=&#34;IO Testing Talk-04&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;In this screenshot, the &amp;ldquo;Distribute,&amp;rdquo; &amp;ldquo;Android,&amp;rdquo; and &amp;ldquo;Games&amp;rdquo; tags are added to the view hierarchy based on the tags associated with the &amp;rdquo;Going global with Google Play&amp;rdquo; IO session. In this post, I&amp;rsquo;ll outline an approach that I used to write the code that is both unit testable and able to dynamically construct the &lt;code&gt;SesisonDetailActivity&lt;/code&gt;&amp;rsquo;s view hierarchy. This post is a part of a series of parts in which I discuss how we can take steps towards &lt;a href=&#34;http://www.philosophicalhacker.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/&#34;&gt;making Google&amp;rsquo;s IOSched app unit testable&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;As &lt;a href=&#34;http://www.philosophicalhacker.com/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/&#34;&gt;I&amp;rsquo;ve stated elsewhere&lt;/a&gt;, dependency injection is key to making our apps unit testable. Because the MVP pattern allows us to inject dependencies into Presenters, objects which contain much of our app&amp;rsquo;s business logic, the pattern plays a key role in making our apps unit testable in general. Unsurprisingly, the pattern also plays a role in helping us write unit testable dynamically constructed views.&lt;/p&gt;
+
+&lt;p&gt;If you&amp;rsquo;re not familiar with MVP, you should check out &lt;a href=&#34;https://corner.squareup.com/2014/10/advocating-against-android-fragments.html&#34;&gt;this post&lt;/a&gt; in which Square talks about how they use MVP to get rid of fragments and to facilitate unit testing. &lt;a href=&#34;http://hannesdorfmann.com/android/mosby/&#34;&gt;This post&lt;/a&gt; in which Hannes Dorfmann introduces a library he wrote to facilitate the application of the MVP pattern also contains a decent introduction to the pattern.&lt;/p&gt;
+
+&lt;p&gt;Before I outline my approach to refactoring the &lt;code&gt;SessionDetailActivity&lt;/code&gt; so that we can have unit testable, view constructing code, let&amp;rsquo;s try to get a handle on how the &lt;code&gt;SessionDetailActivity&lt;/code&gt;works without any kind of refactoring. Here&amp;rsquo;s what the code currently looks like:&lt;/p&gt;
+
+&lt;p&gt;There are few important things to notice about this code fragment.&lt;/p&gt;
+
+&lt;p&gt;First, note that there&amp;rsquo;s business logic that &lt;em&gt;determines the structure of the view hierarchy that&amp;rsquo;s being built&lt;/em&gt; by this method. For example, if one of the tags has an id that&amp;rsquo;s equal to the keynote speaker tag id, we don&amp;rsquo;t want to add a view to the tags container for that tag (lines 18-31). Let&amp;rsquo;s call this kind of business logic &amp;ldquo;view-hierarchy-affecting business logic.&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;Also note that there&amp;rsquo;s business logic that determines the properties of the views that have been added by the view-hierarchy-affecting business logic. More specifically, it contains code that determines how the &lt;em&gt;how the app should respond when the user interacts with the views that are a part of the dynamically constructed view hierarchy&lt;/em&gt;. Here I have in mind the piece of the method that set&amp;rsquo;s up the tag view&amp;rsquo;s &lt;code&gt;OnClickListener&lt;/code&gt; to show them a list of IO sessions that have the tag associated with the tag view the user selected (lines 55 - 64). Let&amp;rsquo;s call this kind of business logic &amp;ldquo;view-property-affecting business logic.&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;The problem of creating unit testable, dynamically constructed views is basically the problem of finding sensible places to put these two different kinds of business logic. Here&amp;rsquo;s what I suggest, the view-hierarchy-affecting business logic should go in a &lt;code&gt;SessionDetailPresenter&lt;/code&gt;:&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;SessionDetailActivity&lt;/code&gt; in this code segment is acting as the View within the MVP triad, and as such, it should not contain any business logic. Thus, we know that the view-property-affecting business logic should not be within the &lt;code&gt;SessionDetailActivity&lt;/code&gt;. Instead of placing the view-property affecting business logic within the &lt;code&gt;SessionDetailActivity&lt;/code&gt;, we have the &lt;code&gt;SessionDetailActivity&lt;/code&gt; delegate that logic out to another View-Presenter pair:&lt;/p&gt;
+
+&lt;p&gt;The &amp;ldquo;SessionTagViewTranslator&amp;rdquo; in this code segment is really just the View within the View-Presenter pair. For reasons that I discuss &lt;a href=&#34;http://www.philosophicalhacker.com/2015/04/05/dont-call-it-mvp/&#34;&gt;here&lt;/a&gt;, I prefer the name &amp;ldquo;ViewTranslator&amp;rdquo; over &amp;ldquo;View&amp;rdquo; because it more clearly marks the difference between an MVP View and an Android View. Astute readers will notice that the SessionDetailActivity shouldn&amp;rsquo;t be responsible for forwarding the click event on the view to the TagPresenter. This problem arises because of a circular dependency between MVP Views and Presenters. I&amp;rsquo;ll discuss how to break this dependency in my next post. The &lt;code&gt;TagPresenter&lt;/code&gt; is fairly trivial, but here&amp;rsquo;s what it looks like:&lt;/p&gt;
+
+&lt;p&gt;The SesionTagViewTranslator is even more trivial, so I won&amp;rsquo;t bother showing the code for that.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion:de96b0d86be079e91b1b191cfad3b31b&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;To sum it all up: dynamically constructed views often have two different types of business logic: view-hierarchy-affecting business logic and view-property-affecting business logic. Making these views unit testable consists of two steps: First, place the view-hierarchy-affecting business logic in a top level presenter like the &lt;code&gt;SessionDetailPresenter&lt;/code&gt;. Second have an MVP-View (like the &lt;code&gt;SessionDetailActivity&lt;/code&gt;) create View-Presenter pairs for each Android view that&amp;rsquo;s added to the view hierarchy.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Towards A Unit Testable Fork of Google&#39;s IOSched App</title>
+      <link>http://replace-this-with-your-hugo-site.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/</link>
+      <pubDate>Sun, 31 May 2015 20:11:16 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/</guid>
+      <description>
+
+&lt;p&gt;In my recent &lt;a href=&#34;http://www.philosophicalhacker.com/2015/04/10/against-android-unit-tests/&#34;&gt;Against Android Unit Tests&lt;/a&gt; series, I discussed the difficulties of unit testing android applications and proposed a different way of building applications that would enhance their unit testability. My proposal in that series was really largely a rough sketch of what it would take to make parts of Google&amp;rsquo;s IOSched app unit testable.&lt;/p&gt;
+
+&lt;p&gt;More recently, I&amp;rsquo;ve started to fill in the details of that proposal by forking the IOSched repo and refactoring it to make it unit testable. In the next few posts, I&amp;rsquo;ll be discussing some of the challenges that arose when attempting to make the &lt;code&gt;SessionDetailActivity&lt;/code&gt; unit testable within the IOSched app. In this post, I want to provide a broad overview of the challenges I&amp;rsquo;ll be discussing.&lt;/p&gt;
+
+&lt;h2 id=&#34;unit-testing-dynamically-constructed-views:be0df47147e69281d62bde6a0150c690&#34;&gt;Unit Testing Dynamically Constructed Views&lt;/h2&gt;
+
+&lt;p&gt;Some of the views within the &lt;code&gt;SessionDetailActivity&lt;/code&gt; are built dynamically. The tags that appear below the session&amp;rsquo;s description are a good example of this:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/04/screenshot-0646am-apr-17-2015.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/04/screenshot-0646am-apr-17-2015-169x300.png&#34; alt=&#34;Screenshot (06:46AM, Apr 17, 2015)&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;It wasn&amp;rsquo;t immediately obvious to me how to leverage the &amp;ldquo;MVP&amp;rdquo; pattern to maintain the class&amp;rsquo;s unit testability in the face of dynamically built views. I&amp;rsquo;ll discuss how I solved this problem in &lt;a href=&#34;http://www.philosophicalhacker.com/2015/06/06/unit-testing-dynamically-constructed-views/&#34;&gt;the first post of this series&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;circular-dependencies-between-viewtranslators-and-presenters:be0df47147e69281d62bde6a0150c690&#34;&gt;Circular Dependencies between ViewTranslators and Presenters&lt;/h2&gt;
+
+&lt;p&gt;&amp;ldquo;ViewTranslator&amp;rdquo; is just the name that I prefer for what is traditionally called the &amp;ldquo;View&amp;rdquo; within the MVP pattern. In &lt;a href=&#34;https://corner.squareup.com/2014/10/advocating-against-android-fragments.html&#34;&gt;Square&amp;rsquo;s description of the MVP pattern&lt;/a&gt;, we can see that there&amp;rsquo;s a circular dependency between the ViewTranslator and Presenter. For reasons that will be clear after I&amp;rsquo;ve discussed my solution to the problem of creating unit testable dynamically constructed views, this circular dependency is not ideal. In the second post, I&amp;rsquo;ll discuss how I resolved this circular dependency.&lt;/p&gt;
+
+&lt;h2 id=&#34;static-methods:be0df47147e69281d62bde6a0150c690&#34;&gt;Static Methods&lt;/h2&gt;
+
+&lt;p&gt;As &lt;a href=&#34;http://googletesting.blogspot.com/2008/12/static-methods-are-death-to-testability.html&#34;&gt;Google&amp;rsquo;s testing blog points out&lt;/a&gt;, static methods spell trouble for your app&amp;rsquo;s unit testability. Unfortunately, there are several static methods within &lt;code&gt;SessionDetailActivity&lt;/code&gt; that needed to remove to make unit testing possible. In the third post, I discuss how I removed those static methods.&lt;/p&gt;
+
+&lt;h2 id=&#34;towards-a-unit-testable-fork-of-google-s-iosched-app:be0df47147e69281d62bde6a0150c690&#34;&gt;Towards a Unit Testable Fork of Google&amp;rsquo;s IOSched App&lt;/h2&gt;
+
+&lt;p&gt;My hope is to eventually have &lt;a href=&#34;https://github.com/kmdupr33/iosched&#34;&gt;a fork of Google&amp;rsquo;s IOSched app&lt;/a&gt; that allows us to unit test all of its business logic. Making a non-trivial app like IOSched unit testable will tell us a lot about what it really takes to unit test Android apps. We might find out that unit testing Android apps is just too impractical. Either way, I look forward to exploring how we might pull this off.&lt;/p&gt;
+
+&lt;p&gt;You can check out my progress towards this goal by looking at the aforementioned fork of the IOSched repo. I&amp;rsquo;ll try to make sure the master branch always has something that is semi-polished in it. I make no guarantees about other branches. I&amp;rsquo;d love to work with others toward this goal. If people are interested in contributing to the repo, I&amp;rsquo;ll put together some code standards and guidelines for contributing.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>An Introduction to Unit Testing on Android</title>
+      <link>http://replace-this-with-your-hugo-site.com/2015/05/29/making-the-most-of-android-studios-unit-testing-support/</link>
+      <pubDate>Fri, 29 May 2015 11:23:14 +0000</pubDate>
+      
+      <guid>http://replace-this-with-your-hugo-site.com/2015/05/29/making-the-most-of-android-studios-unit-testing-support/</guid>
+      <description>&lt;p&gt;Yesterday at IO Extended Orlando, I gave a talk on testing. What follows is a written version of the presentation I gave.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-01.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-01.png&#34; alt=&#34;IO Testing Talk-01&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Android 1.2 introduced unit testing support. Now, we can run junit tests on the jvm while we&amp;rsquo;re developing our apps. During my talk, we&amp;rsquo;ll discuss the following questions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Why should anyone care about this new feature?&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;What the heck is unit testing anyways?&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Briefly, I&amp;rsquo;ll also mention some of the challenges of writing unit tests for Android.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-02.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-02.png&#34; alt=&#34;IO Testing Talk-02&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Before we get into those questions, let me introduce myself. I&amp;rsquo;m Matt Dupree. I&amp;rsquo;m a wannabe philosophy professor turned wannabe tech entrepreneur, which is just a fancy way of saying that I studied philosophy as an undergrad and graduate student, decided I didn&amp;rsquo;t want to be poor, and become a software developer about 2 years ago. That&amp;rsquo;s a bit of an oversimplification, but you&amp;rsquo;re not here to hear about my career choices. In case you care to know more, you can check out &lt;a href=&#34;http://philosophicalhacker.com/2014/04/21/why-im-glad-my-dream-job-didnt-work-out/&#34;&gt;this post&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-03.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-03.png&#34; alt=&#34;IO Testing Talk-03&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Many of us don&amp;rsquo;t really do a lot of testing for Android. This is unfortunate because there are plenty of cases where writing tests can be very useful. Writing unit tests, moreover, can be particularly useful for getting targeted info on whether a certain class is working correctly. Here&amp;rsquo;s a little experiment designed to show the value of writing unit tests on Android.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-04.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-04.png&#34; alt=&#34;IO Testing Talk-04&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s say we were working on Google&amp;rsquo;s IO Sched app from last year. The above screenshot is a shot of the &lt;code&gt;SessionDetailActivity&lt;/code&gt;. This is where the user can view the details about a session and add that session to their IO schedule. The business logic for what happens when the user presses the plus button on the screen is as follows:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;If the user taps the plus button before the IO session has happened, the session is added to the user&amp;rsquo;s schedule and a notification is set to remind the user that the IO session is coming up.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;If the user taps the plus button after the IO session has happened, when the user returns to the screen, they will be presented with a card that asks them for feedback about the session.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;If the session has already been added to the user&amp;rsquo;s schedule, when they enter the session detail screen, they should see a &amp;ldquo;check&amp;rdquo; button instead of a &amp;ldquo;plus&amp;rdquo; button, and pressing this button should perform the reverse of one of the two above operations, depending on whether the check button is pressed before or after the IO session.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You could test all of this business logic manually, but its must faster to write unit tests that verify that the &lt;code&gt;SessionDetailActivity&lt;/code&gt; does all of this correctly. Unit tests that verify this behavior will complete in seconds. Manual testing, on the other hand, takes over a minute to complete:&lt;/p&gt;
+
+&lt;p&gt;Now, at this point, some of you make the following argument:&lt;/p&gt;
+
+&lt;blockquote&gt;Because unit tests don&#39;t actually tell you anything about the overall behavior of the system, there will be bugs that will slip past a unit test. Thus, we should prefer manual testing (or perhaps automated functional UI tests) over unit testing.&lt;/blockquote&gt;
+
+&lt;p&gt;This is a tricky argument, but fortunately, I have a lot of experience with those.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-05.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-05.png&#34; alt=&#34;IO Testing Talk-05&#34; /&gt;&lt;/a&gt;Here&amp;rsquo;s my response to the above argument: Even if there are bugs that can slip past unit tests, we are better off, all other things being equal, if we have unit tests than if we didn&amp;rsquo;t have unit tests. To see this, let&amp;rsquo;s look at the three possible outcomes for unit testing the functionality I mentioned above.&lt;/p&gt;
+
+&lt;p&gt;In the first outcome (on the far left), our unit tests pass and our functional tests pass. Everything works great, so we can celebrate with &lt;a href=&#34;http://slime.clay.io/game/slime&#34;&gt;a game of slimeball&lt;/a&gt; or something.&lt;/p&gt;
+
+&lt;p&gt;In the second outcome, our unit tests fail. In that situation, we know exactly where the problem is, which makes debugging much easier.&lt;/p&gt;
+
+&lt;p&gt;In the final outcome (on the far right), our unit tests pass, but our functional tests fail. The above argument against unit testing focuses on this scenario, but even if we find ourselves in this scenario, we&amp;rsquo;re better off having unit tests because we have a good head start on where the problem lies: because our unit test passed, we know that the problem is not within the &lt;code&gt;SessionDetailActivity&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;So, in any possible scenario where we&amp;rsquo;ve run our unit and functional tests, we&amp;rsquo;re better off, all other things being equal, having our unit tests rather than not having them. Astute readers will point out that the &amp;ldquo;all other things being equal&amp;rdquo; clause of my claim is almost never satisfied when working on a project because of the time investment we make into writing unit tests. That&amp;rsquo;s true. Technically, I need to make a stronger claim about the general value of unit tests in order to completely convince you that they are worth the time investment (especially on Android), but I think I&amp;rsquo;ve said enough to show that its worth exploring whether unit tests would be useful for the project that you&amp;rsquo;re working on.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-06.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-06.png&#34; alt=&#34;IO Testing Talk-06&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;We just talked a lot about unit tests, but we never did ask a simple question: what exactly is a unit test? Some of us might have a clear definition of a unit test in our mind, but until recently, I was not one of those people. I actually think that there&amp;rsquo;s a good amount of confusion over what unit tests are, especially among android developers. The confusion on the definition of a unit test is, I think, a result of us being pretty vague when we use the term. We can see this if we look at two unit test cases mentioned on developer.android.com that are both called &amp;ldquo;unit tests,&amp;rdquo; but in fact have very different properties. The first snippet is found on &lt;a href=&#34;http://developer.android.com/training/activity-testing/activity-unit-testing.html&#34;&gt;the android page about unit testing activities&lt;/a&gt;:&lt;/p&gt;
+
+&lt;p&gt;This second snippet is found on the android page entitled &amp;rdquo;&lt;a href=&#34;http://developer.android.com/training/testing/unit-testing/local-unit-tests.html&#34;&gt;Building Effective Unit Tests&lt;/a&gt;&amp;ldquo;:&lt;/p&gt;
+
+&lt;p&gt;In spite of their differences, these two snippets are both called &amp;ldquo;unit tests.&amp;rdquo; I don&amp;rsquo;t mean to quibble over definitions, but our sloppiness with the word &amp;ldquo;unit test&amp;rdquo; is, I think, unhelpful. Here&amp;rsquo;s a more precise definition:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;A unit test is a test that can verify that &lt;strong&gt;all of the code&lt;/strong&gt; in exactly one &lt;strong&gt;non-trivial&lt;/strong&gt; class is working correctly. If this test fails, we know that the problem is located in that class being tested.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;On this definition, tests like &lt;code&gt;MyActivityUnitTestCase&lt;/code&gt; in the first snippet would not count as a unit tests because, as &lt;a href=&#34;http://philosophicalhacker.com/2015/04/17/why-android-unit-testing-is-so-hard-pt-1/&#34;&gt;I&amp;rsquo;ve pointed out elsewhere&lt;/a&gt;, when testing activities, we often lack enough control over the pre-act state required to exercise different branches of the methods we want to test. Moreover, &lt;a href=&#34;http://philosophicalhacker.com/2015/04/24/why-android-unit-testing-is-so-hard-pt-2/&#34;&gt;activities often contain dependencies that aren&amp;rsquo;t injected&lt;/a&gt;, so if a test fails, it may fail because of an error in the code of one of the non-mocked dependencies within the activity being tested.&lt;/p&gt;
+
+&lt;p&gt;I just talked about dependencies that have been &amp;ldquo;injected.&amp;ldquo; &amp;rdquo;Dependency injection&amp;rdquo; and its related phrases happens to be another term that has some sloppy usage. Here&amp;rsquo;s my understanding of dependency injection:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-07.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-07.png&#34; alt=&#34;IO Testing Talk-07&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This definition is a shortened version of the definition that Martin Fowler, the guy who coined the term &amp;ldquo;dependency injection,&amp;rdquo; offers in his &lt;a href=&#34;http://martinfowler.com/articles/injection.html&#34;&gt;article on dependency injection&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If we accept my definition of &amp;ldquo;unit testing&amp;rdquo; and my interpretation of Martin Fowler&amp;rsquo;s definition of &amp;ldquo;dependency injection&amp;rdquo;, then we can say that &amp;ldquo;unit testing&amp;rdquo; Android component classes (e.g., Activities, Services, Fragments, etc.) turns out to be extremely difficult largely because there&amp;rsquo;s no way to have true dependency injection for our app component class, classes that typically hold much of the business logic that we want to test.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-08.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-08.png&#34; alt=&#34;IO Testing Talk-08&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;ve written extensively about this topic in my series entitled &amp;ldquo;&lt;a href=&#34;http://philosophicalhacker.com/2015/04/10/against-android-unit-tests/&#34;&gt;Against Android Unit Tests.&lt;/a&gt;&amp;rdquo; I&amp;rsquo;ve also made some suggestions on how we might write unit tests for android &lt;a href=&#34;http://www.philosophicalhacker.com/2015/05/01/how-to-make-our-android-apps-unit-testable-pt-1/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

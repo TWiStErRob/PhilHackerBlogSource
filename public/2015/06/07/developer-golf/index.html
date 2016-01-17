@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  	<meta property="og:title" content=" Developer Golf &middot;  Philosophical Hacker" />
+  	<meta property="og:site_name" content="Philosophical Hacker" />
+  	<meta property="og:url" content="http://replace-this-with-your-hugo-site.com/2015/06/07/developer-golf/" />
+
+    
+  	<meta property="og:type" content="article" />
+
+    <meta property="og:article:published_time" content="2015-06-07T13:16:29Z" />
+
+    
+    
+
+  <title>
+     Developer Golf &middot;  Philosophical Hacker
+  </title>
+
+    <meta name="description" content="Articles on android and go development" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="http://replace-this-with-your-hugo-site.com/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="http://replace-this-with-your-hugo-site.com/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="http://replace-this-with-your-hugo-site.com/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="http://replace-this-with-your-hugo-site.com/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+
+    
+      
+          <link href="http://replace-this-with-your-hugo-site.com/index.xml" rel="alternate" type="application/rss+xml" title="Philosophical Hacker" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.15" />
+
+    <link rel="canonical" href="http://replace-this-with-your-hugo-site.com/2015/06/07/developer-golf/" />
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+    </ul>
+    
+    
+    <a class="subscribe-button icon-feed" href="http://replace-this-with-your-hugo-site.com/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+
+<header class="main-header post-head no-cover">
+  <nav class="main-nav clearfix">
+
+
+  
+  
+      <a class="menu-button icon-feed" href="http://replace-this-with-your-hugo-site.com/index.xml">&nbsp;&nbsp;Subscribe</a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">Developer Golf</h1>
+        <small></small>
+
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2015-06-07T13:16:29Z">
+            Jun 7, 2015
+          </time>
+        
+         
+        </section>
+    </header>
+
+    <section class="post-content">
+      
+
+<h2 id="developer-golf-http-www-philosophicalhacker-com-wp-content-uploads-2015-06-developer-golf-png-http-www-philosophicalhacker-com-wp-content-uploads-2015-06-developer-golf-png:eb9f68c5ab418835dc2b3f836f4898aa"><a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/Developer-golf.png"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/Developer-golf.png" alt="Developer golf" /></a></h2>
+
+<h2 id="what-is-developer-golf:eb9f68c5ab418835dc2b3f836f4898aa">What is Developer Golf?</h2>
+
+<p>Developer golf is a fun way to measure developer performance. It turns our job into a game of producing the most lines of high quality (bug free) code.</p>
+
+<h2 id="how-do-you-play:eb9f68c5ab418835dc2b3f836f4898aa">How do you play?</h2>
+
+<p>You win developer golf in the same way that you win any golf game: by having the least amount of **strokes <strong>at the end of</strong> a course**.</p>
+
+<p>A <strong>stroke</strong> in developer golf is a bug that makes it past the developer, whether that bug is found by QA or by users (in production). Once the cause of the bug is found, <code>git-blame</code> can be used to determine which developer gains a stroke for the bug.</p>
+
+<p>A <strong>course </strong>in developer golf could be a sprint or a release. <strong>Par</strong> for the course is calculated by averaging out the ratio of story points to bugs for all previous sprints and/or releases and then dividing that number by the number of developers on a team. Here&rsquo;s an example:</p>
+
+<blockquote>Sprint 1: 140 story points/14 bugs
+
+Sprint 2: 160 story points/16 bugs
+
+Sprint 3: 130 story points/ 13 bugs
+
+Average story point to bug ratio: 10
+
+Number of devs on a team: 2
+
+Par for the next course: 5</blockquote>
+
+<p><strong>Mulligans</strong> can be earned by contributing significantly more code than your team members. Mulligans are earned prior to the start of a course. In order to determine how many mulligans a developer has:</p>
+
+<ol>
+<li><p>For every developer, calculate her average number of contributions (additions and deletions) per week.</p></li>
+
+<li><p>Calculate the standard deviation for weekly team member contributions.</p></li>
+
+<li><p>The number of mulligans a developer has earned is equal to the square of the number of standard deviations her average weekly contribution is above the average weekly contribution for all developers. (You can&rsquo;t have negative mulligans.)</p></li>
+</ol>
+
+<p>Here&rsquo;s an example:</p>
+
+<blockquote>
+<p><strong>Average weekly contributions:</strong></p>
+
+<p>Bob: 1000 contributions</p>
+
+<p>Barbara: 2000 contributions</p>
+
+<p>Billy: 3000 contributions</p>
+
+<p><strong>Standard deviation: 1000</strong></p>
+
+<p>Billy gets a mulligan.</p>
+</blockquote>
+
+<p><strong>Team play:</strong> You could introduce team play simply by treating teams as you would individuals.</p>
+
+<p>Happy golfing!</p>
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+
+    
+
+
+
+
+
+<section class="author">
+  <h4><a href="http://replace-this-with-your-hugo-site.com/"></a></h4>
+  
+  <p>Read <a href="http://replace-this-with-your-hugo-site.com/">more posts</a> by this author.</p>
+  
+  <div class="author-meta">
+    
+    
+  </div>
+</section>
+
+
+
+    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Developer%20Golf&amp;url=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f06%2f07%2fdeveloper-golf%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f06%2f07%2fdeveloper-golf%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f06%2f07%2fdeveloper-golf%2f&amp;description=Developer%20Golf"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f06%2f07%2fdeveloper-golf%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+    
+
+
+
+
+  </footer>
+</article>
+
+</main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Philosophical Hacker</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/jquery.js"></script>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/index.js"></script>
+    
+</body>
+</html>
+

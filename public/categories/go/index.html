@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  	<meta property="og:title" content=" Go &middot;  Philosophical Hacker" />
+  	<meta property="og:site_name" content="Philosophical Hacker" />
+  	<meta property="og:url" content="http://replace-this-with-your-hugo-site.com/categories/go/" />
+
+    
+    <meta property="og:type" content="website" />
+    
+
+  <title>
+     Go &middot;  Philosophical Hacker
+  </title>
+
+    <meta name="description" content="Articles on android and go development" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="http://replace-this-with-your-hugo-site.com/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="http://replace-this-with-your-hugo-site.com/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="http://replace-this-with-your-hugo-site.com/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="http://replace-this-with-your-hugo-site.com/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+
+    
+      
+          <link href="http://replace-this-with-your-hugo-site.com/index.xml" rel="alternate" type="application/rss+xml" title="Philosophical Hacker" />
+      
+      
+        <link href="http://replace-this-with-your-hugo-site.com/categories/go/index.xml" rel="alternate" type="application/rss+xml" title="Go &middot; Philosophical Hacker" />
+      
+    
+    <meta name="generator" content="Hugo 0.15" />
+
+    <link rel="canonical" href="http://replace-this-with-your-hugo-site.com/categories/go/" />
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+    </ul>
+    
+    
+    <a class="subscribe-button icon-feed" href="http://replace-this-with-your-hugo-site.com/categories/go/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+
+	<header class="main-header tag-head" style="background-image: url(http://replace-this-with-your-hugo-site.com/images/the-thinker.jpg)">
+
+    <nav class="main-nav overlay clearfix">
+      
+      
+        
+          <a class="menu-button icon-feed" href="http://replace-this-with-your-hugo-site.com/categories/go/index.xml">&nbsp;&nbsp;Subscribe</a>
+        
+      
+    </nav>
+    <div class="vertical">
+        <div class="main-header-content inner">
+            <h1 class="page-title">Go</h1>
+            <h2 class="page-description">
+                
+            </h2>
+        </div>
+    </div>
+</header>
+
+<main class="content" role="main">
+    
+
+	<div class="extra-pagination inner">
+    <nav class="pagination" role="navigation">
+	
+	<span class="page-number">Page 1 of 1</span>
+	
+</nav>
+
+	</div>
+
+	
+	   
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2016/01/14/should-we-use-mocking-libraries-for-go-testing/">Should we use mocking libraries for go testing?</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p><p>A few weeks ago, I started learning go. Since I&rsquo;m a wannabe TDD-er, I took at look at some resources on testing go code. I stumbled upon <a href="https://talks.golang.org/2014/testing.slide#1">Andrew Gerrand&rsquo;s excellent Testing Techniques talk</a> in which he says this:</p>
+
+<blockquote>Go eschews a lot of things, including mocks and fakes.</blockquote>
+
+<p>&ldquo;Alright cool,&rdquo; I thought to myself. I&rsquo;m down to &ldquo;do as the gophers do&rdquo; and eschew mocks. Later on during his talk, Andrew Gerrand mentions <a href="https://github.com/golang/mock">gomock</a>, a mocking library, and reluctantly says</p>
+
+<blockquote>[mocking libraries like gomock] are fine, but I find that on balance the hand-written fakes tend be easier to reason about and clearer to see what's going on, but I'm not an enterprise go programmer so maybe people do need that so I don't know, but that's my advice.</blockquote>
+
+<p>Of course, after hearing that, I felt a little confused and unsure whether I should refrain from using mocking libraries in go. To make matters worse, I took a look at gomock and was surprised to find that its written by two engineers at Google.</p>
+
+<p>At that point, it seemed that the question of whether we should use a mocking library while testing go code is a bit of a contentious question, even within Google. I found the seeming contentious nature of this question pretty unhelpful and confusing when I was trying to get a handle on how to write good go code. However, it led me to do some research on the pros and cons of mocking libraries vs hand-written mocks, and in this post, I present the conclusions I came to based on my research:</p>
+
+<p>1. The apparent contentiousness about whether to use use a mocking library if probably partially due to vague terminology.</p>
+
+<ol>
+<li>If we are clear about our terms, the argument against using mocking libraries is not very compelling.</li>
+</ol>
+ <a class="read-more" href="/2016/01/14/should-we-use-mocking-libraries-for-go-testing/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        
+        <time class="post-date" datetime="2016-01-14T02:20:53Z">
+            14 Jan 2016
+        </time>
+    </footer>
+</article>
+
+	
+
+	<nav class="pagination" role="navigation">
+	
+	<span class="page-number">Page 1 of 1</span>
+	
+</nav>
+
+</main>
+
+
+
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Philosophical Hacker</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/jquery.js"></script>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/index.js"></script>
+    
+</body>
+</html>

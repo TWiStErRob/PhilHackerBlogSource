@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  	<meta property="og:title" content=" Philosophical Hacker" />
+  	<meta property="og:site_name" content="Philosophical Hacker" />
+  	<meta property="og:url" content="http://replace-this-with-your-hugo-site.com/" />
+
+    
+    <meta property="og:type" content="website" />
+    
+
+  <title>
+     Philosophical Hacker
+  </title>
+
+    <meta name="description" content="Articles on android and go development" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="http://replace-this-with-your-hugo-site.com/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="http://replace-this-with-your-hugo-site.com/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="http://replace-this-with-your-hugo-site.com/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="http://replace-this-with-your-hugo-site.com/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+
+    
+      
+      
+        <link href="http://replace-this-with-your-hugo-site.com/index.xml" rel="alternate" type="application/rss+xml" title="Philosophical Hacker" />
+      
+    
+    <meta name="generator" content="Hugo 0.15" />
+
+    <link rel="canonical" href="http://replace-this-with-your-hugo-site.com/" />
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+    </ul>
+    
+    
+    <a class="subscribe-button icon-feed" href="http://replace-this-with-your-hugo-site.com/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+<header class="main-header " style="background-image: url(http://replace-this-with-your-hugo-site.com/images/the-thinker.jpg)">
+
+
+    <nav class="main-nav overlay clearfix">
+        
+        
+            
+              <a class="menu-button icon-feed" href="http://replace-this-with-your-hugo-site.com/index.xml">&nbsp;&nbsp;Subscribe</a>
+            
+        
+    </nav>
+    <div class="vertical">
+        <div class="main-header-content inner">
+            
+                <a class="bloglogo" href="https://www.linkedin.com/in/k-matthew-dupree-44672178" target="_blank">
+                    <span class="icon-linkedin" style="color:white;font-size:2em"></span>
+                </a>
+            &nbsp;
+            
+            
+            
+                <a class="bloglogo" href="https://twitter.com/philosohacker" target="_blank">
+                    <span class="icon-twitter" style="color:white;font-size:2em"></span>
+                </a>
+            &nbsp;
+            
+            
+                <a class="bloglogo" href="https://www.facebook.com/philosophicalhacker" target="_blank">
+                    <span class="icon-facebook" style="color:white;font-size:2em"></span>
+                </a>
+            &nbsp;
+            
+            
+            
+            
+
+            <h1 class="page-title">Philosophical Hacker</h1>
+            <h2 class="page-description">Articles on android and go development</h2>
+        </div>
+    </div>
+    <a class="scroll-down icon-arrow-left" href="#content"><span class="hidden">Scroll Down</span></a>
+</header>
+
+
+<main id="content" class="content" role="main">
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    
+        
+            
+        
+    
+    
+    
+    
+    
+
+    <div class="extra-pagination inner">
+        <nav class="pagination" role="navigation">
+	
+	    <a class="newer-posts" href="/">&larr; Newer Posts</a>
+	
+	<span class="page-number">Page 2 of 4</span>
+	
+	    <a class="older-posts" href="/page/3/">Older Posts &rarr;</a>
+	
+</nav>
+
+    </div>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2015/06/12/an-introduction-to-rxjava-for-android/">An Introduction to RxJava for Android (Pt. 1)</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p><p>I&rsquo;m taking a brief break from talking about testing. I&rsquo;ll resume my discussion of how <a href="http://www.philosophicalhacker.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/">I&rsquo;m making Google&rsquo;s IOSched app unit testable</a> after I&rsquo;ve posted the content from <a href="http://www.meetup.com/University-Android/events/222048562/">my upcoming talk on RxJava</a>.</p>
+
+<p> <a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_rxjava_def.jpg"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_rxjava_def-1024x791.jpg" alt="rxjava_prezi_rxjava_def" /></a></p>
+ <a class="read-more" href="/2015/06/12/an-introduction-to-rxjava-for-android/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        
+        <time class="post-date" datetime="2015-06-12T12:34:53Z">
+            12 Jun 2015
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2015/06/07/developer-golf/">Developer Golf</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p><h2 id="developer-golf-http-www-philosophicalhacker-com-wp-content-uploads-2015-06-developer-golf-png-http-www-philosophicalhacker-com-wp-content-uploads-2015-06-developer-golf-png:eb9f68c5ab418835dc2b3f836f4898aa"><a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/Developer-golf.png"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/06/Developer-golf.png" alt="Developer golf" /></a></h2>
+
+<h2 id="what-is-developer-golf:eb9f68c5ab418835dc2b3f836f4898aa">What is Developer Golf?</h2>
+
+<p>Developer golf is a fun way to measure developer performance. It turns our job into a game of producing the most lines of high quality (bug free) code.</p>
+ <a class="read-more" href="/2015/06/07/developer-golf/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        
+        <time class="post-date" datetime="2015-06-07T13:16:29Z">
+            7 Jun 2015
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2015/06/06/unit-testing-dynamically-constructed-views/">Unit Testing Dynamically Constructed Views</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p><p>Some view hierarchies in Android are specified statically. The structure of these hierarchies does not change at run-time. Occasionally, we need to have dynamically constructed view hierarchies, hierarchies whose structure change at run-time. We might need to, for example, add or remove a view depending on some data we&rsquo;ve fetched or in response to some input. The <code>SessionDetailActivity</code> in Google&rsquo;s IOSched app has a dynamically constructed view hierarchy. The number of tags associated with a particular IO session determines how many tag views are added to the <code>SessionDetailActivity</code>&rsquo;s view hierarchy.</p>
+
+<p><a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-04.png"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-04.png" alt="IO Testing Talk-04" /></a></p>
+
+<p>In this screenshot, the &ldquo;Distribute,&rdquo; &ldquo;Android,&rdquo; and &ldquo;Games&rdquo; tags are added to the view hierarchy based on the tags associated with the &rdquo;Going global with Google Play&rdquo; IO session. In this post, I&rsquo;ll outline an approach that I used to write the code that is both unit testable and able to dynamically construct the <code>SesisonDetailActivity</code>&rsquo;s view hierarchy. This post is a part of a series of parts in which I discuss how we can take steps towards <a href="http://www.philosophicalhacker.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/">making Google&rsquo;s IOSched app unit testable</a>.</p>
+ <a class="read-more" href="/2015/06/06/unit-testing-dynamically-constructed-views/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        
+        <time class="post-date" datetime="2015-06-06T11:08:03Z">
+            6 Jun 2015
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/">Towards A Unit Testable Fork of Google&#39;s IOSched App</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p><p>In my recent <a href="http://www.philosophicalhacker.com/2015/04/10/against-android-unit-tests/">Against Android Unit Tests</a> series, I discussed the difficulties of unit testing android applications and proposed a different way of building applications that would enhance their unit testability. My proposal in that series was really largely a rough sketch of what it would take to make parts of Google&rsquo;s IOSched app unit testable.</p>
+
+<p>More recently, I&rsquo;ve started to fill in the details of that proposal by forking the IOSched repo and refactoring it to make it unit testable. In the next few posts, I&rsquo;ll be discussing some of the challenges that arose when attempting to make the <code>SessionDetailActivity</code> unit testable within the IOSched app. In this post, I want to provide a broad overview of the challenges I&rsquo;ll be discussing.</p>
+ <a class="read-more" href="/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        
+        <time class="post-date" datetime="2015-05-31T20:11:16Z">
+            31 May 2015
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2015/05/29/making-the-most-of-android-studios-unit-testing-support/">An Introduction to Unit Testing on Android</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p><p>Yesterday at IO Extended Orlando, I gave a talk on testing. What follows is a written version of the presentation I gave.</p>
+
+<p><a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-01.png"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-01.png" alt="IO Testing Talk-01" /></a></p>
+
+<p>Android 1.2 introduced unit testing support. Now, we can run junit tests on the jvm while we&rsquo;re developing our apps. During my talk, we&rsquo;ll discuss the following questions:</p>
+
+<ul>
+<li><p>Why should anyone care about this new feature?</p></li>
+
+<li><p>What the heck is unit testing anyways?</p></li>
+</ul>
+
+<p>Briefly, I&rsquo;ll also mention some of the challenges of writing unit tests for Android.</p>
+ <a class="read-more" href="/2015/05/29/making-the-most-of-android-studios-unit-testing-support/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        
+        <time class="post-date" datetime="2015-05-29T11:23:14Z">
+            29 May 2015
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/">What I&#39;ve Learned From Trying to Make An Android App Unit Testable</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p><p>For the past few posts, I&rsquo;ve introduced and showed how we would apply The Square Way of building Android applications. The primary motivation for The Square Way was to increase the unit testability of our applications. As I stated in the <a href="http://philosophicalhacker.com/2015/04/10/against-android-unit-tests/">introduction to this series</a>, most tests in Android are slow, instrumentation tests and/or tests that rely on third-party frameworks like Roboletric. The Square Way was supposed to help us write fast unit tests that didn&rsquo;t rely on any third-party frameworks.</p>
+
+<p>Now that we&rsquo;ve discussed <a href="http://philosophicalhacker.com/2015/04/17/why-android-unit-testing-is-so-hard-pt-1/">why unit testing in Android is so difficult</a> and seen how <a href="http://philosophicalhacker.com/2015/05/01/how-to-make-our-android-apps-unit-testable-pt-1/">The Square Way resolves those difficulties</a>, we are finally in a position to assess The Square Way as a whole as a method of creating unit testable Android applications. That assessment is the subject of this article. My assessment consists of the following three claims:</p>
+
+<ol>
+<li><p>Removing all compile time dependencies on the Android SDK is not necessary for us write fast unit tests for Android. (Its also not really a practical thing to try to do anyway.)</p></li>
+
+<li><p>Provided that we redefine The Square Way so that it does not require us to remove compile-time dependencies on the Android SDK, the only problem that arises when trying to apply The Square Way is simply writing all of boilerplate code. Fortunately, much of this boilerplate can be written for us by Android Studio.</p></li>
+
+<li><p>Dependency Injection is really the main &ldquo;active ingredient&rdquo; that allows The Square Way enhance the unit testability of our applications.</p></li>
+</ol>
+ <a class="read-more" href="/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        
+        <time class="post-date" datetime="2015-05-22T12:29:28Z">
+            22 May 2015
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2015/05/09/android-unit-testing-guides/">Android Unit Testing Guides</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p><p>In <a href="http://philosophicalhacker.com/2015/05/08/how-to-make-our-android-apps-unit-testable-pt-2/">my last post</a>, I showed how we can apply The Square Way to UI app component classes. More specifically I showed how The Square Way would have us rewrite the <code>SessionDetailActivity</code> so that we could unit test its <code>onStop()</code> method. At the end of my last post, I said that I&rsquo;d be spending this and the next post doing an overall assessment of The Square Way.</p>
+
+<p>I actually won&rsquo;t be doing that this post. I&rsquo;ll be postponing the overall assessment of The Square Way until the next few posts. Instead, what I want to do in this post is simply present a few unit-testability guides. These cheatsheets summarize much of what&rsquo;s been covered in the past few posts and provide you with simplified steps to follow if you are interested in enhancing your application&rsquo;s unit-testability via The Square Way.</p>
+ <a class="read-more" href="/2015/05/09/android-unit-testing-guides/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        
+        <time class="post-date" datetime="2015-05-09T13:20:54Z">
+            9 May 2015
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2015/05/08/how-to-make-our-android-apps-unit-testable-pt-2/">How to Make Our Android Apps Unit Testable (Pt. 2)</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p><p>In <a href="http://philosophicalhacker.com/2015/05/01/how-to-make-our-android-apps-unit-testable-pt-1/">my last post</a>, I introduced the “The Square Way” of structuring our android code. I said that The Square Way is a generalization of the approach that Square used to make the logic within their <code>Fragment</code>s unit testable. I also showed how The Square Way would have us rewrite the <code>SessionCalendarService</code> within Google’s IOSched app so that we could unit test the business logic within it. As we’ll see in this post, The Square Way also makes it easier/possible for us to unit test UI app component business logic.</p>
+ <a class="read-more" href="/2015/05/08/how-to-make-our-android-apps-unit-testable-pt-2/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        
+        <time class="post-date" datetime="2015-05-08T11:46:13Z">
+            8 May 2015
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2015/05/01/how-to-make-our-android-apps-unit-testable-pt-1/">How to Make Our Android Apps Unit Testable (Pt. 1)</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p><p>Unit testing Android apps is hard, and sometimes it can be impossible. For <a href="http://philosophicalhacker.com/2015/04/17/why-android-unit-testing-is-so-hard-pt-1/">the past two posts</a>, I’ve been explaining why android unit testing is so difficult. The main conclusion from <a href="http://philosophicalhacker.com/2015/04/24/why-android-unit-testing-is-so-hard-pt-2/">the last post</a> is that it is difficult/impossible to unit test our Android applications because of the way we are encouraged to structure them. Google seems to want us to put our business logic in app component classes (e.g., <code>Activity</code>s, <code>Fragment</code>s, <code>Service</code>s, etc.). This approach to writing Android applications is what I have been calling the “standard way.”</p>
+
+<p>In this post, I outline an alternative approach to structuring Android applications that will make it easier to unit test them. As I pointed out in <a href="http://philosophicalhacker.com/2015/04/10/against-android-unit-tests/">the introduction to this series</a>, the approach that I suggest is a generalization of the approach that Square uses to <a href="https://corner.squareup.com/2014/10/advocating-against-android-fragments.html">remove Fragments from their applications</a>. Since this approach is inspired by the folks at Square, I will call it “the square way.”</p>
+
+<p>The heart of the square way way is this: remove all business logic from app component classes (e.g., <code>Activity</code>s, <code>Fragment</code>s, <code>Service</code>s) and place that logic into “business objects,” POJO objects whose dependencies are injected, android-specific implementations of android-agnostic interfaces. If we follow the square way of developing our apps, we will be in a better position to unit test them. In this post, I explain how the square way would have us refactor non-UI app components like the <code>SessionCalendarService</code> I’ve been discussing for the past few posts.</p>
+ <a class="read-more" href="/2015/05/01/how-to-make-our-android-apps-unit-testable-pt-1/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        
+        <time class="post-date" datetime="2015-05-01T11:30:24Z">
+            1 May 2015
+        </time>
+    </footer>
+</article>
+
+    
+        
+<article class="post post">
+    <header class="post-header">
+        <h2 class="post-title"><a href="/2015/04/24/why-android-unit-testing-is-so-hard-pt-2/">Why Android Unit Testing Is So Hard (Pt. 2)</a></h2>
+    </header>
+    <section class="post-excerpt">
+        <p><p><strong>Edit:</strong> In <a href="http://philosophicalhacker.com/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/">the post that concludes this series</a>, I point out that making unit testable Android apps does not require us to remove compile-time dependencies on the Android SDK and that attempting to do so is impractical anyway. Ignore anything in this post that suggests otherwise.</p>
+
+<hr />
+
+<p>In my <a href="http://philosophicalhacker.com/2015/04/17/why-android-unit-testing-is-so-hard-pt-1/">last post</a>, I showed that even the (intelligent) engineers over at Google have written some Android code that is simply untestable. More specifically, I showed that there’s no way to unit test the <code>SessionDetailActivity</code>’s <code>onStop()</code> method. I also gave a specific diagnosis for the untestability of <code>onStop()</code>: we can’t complete the arrange- and assert-steps of a test against <code>onStop()</code> because there is no way to alter the pre-act-state, nor is there a way to access the post-act-state for a test of <code>onStop()</code>. I ended the last post by claiming that some properties of the Android SDK, along with the standard way we are encouraged to structure our android apps, encourage us to write code that is difficult/impossible to unit test and by promising that I’d elaborate more on that claim in this post.</p>
+
+<p>Before I do that, let me say again that showing that the difficulty of testing Android applications is caused by the standard structure of android apps is important for the overarching goal of this series of articles. This series is an attempt to argue that we should consider restructuring our applications so that they do not explicitly depend on the Android SDK and its an attempt to present a robust architecture that will enhance the testability of Android applications. You can read the introduction to this series <a href="http://philosophicalhacker.com/2015/04/10/against-android-unit-tests/">here</a>. With that said, I can move on to trying to demonstrate the central claim of this post.</p>
+
+<p>There’s a standard way of developing android applications. Sample code and open source code alike both place an app’s business logic within Android app component classes, namely, Activities, Services, and Fragments. Going forward, I’m going to refer to this practice as “the standard way.” Here’s the central claim of this post: As long as we follow the “standard way”, we’re going to write code that’s either difficult or impossible to unit test. In other words, the untestable code that I pointed out in my last article is not a fluke. The standard way prevents us from unit testing key pieces of our applications.</p>
+ <a class="read-more" href="/2015/04/24/why-android-unit-testing-is-so-hard-pt-2/">&raquo;</a></p>
+    </section>
+    <footer class="post-meta">
+        
+        
+        
+        
+            
+        
+        
+        <time class="post-date" datetime="2015-04-24T11:44:49Z">
+            24 Apr 2015
+        </time>
+    </footer>
+</article>
+
+    
+
+    <nav class="pagination" role="navigation">
+	
+	    <a class="newer-posts" href="/">&larr; Newer Posts</a>
+	
+	<span class="page-number">Page 2 of 4</span>
+	
+	    <a class="older-posts" href="/page/3/">Older Posts &rarr;</a>
+	
+</nav>
+
+
+</main>
+
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Philosophical Hacker</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/jquery.js"></script>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/index.js"></script>
+    
+</body>
+</html>
+

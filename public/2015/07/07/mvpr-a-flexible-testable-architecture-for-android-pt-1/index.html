@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  	<meta property="og:title" content=" MVPR: A Flexible, Testable Architecture for Android (Pt. 1) &middot;  Philosophical Hacker" />
+  	<meta property="og:site_name" content="Philosophical Hacker" />
+  	<meta property="og:url" content="http://replace-this-with-your-hugo-site.com/2015/07/07/mvpr-a-flexible-testable-architecture-for-android-pt-1/" />
+
+    
+  	<meta property="og:type" content="article" />
+
+    <meta property="og:article:published_time" content="2015-07-07T18:29:16Z" />
+
+    
+    
+
+  <title>
+     MVPR: A Flexible, Testable Architecture for Android (Pt. 1) &middot;  Philosophical Hacker
+  </title>
+
+    <meta name="description" content="Articles on android and go development" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="http://replace-this-with-your-hugo-site.com/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="http://replace-this-with-your-hugo-site.com/images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="http://replace-this-with-your-hugo-site.com/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="http://replace-this-with-your-hugo-site.com/css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+
+    
+      
+          <link href="http://replace-this-with-your-hugo-site.com/index.xml" rel="alternate" type="application/rss+xml" title="Philosophical Hacker" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.15" />
+
+    <link rel="canonical" href="http://replace-this-with-your-hugo-site.com/2015/07/07/mvpr-a-flexible-testable-architecture-for-android-pt-1/" />
+
+    
+
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+    </ul>
+    
+    
+    <a class="subscribe-button icon-feed" href="http://replace-this-with-your-hugo-site.com/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+
+<header class="main-header post-head no-cover">
+  <nav class="main-nav clearfix">
+
+
+  
+  
+      <a class="menu-button icon-feed" href="http://replace-this-with-your-hugo-site.com/index.xml">&nbsp;&nbsp;Subscribe</a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">MVPR: A Flexible, Testable Architecture for Android (Pt. 1)</h1>
+        <small></small>
+
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2015-07-07T18:29:16Z">
+            Jul 7, 2015
+          </time>
+        
+         
+        </section>
+    </header>
+
+    <section class="post-content">
+      
+
+<blockquote>Thorough unit testing helps us improve the internal quality because, to be tested, a unit has to be structured to run outside the system in a test fixture. A unit test for an object needs to create the object, provide its dependencies, interact with it, and check that it behaved as expected. So, for a class to be easy to unit-test, the class must have explicit dependencies that can easily be substituted and clear responsibilities that can easily be invoked and verified. In software engineering terms, that means that the code must be loosely coupled and highly cohesive —in other words, well-designed.
+
+Steve Freeman and Nat Pryce, _Growing Object Oriented Software Guided by Tests_</blockquote>
+
+<p>Lately, I&rsquo;ve been working towards making Google&rsquo;s IO app unit testable. A part of the reason I&rsquo;m doing this is to test the claims that Freeman and Pryce make in the above quotation about unit testing. Although I&rsquo;m still not even done with refactoring one Activity in Google&rsquo;s IOSched app, I&rsquo;m already finding some truth to what they&rsquo;re saying.</p>
+
+<p>The <code>Activity</code> that I&rsquo;ve been working on is the <code>SessionDetailActivity</code>. If you&rsquo;ve been following me for a while, you know exactly what Activity I&rsquo;m talking about, but if you&rsquo;re tuning in the first time, here&rsquo;s what the <code>SessionDetailActivity</code> UI looks like:</p>
+
+<p><a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-04.png"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-04.png" alt="IO Testing Talk-04" /></a></p>
+
+<p>As I mentioned in <a href="http://www.philosophicalhacker.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/">the post that introduced this series</a>, there have been several challenges to making the <code>SessionDetailActivity</code> unit testable. Unit testing its dynamically constructed views was a challenge that I discussed in <a href="http://www.philosophicalhacker.com/2015/06/06/unit-testing-dynamically-constructed-views/">my last post in this series</a>, but in that post, I noted that my strategy for testing dynamically constructed views wasn&rsquo;t entirely clean because of a circular dependency between <code>Views</code> and <code>Presenters</code>.</p>
+
+<p>This circular dependency is a symptom of a larger problem with how we structure our Android applications: both <code>Activities</code> and <code>Presenters</code> violate the principle of single responsibility. They are often responsible for at least two things: binding data to a <code>View</code> and responding to user input. This is a part of the reason why <a href="https://github.com/google/iosched/blob/master/android/src/main/java/com/google/samples/apps/iosched/ui/SessionDetailActivity.java">the <code>SessionDetailActivity</code></a>, a class that&rsquo;s supposed to serve as a model for Android development, is over 1000 lines long.</p>
+
+<p>I think there&rsquo;s a better way to structure our applications. In the next few posts, I&rsquo;ll propose a new architecture that has the following properties:</p>
+
+<ol>
+<li><p>It breaks up the multiple responsibilities typically handled by <code>Presenters</code> and <code>Activities</code></p></li>
+
+<li><p>It breaks the circular dependency that traditionally exists between Views on the one hand and Activities or Presenters on the other hand.</p></li>
+
+<li><p>It enables us to use constructor dependency injection for all of our objects that present data to the user and respond to user input.</p></li>
+
+<li><p>It makes our ui-related business logic classes easier to unit test, impossible to construct without the dependencies necessary to fulfill their responsibilities, and (slightly) more amenable to the use of composition and polymorphism to extend and/or modify object behavior.</p></li>
+</ol>
+
+<p>In this post, I will try to give some reasons why we might consider a new architecture for Android development in the first place.</p>
+
+<h2 id="why-a-new-architecture:25be7690f1d98142cd41730b0d055142">Why a New Architecture?</h2>
+
+<h3 id="activities-fragments-presenters-can-become-bloated:25be7690f1d98142cd41730b0d055142">Activities/Fragments/Presenters can become Bloated</h3>
+
+<p><code>Activities</code> and <code>Fragments</code> (I&rsquo;m just going say &ldquo;Activities&rdquo; from now on, but what I say applies equally to <code>Fragments</code>.) are egregious violators of the principle of single responsibility. At Droidcon Montreal, Richa Khandelwal <a href="https://speakerdeck.com/richk/clean-android-architecture">listed the responsibilities</a> that often wind up in an <code>Activity</code>:</p>
+
+<ul>
+<li><p>Handle View Events</p></li>
+
+<li><p>Update Model</p></li>
+
+<li><p>Invoke another View</p></li>
+
+<li><p>Interact with System Components</p></li>
+
+<li><p>Handle System Events</p></li>
+
+<li><p>Update View based on System Events</p></li>
+</ul>
+
+<p>As Richa shows later in the presentation, many of these responsibilities can be moved out of Activities, but even if we do that, Activities still violate the principle of single responsibility. Even the slimmest Activities are still responsible for binding a model&rsquo;s data to the View and for responding to user input. Here&rsquo;s an example:</p>
+
+<p>The SessionDetailActivity in Google&rsquo;s IOSched app is actually a good example of how bloated an Activity can get even if its only concerned with the two responsibilities of binding data to views and responding to user input. ~70% of the 1000+ lines of SessionDetailActivity are only concerned with these two responsibilities, so even if we moved all other code out of the SessionDetailActivity, we&rsquo;d still have a class that&rsquo;s about 700 lines long. Don&rsquo;t believe me? Take a look at <a href="https://github.com/google/iosched/blob/master/android/src/main/java/com/google/samples/apps/iosched/ui/SessionDetailActivity.java">the source code</a>. Presenters can become bloated for the same reason an Activity does: Presenters are typically responsible for binding data to a View and for responding to user input, so a Presenter would be just as long as an Activity that&rsquo;s slimmed down by removing all of its other extra responsibilities. </p>
+
+<h3 id="activities-fragments-presenters-often-have-a-circular-dependency-on-their-views:25be7690f1d98142cd41730b0d055142">Activities/Fragments/Presenters often have a Circular Dependency on their Views</h3>
+
+<p>Activities typically fulfill their responsibilities of binding data to views and responding to user input by creating a circular dependency between themselves and the Views that make up their Content View (i.e., the view passed in to the setContentView() method). There&rsquo;s a piece of code in the same gist that I showed above that provides an example of this.</p>
+
+<p>The <code>SessionDetailActivity</code> has a reference to <code>mAddScheduleButton</code> and <code>mAddSchedule</code> button has a reference to <code>SessionDetailActivity</code>. As we&rsquo;ll see later, this circular dependency limits the approaches we can take to implementing the UI-related business logic that&rsquo;s typically found in Activities.</p>
+
+<p>MVP Presenters have basically the same circular dependency between themselves and their Views. Before I can explain this in more detail, I have to make a brief distinction between MVP-Views and Android-Views.</p>
+
+<p>An MVP-View, as I&rsquo;m defining it, is just an object that&rsquo;s a part of the MVP triad. It&rsquo;s typically defined as an interface, and it may be implemented by an Activity, Fragment, or an Android-View. An Android-View, as the name implies, is a class that is a part of the Android framework. More specifically, it&rsquo;s a subclass of the <code>View</code> class.</p>
+
+<p>Using MVP-Views and Presenters just recreates virtually the same circular dependency between MVP-Views and Presenters that exists between Android-Views and Activities.</p>
+
+<p><a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/07/CircularDependency-011.png"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/07/CircularDependency-011-300x222.png" alt="CircularDependency-01" /></a></p>
+
+<p><a href="http://www.philosophicalhacker.com/wp-content/uploads/2015/07/CircularDependency-021.png"><img src="http://www.philosophicalhacker.com/wp-content/uploads/2015/07/CircularDependency-021-300x222.png" alt="CircularDependency-02" /></a></p>
+
+<p>Presenters need MVP-Views so that they can bind data to the MVP-View. The MVP-View needs a reference to the Presenter so that it can forward clicks and other ui-related events to the Presenter. Square&rsquo;s <a href="https://corner.squareup.com/2014/10/advocating-against-android-fragments.html">post against Fragments</a> has an MVP implementation that exhibits this circular dependency. Hannes Dorfmann&rsquo;s <a href="http://hannesdorfmann.com/android/mosby/">post introducing his library to help implement MVP</a> also has some code that has this circular dependency.</p>
+
+<p>Circular dependencies pose a problem when you try to construct objects for unit testing (or in general). However, typically, we don&rsquo;t see the circular dependency between MVP-Views and Presenters or Activities and their Android-Views as a problem because Activities and Fragments are instantiated by the system and because we don&rsquo;t usually use dependency injection to inject an Activity and/or Fragment&rsquo;s dependencies. Instead, we just instantiate whatever dependences the Activity needs in onCreate():</p>
+
+<p>Instantiating concrete classes of our dependencies in onCreate(), however, limits our ability to use composition and polymorphism to implement our ui-related business logic. Here&rsquo;s an example where you might wish you could use polymorphism to implement ui-related business logic: Suppose your implementing an application that has users. Suppose further that the users have different privileges based on the level they attain. They might attain higher levels by verifying an email or by answering a question that others users have asked (StackOverflow style). Finally, suppose that the user interface that&rsquo;s presented to the user is largely dependent on the level they have attained as a user. We might imagine that there a many buttons that do different things depending on the level the user has achieved or that the initial state of the view depends on the user&rsquo;s level.</p>
+
+<p>Polymorphism provides us with a clean, scalable way to implement this kind of logic: we can have a Presenter for each level the user can attain. Regardless of the level the user has attained, we can pass the same MVP-View to into a particular Presenter subclass and let that particular subclass appropriately handle clicks or present the initial UI based on the user&rsquo;s level. Of course, there are ways of architecting Android apps so that we can take advantage of polymorphism in spite of the circular dependency between Presenters and MVP-Views, but none of the approaches that I&rsquo;ve seen are particularly pretty, nor do they do a great job of facilitating unit testing. </p>
+
+<p>I don&rsquo;t have the space here to go over all of those different solutions that I have in mind, but I can briefly say why one easy way of resolving the circular dependency between MVP-Views and Presenters is not ideal. You might think that we can just create an MVP-View or Presenter without the dependencies they need to fulfill their responsibilities. We could, in other words, do something like this:</p>
+
+<p>This would allow us to use polymorphism to solve problems like the one I mentioned above, but it doesn&rsquo;t really break the circular dependency between MVP-Views and Presenters. All it does is allow us to create an object in an invalid state. This isn&rsquo;t cleanest solution. To put the point in Freeman and Pryce&rsquo;s words:</p>
+
+<blockquote>“New or new not, there is no try”
+
+We try to make sure that we always create a valid object…Partially creating an object and then finishing it off by setting its properties is brittle…</blockquote>
+
+<h2 id="conclusion:25be7690f1d98142cd41730b0d055142">Conclusion</h2>
+
+<p>Presenters and Activities violate the principle of single responsibility. They are often responsible for binding data to a View and for responding to user input/actions. This can cause both Activities and Presenters to become bloated.</p>
+
+<p>Presenters and Activities often carry out their multiple responsibilities by creating a circular dependency between themselves and their Views. Although this circular reference doesn&rsquo;t appear to be a problem, it can make it more difficult to unit test our Views and/or Presenters and it can limit our ability to use polymorphism to implement ui-related business logic.</p>
+
+<p>As I said before, I think there&rsquo;s a way of structuring our applications that doesn&rsquo;t have these disadvantages, and in the next post, I&rsquo;ll go over this alternative architecture.</p>
+
+<hr />
+
+<p>Below, Hannes Dorfmann has a great comment to this article. I&rsquo;ve responded to that <a href="http://www.philosophicalhacker.com/2015/07/08/my-response-to-hannes-dorfmann-on-the-circular-dependency-problem/">here</a>.</p>
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+
+    
+
+
+
+
+
+<section class="author">
+  <h4><a href="http://replace-this-with-your-hugo-site.com/"></a></h4>
+  
+  <p>Read <a href="http://replace-this-with-your-hugo-site.com/">more posts</a> by this author.</p>
+  
+  <div class="author-meta">
+    
+    
+  </div>
+</section>
+
+
+
+    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=MVPR%3a%20A%20Flexible%2c%20Testable%20Architecture%20for%20Android%20%28Pt.%201%29&amp;url=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f07%2f07%2fmvpr-a-flexible-testable-architecture-for-android-pt-1%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f07%2f07%2fmvpr-a-flexible-testable-architecture-for-android-pt-1%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f07%2f07%2fmvpr-a-flexible-testable-architecture-for-android-pt-1%2f&amp;description=MVPR%3a%20A%20Flexible%2c%20Testable%20Architecture%20for%20Android%20%28Pt.%201%29"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=http%3a%2f%2freplace-this-with-your-hugo-site.com%2f2015%2f07%2f07%2fmvpr-a-flexible-testable-architecture-for-android-pt-1%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+    
+
+
+
+
+  </footer>
+</article>
+
+</main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Philosophical Hacker</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/jquery.js"></script>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="http://replace-this-with-your-hugo-site.com/js/index.js"></script>
+    
+</body>
+</html>
+
