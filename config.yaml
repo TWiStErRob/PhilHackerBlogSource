@@ -3,6 +3,7 @@ disablePathToLower: true
 languageCode: en-us
 title: Philosophical Hacker
 theme: casper
+DisqusShortname: philosophicalhacker
 params:
     cover: images/the-thinker.jpg
     description: Articles on android and go development
@@ -15,4 +16,4 @@ menu:
     - name: "Home"
       weight: -120
       identifier: "blog"
-      url: "/"    
+      url: "/"
