@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Philosophical Hacker</title>
-    <link>http://replace-this-with-your-hugo-site.com/</link>
+    <link>http://kmdupr33.github.io/PhilHackerBlog/</link>
     <description>Recent content on Philosophical Hacker</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 14 Jan 2016 02:20:53 +0000</lastBuildDate>
-    <atom:link href="http://replace-this-with-your-hugo-site.com/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://kmdupr33.github.io/PhilHackerBlog/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Should we use mocking libraries for go testing?</title>
-      <link>http://replace-this-with-your-hugo-site.com/2016/01/14/should-we-use-mocking-libraries-for-go-testing/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2016/01/14/should-we-use-mocking-libraries-for-go-testing/</link>
       <pubDate>Thu, 14 Jan 2016 02:20:53 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2016/01/14/should-we-use-mocking-libraries-for-go-testing/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2016/01/14/should-we-use-mocking-libraries-for-go-testing/</guid>
       <description>
 
 &lt;p&gt;A few weeks ago, I started learning go. Since I&amp;rsquo;m a wannabe TDD-er, I took at look at some resources on testing go code. I stumbled upon &lt;a href=&#34;https://talks.golang.org/2014/testing.slide#1&#34;&gt;Andrew Gerrand&amp;rsquo;s excellent Testing Techniques talk&lt;/a&gt; in which he says this:&lt;/p&gt;
@@ -126,10 +126,10 @@
     
     <item>
       <title>Making a TDD-based HackerNews client for Android</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/07/17/making-a-tdd-based-hackernews-client-for-android/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/07/17/making-a-tdd-based-hackernews-client-for-android/</link>
       <pubDate>Fri, 17 Jul 2015 11:53:55 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/07/17/making-a-tdd-based-hackernews-client-for-android/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/07/17/making-a-tdd-based-hackernews-client-for-android/</guid>
       <description>
 
 &lt;p&gt;I&amp;rsquo;m using TDD to write a HackerNews client for Android. This post (and the ones that will likely follow it) share a little bit about some of the techniques I used to follow a TDD-based work-flow for developing this application. It also discusses the architecture that arises when Android apps are built with testability in mind from the ground up.&lt;/p&gt;
@@ -206,10 +206,10 @@ Pg. 90&lt;/blockquote&gt;
     
     <item>
       <title>Why Having Global Static References to Application Contexts is Probably not the Best Idea</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/07/14/why-static-references-to-application-contexts-are-probably-not-the-best-idea/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/07/14/why-static-references-to-application-contexts-are-probably-not-the-best-idea/</link>
       <pubDate>Tue, 14 Jul 2015 18:35:40 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/07/14/why-static-references-to-application-contexts-are-probably-not-the-best-idea/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/07/14/why-static-references-to-application-contexts-are-probably-not-the-best-idea/</guid>
       <description>
 
 &lt;p&gt;In my last post, I went over &lt;a href=&#34;http://www.philosophicalhacker.com/2015/07/09/6-things-i-wish-i-knew-before-i-wrote-my-first-android-app/&#34;&gt;6 things I wish I knew before I wrote my first Android app&lt;/a&gt;. One of the things I listed in that post was this:&lt;/p&gt;
@@ -286,10 +286,10 @@ Accessing global state statically doesn’t clarify those shared dependencies to
     
     <item>
       <title>6 Things I wish I Knew before I Wrote my first Android App</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/07/09/6-things-i-wish-i-knew-before-i-wrote-my-first-android-app/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/07/09/6-things-i-wish-i-knew-before-i-wrote-my-first-android-app/</link>
       <pubDate>Thu, 09 Jul 2015 21:07:51 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/07/09/6-things-i-wish-i-knew-before-i-wrote-my-first-android-app/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/07/09/6-things-i-wish-i-knew-before-i-wrote-my-first-android-app/</guid>
       <description>
 
 &lt;p&gt;My first app was terrible. It was so terrible, in fact, that I removed it from the store and I don&amp;rsquo;t even bother listing it on my resume&amp;rsquo; anymore. That app wouldn&amp;rsquo;t have been so terrible if I knew a few things about Android development before I wrote it.&lt;/p&gt;
@@ -369,10 +369,10 @@ Accessing global state statically doesn’t clarify those shared dependencies to
     
     <item>
       <title>My Response to Hannes Dorfmann on &#34;the Circular Dependency Problem&#34;</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/07/08/my-response-to-hannes-dorfmann-on-the-circular-dependency-problem/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/07/08/my-response-to-hannes-dorfmann-on-the-circular-dependency-problem/</link>
       <pubDate>Wed, 08 Jul 2015 13:42:14 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/07/08/my-response-to-hannes-dorfmann-on-the-circular-dependency-problem/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/07/08/my-response-to-hannes-dorfmann-on-the-circular-dependency-problem/</guid>
       <description>&lt;p&gt;In &lt;a href=&#34;http://www.philosophicalhacker.com/2015/07/07/mvpr-a-flexible-testable-architecture-for-android-pt-1/&#34;&gt;my last post&lt;/a&gt;, I argued that there are two disadvantages to &lt;code&gt;Activities&lt;/code&gt; and Presenters. The first disadvantage is that they are often bloated classes. The second disadvantage is that these classes often have a circular dependency between themselves and their Views. Yesterday, Hannes Dorfmann made a comment on my post that was so thoughtful and excellent that I think its worth dedicating an entire post to responding to it.&lt;/p&gt;
 
 &lt;p&gt;Specifically, Hannes&amp;rsquo; comments challenge my claim that the circular dependency between Activities/Fragments/Presenters and their Views are a problem.&lt;/p&gt;
@@ -458,10 +458,10 @@ That’s open to dispute. [Is] a presenter...in an invalid state without a View
     
     <item>
       <title>MVPR: A Flexible, Testable Architecture for Android (Pt. 1)</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/07/07/mvpr-a-flexible-testable-architecture-for-android-pt-1/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/07/07/mvpr-a-flexible-testable-architecture-for-android-pt-1/</link>
       <pubDate>Tue, 07 Jul 2015 18:29:16 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/07/07/mvpr-a-flexible-testable-architecture-for-android-pt-1/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/07/07/mvpr-a-flexible-testable-architecture-for-android-pt-1/</guid>
       <description>
 
 &lt;blockquote&gt;Thorough unit testing helps us improve the internal quality because, to be tested, a unit has to be structured to run outside the system in a test fixture. A unit test for an object needs to create the object, provide its dependencies, interact with it, and check that it behaved as expected. So, for a class to be easy to unit-test, the class must have explicit dependencies that can easily be substituted and clear responsibilities that can easily be invoked and verified. In software engineering terms, that means that the code must be loosely coupled and highly cohesive —in other words, well-designed.
@@ -564,20 +564,20 @@ We try to make sure that we always create a valid object…Partially creating an
     
     <item>
       <title>I&#39;m taking a brief hiatus from blogging here...</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/06/26/im-taking-a-brief-hiatus-from-blogging-here/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/06/26/im-taking-a-brief-hiatus-from-blogging-here/</link>
       <pubDate>Fri, 26 Jun 2015 12:48:20 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/06/26/im-taking-a-brief-hiatus-from-blogging-here/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/06/26/im-taking-a-brief-hiatus-from-blogging-here/</guid>
       <description>&lt;p&gt;&amp;hellip;so that I can focus on ensuring that &lt;a href=&#34;http://droidjournal.com&#34;&gt;Droid Journal&lt;/a&gt; has a successful inaugural edition. I did, however, just post on &lt;a href=&#34;http://www.droidjournal.com/blog/reviews/2015/06/26/review-advocating-against-android-fragments.html&#34;&gt;Droid Journal&amp;rsquo;s blog&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Taylor Swift, Photographers, and &#34;working for nothing&#34;</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/06/25/taylor-swift-photographers-and-working-for-nothing/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/06/25/taylor-swift-photographers-and-working-for-nothing/</link>
       <pubDate>Thu, 25 Jun 2015 01:44:15 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/06/25/taylor-swift-photographers-and-working-for-nothing/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/06/25/taylor-swift-photographers-and-working-for-nothing/</guid>
       <description>
 
 &lt;p&gt;If you don&amp;rsquo;t already know, here&amp;rsquo;s a quick run down of what&amp;rsquo;s happening with the whole Taylor Swift/Apple/Indie Artists debacle: Last month, Apple released its streaming service and offered a three month trial period to users for free. During the trial period, they weren&amp;rsquo;t planning on paying the artists whose music was streamed by the service. Last week, Taylor Swift published &lt;a href=&#34;http://taylorswift.tumblr.com/post/122071902085/to-apple-love-taylor&#34;&gt;an open letter to Apple&lt;/a&gt; in which she basically claimed that Apple was wronging artists by not paying them for three months. Two days ago, Jason Sheldon produced a contract that he had to sign to photograph one of Swift&amp;rsquo;s older tours, and because the contract allows for his work to be used indefinitely without compensating him for each use, &lt;a href=&#34;http://petapixel.com/2015/06/22/an-open-response-to-taylor-swifts-rant-against-apple/&#34;&gt;he basically calls Swift a hypocrite&lt;/a&gt;. &lt;a href=&#34;http://money.cnn.com/2015/06/23/media/taylor-swift-photographer-response/&#34;&gt;Swift&amp;rsquo;s spokesman said that Sheldon is misrepresenting the contract&lt;/a&gt;. A few hours ago, Joel Goodman, another freelance photographer, &lt;a href=&#34;http://consequenceofsound.net/2015/06/newly-leaked-contract-stipulates-taylor-swift-can-destroy-equipment-of-defiant-photographers/&#34;&gt;leaked a contract for the 1989 tour that contains even stricter rules&lt;/a&gt;.&lt;/p&gt;
@@ -650,10 +650,10 @@ Photographers need to earn a living as well.&lt;/blockquote&gt;
     
     <item>
       <title>Introduction to RxJava for Android (Pt. 2)</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/06/19/introduction-to-rxjava-for-android-pt-2/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/06/19/introduction-to-rxjava-for-android-pt-2/</link>
       <pubDate>Fri, 19 Jun 2015 12:19:14 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/06/19/introduction-to-rxjava-for-android-pt-2/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/06/19/introduction-to-rxjava-for-android-pt-2/</guid>
       <description>&lt;p&gt;I concluded my last post by summing up what we&amp;rsquo;ve seen so far and what we still need to understand about RxJava:&lt;/p&gt;
 
 &lt;blockquote&gt;We now know what an asynchronous data stream is and we know that RxJava uses the Observer pattern to deliver these streams to everyone that’s interested. We still don’t know, however, what it means for a data stream to be “functionally transformed” nor do we know how RxJava allows us to represent anything as an asynchronous data stream that can be created and consumed on any thread. These are questions I’ll have to tackle in the second part of this written version of my upcoming RxJava talk.&lt;/blockquote&gt;
@@ -755,10 +755,10 @@ Photographers need to earn a living as well.&lt;/blockquote&gt;
     
     <item>
       <title>Introduction to RxJava for Android: The Talk</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/06/17/introduction-to-rxjava-for-android-the-talk/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/06/17/introduction-to-rxjava-for-android-the-talk/</link>
       <pubDate>Wed, 17 Jun 2015 01:48:45 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/06/17/introduction-to-rxjava-for-android-the-talk/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/06/17/introduction-to-rxjava-for-android-the-talk/</guid>
       <description>&lt;p&gt;Earlier today, I gave my Intro To RxJava talk. I&amp;rsquo;m not thrilled at how clear I was at explaining certain aspects of RxJava, but here&amp;rsquo;s the video nonetheless. My talk starts at 28:32. Hopefully, I&amp;rsquo;ll do a better job when I finish &lt;a href=&#34;http://www.philosophicalhacker.com/2015/06/12/an-introduction-to-rxjava-for-android/&#34;&gt;the written version of this talk&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;If you want to hear a hilarious take down of the design of the new Pizza Hut app, check out &lt;a href=&#34;https://www.linkedin.com/profile/view?id=51923912&amp;amp;trk=hp-feed-member-name&#34;&gt;Ian&amp;rsquo;s&lt;/a&gt; talk that happens before mine.&lt;/p&gt;
@@ -771,10 +771,10 @@ Photographers need to earn a living as well.&lt;/blockquote&gt;
     
     <item>
       <title>An Introduction to RxJava for Android (Pt. 1)</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/06/12/an-introduction-to-rxjava-for-android/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/06/12/an-introduction-to-rxjava-for-android/</link>
       <pubDate>Fri, 12 Jun 2015 12:34:53 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/06/12/an-introduction-to-rxjava-for-android/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/06/12/an-introduction-to-rxjava-for-android/</guid>
       <description>&lt;p&gt;I&amp;rsquo;m taking a brief break from talking about testing. I&amp;rsquo;ll resume my discussion of how &lt;a href=&#34;http://www.philosophicalhacker.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/&#34;&gt;I&amp;rsquo;m making Google&amp;rsquo;s IOSched app unit testable&lt;/a&gt; after I&amp;rsquo;ve posted the content from &lt;a href=&#34;http://www.meetup.com/University-Android/events/222048562/&#34;&gt;my upcoming talk on RxJava&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt; &lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_rxjava_def.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_rxjava_def-1024x791.jpg&#34; alt=&#34;rxjava_prezi_rxjava_def&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
@@ -860,10 +860,10 @@ Photographers need to earn a living as well.&lt;/blockquote&gt;
     
     <item>
       <title>Developer Golf</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/06/07/developer-golf/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/06/07/developer-golf/</link>
       <pubDate>Sun, 07 Jun 2015 13:16:29 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/06/07/developer-golf/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/06/07/developer-golf/</guid>
       <description>
 
 &lt;h2 id=&#34;developer-golf-http-www-philosophicalhacker-com-wp-content-uploads-2015-06-developer-golf-png-http-www-philosophicalhacker-com-wp-content-uploads-2015-06-developer-golf-png:eb9f68c5ab418835dc2b3f836f4898aa&#34;&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/Developer-golf.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/Developer-golf.png&#34; alt=&#34;Developer golf&#34; /&gt;&lt;/a&gt;&lt;/h2&gt;
@@ -926,10 +926,10 @@ Par for the next course: 5&lt;/blockquote&gt;
     
     <item>
       <title>Unit Testing Dynamically Constructed Views</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/06/06/unit-testing-dynamically-constructed-views/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/06/06/unit-testing-dynamically-constructed-views/</link>
       <pubDate>Sat, 06 Jun 2015 11:08:03 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/06/06/unit-testing-dynamically-constructed-views/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/06/06/unit-testing-dynamically-constructed-views/</guid>
       <description>
 
 &lt;p&gt;Some view hierarchies in Android are specified statically. The structure of these hierarchies does not change at run-time. Occasionally, we need to have dynamically constructed view hierarchies, hierarchies whose structure change at run-time. We might need to, for example, add or remove a view depending on some data we&amp;rsquo;ve fetched or in response to some input. The &lt;code&gt;SessionDetailActivity&lt;/code&gt; in Google&amp;rsquo;s IOSched app has a dynamically constructed view hierarchy. The number of tags associated with a particular IO session determines how many tag views are added to the &lt;code&gt;SessionDetailActivity&lt;/code&gt;&amp;rsquo;s view hierarchy.&lt;/p&gt;
@@ -966,10 +966,10 @@ Par for the next course: 5&lt;/blockquote&gt;
     
     <item>
       <title>Towards A Unit Testable Fork of Google&#39;s IOSched App</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/</link>
       <pubDate>Sun, 31 May 2015 20:11:16 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/</guid>
       <description>
 
 &lt;p&gt;In my recent &lt;a href=&#34;http://www.philosophicalhacker.com/2015/04/10/against-android-unit-tests/&#34;&gt;Against Android Unit Tests&lt;/a&gt; series, I discussed the difficulties of unit testing android applications and proposed a different way of building applications that would enhance their unit testability. My proposal in that series was really largely a rough sketch of what it would take to make parts of Google&amp;rsquo;s IOSched app unit testable.&lt;/p&gt;
@@ -1002,10 +1002,10 @@ Par for the next course: 5&lt;/blockquote&gt;
     
     <item>
       <title>An Introduction to Unit Testing on Android</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/05/29/making-the-most-of-android-studios-unit-testing-support/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/05/29/making-the-most-of-android-studios-unit-testing-support/</link>
       <pubDate>Fri, 29 May 2015 11:23:14 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/05/29/making-the-most-of-android-studios-unit-testing-support/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/05/29/making-the-most-of-android-studios-unit-testing-support/</guid>
       <description>&lt;p&gt;Yesterday at IO Extended Orlando, I gave a talk on testing. What follows is a written version of the presentation I gave.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-01.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-01.png&#34; alt=&#34;IO Testing Talk-01&#34; /&gt;&lt;/a&gt;&lt;/p&gt;

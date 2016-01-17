@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Android on Philosophical Hacker</title>
-    <link>http://replace-this-with-your-hugo-site.com/tags/android/</link>
+    <link>http://kmdupr33.github.io/PhilHackerBlog/tags/android/</link>
     <description>Recent content in Android on Philosophical Hacker</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 06 Apr 2015 03:39:02 +0000</lastBuildDate>
-    <atom:link href="http://replace-this-with-your-hugo-site.com/tags/android/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://kmdupr33.github.io/PhilHackerBlog/tags/android/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Don&#39;t call it &#34;MVP&#34;</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/04/06/dont-call-it-mvp/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/04/06/dont-call-it-mvp/</link>
       <pubDate>Mon, 06 Apr 2015 03:39:02 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/04/06/dont-call-it-mvp/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/04/06/dont-call-it-mvp/</guid>
       <description>
 
 &lt;p&gt;Lately there&amp;rsquo;s been a lot of discussion about an alternative architectural pattern for Android development. The acronym that&amp;rsquo;s being used to denote this alternative pattern is &amp;rdquo;MVP.&amp;rdquo; I think that &amp;ldquo;MVP&amp;rdquo; is an inaccurate and confusing designation for this pattern. In this post, I will say why I think &amp;ldquo;MVP&amp;rdquo; is a bad name for the pattern, and I&amp;rsquo;ll suggest a different name for referring to it.&lt;/p&gt;
@@ -59,10 +59,10 @@
     
     <item>
       <title>An Alternative Multiproject Setup for Android Studio</title>
-      <link>http://replace-this-with-your-hugo-site.com/2014/10/03/an-alternative-multiproject-setup-for-android-studio/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2014/10/03/an-alternative-multiproject-setup-for-android-studio/</link>
       <pubDate>Fri, 03 Oct 2014 03:02:54 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2014/10/03/an-alternative-multiproject-setup-for-android-studio/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2014/10/03/an-alternative-multiproject-setup-for-android-studio/</guid>
       <description>
 
 &lt;p&gt;Google&amp;rsquo;s &lt;a href=&#34;http://tools.android.com/tech-docs/new-build-system/user-guide&#34;&gt;Gradle Plugin user guide recommends&lt;/a&gt; a method for configuring your gradle files to build multiple projects. That method has some shortcomings. In this post, I will briefly explain Google&amp;rsquo;s recommended configuration, note its shortcomings, and  recommend a different way to configure your gradle files to support multi-project setups in Android Studio.&lt;/p&gt;

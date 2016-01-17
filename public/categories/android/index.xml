@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Android on Philosophical Hacker</title>
-    <link>http://replace-this-with-your-hugo-site.com/categories/android/</link>
+    <link>http://kmdupr33.github.io/PhilHackerBlog/categories/android/</link>
     <description>Recent content in Android on Philosophical Hacker</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 17 Jul 2015 11:53:55 +0000</lastBuildDate>
-    <atom:link href="http://replace-this-with-your-hugo-site.com/categories/android/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://kmdupr33.github.io/PhilHackerBlog/categories/android/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Making a TDD-based HackerNews client for Android</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/07/17/making-a-tdd-based-hackernews-client-for-android/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/07/17/making-a-tdd-based-hackernews-client-for-android/</link>
       <pubDate>Fri, 17 Jul 2015 11:53:55 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/07/17/making-a-tdd-based-hackernews-client-for-android/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/07/17/making-a-tdd-based-hackernews-client-for-android/</guid>
       <description>
 
 &lt;p&gt;I&amp;rsquo;m using TDD to write a HackerNews client for Android. This post (and the ones that will likely follow it) share a little bit about some of the techniques I used to follow a TDD-based work-flow for developing this application. It also discusses the architecture that arises when Android apps are built with testability in mind from the ground up.&lt;/p&gt;
@@ -91,10 +91,10 @@ Pg. 90&lt;/blockquote&gt;
     
     <item>
       <title>Why Having Global Static References to Application Contexts is Probably not the Best Idea</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/07/14/why-static-references-to-application-contexts-are-probably-not-the-best-idea/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/07/14/why-static-references-to-application-contexts-are-probably-not-the-best-idea/</link>
       <pubDate>Tue, 14 Jul 2015 18:35:40 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/07/14/why-static-references-to-application-contexts-are-probably-not-the-best-idea/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/07/14/why-static-references-to-application-contexts-are-probably-not-the-best-idea/</guid>
       <description>
 
 &lt;p&gt;In my last post, I went over &lt;a href=&#34;http://www.philosophicalhacker.com/2015/07/09/6-things-i-wish-i-knew-before-i-wrote-my-first-android-app/&#34;&gt;6 things I wish I knew before I wrote my first Android app&lt;/a&gt;. One of the things I listed in that post was this:&lt;/p&gt;
@@ -171,10 +171,10 @@ Accessing global state statically doesn’t clarify those shared dependencies to
     
     <item>
       <title>6 Things I wish I Knew before I Wrote my first Android App</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/07/09/6-things-i-wish-i-knew-before-i-wrote-my-first-android-app/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/07/09/6-things-i-wish-i-knew-before-i-wrote-my-first-android-app/</link>
       <pubDate>Thu, 09 Jul 2015 21:07:51 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/07/09/6-things-i-wish-i-knew-before-i-wrote-my-first-android-app/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/07/09/6-things-i-wish-i-knew-before-i-wrote-my-first-android-app/</guid>
       <description>
 
 &lt;p&gt;My first app was terrible. It was so terrible, in fact, that I removed it from the store and I don&amp;rsquo;t even bother listing it on my resume&amp;rsquo; anymore. That app wouldn&amp;rsquo;t have been so terrible if I knew a few things about Android development before I wrote it.&lt;/p&gt;
@@ -254,10 +254,10 @@ Accessing global state statically doesn’t clarify those shared dependencies to
     
     <item>
       <title>My Response to Hannes Dorfmann on &#34;the Circular Dependency Problem&#34;</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/07/08/my-response-to-hannes-dorfmann-on-the-circular-dependency-problem/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/07/08/my-response-to-hannes-dorfmann-on-the-circular-dependency-problem/</link>
       <pubDate>Wed, 08 Jul 2015 13:42:14 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/07/08/my-response-to-hannes-dorfmann-on-the-circular-dependency-problem/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/07/08/my-response-to-hannes-dorfmann-on-the-circular-dependency-problem/</guid>
       <description>&lt;p&gt;In &lt;a href=&#34;http://www.philosophicalhacker.com/2015/07/07/mvpr-a-flexible-testable-architecture-for-android-pt-1/&#34;&gt;my last post&lt;/a&gt;, I argued that there are two disadvantages to &lt;code&gt;Activities&lt;/code&gt; and Presenters. The first disadvantage is that they are often bloated classes. The second disadvantage is that these classes often have a circular dependency between themselves and their Views. Yesterday, Hannes Dorfmann made a comment on my post that was so thoughtful and excellent that I think its worth dedicating an entire post to responding to it.&lt;/p&gt;
 
 &lt;p&gt;Specifically, Hannes&amp;rsquo; comments challenge my claim that the circular dependency between Activities/Fragments/Presenters and their Views are a problem.&lt;/p&gt;
@@ -343,10 +343,10 @@ That’s open to dispute. [Is] a presenter...in an invalid state without a View
     
     <item>
       <title>MVPR: A Flexible, Testable Architecture for Android (Pt. 1)</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/07/07/mvpr-a-flexible-testable-architecture-for-android-pt-1/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/07/07/mvpr-a-flexible-testable-architecture-for-android-pt-1/</link>
       <pubDate>Tue, 07 Jul 2015 18:29:16 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/07/07/mvpr-a-flexible-testable-architecture-for-android-pt-1/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/07/07/mvpr-a-flexible-testable-architecture-for-android-pt-1/</guid>
       <description>
 
 &lt;blockquote&gt;Thorough unit testing helps us improve the internal quality because, to be tested, a unit has to be structured to run outside the system in a test fixture. A unit test for an object needs to create the object, provide its dependencies, interact with it, and check that it behaved as expected. So, for a class to be easy to unit-test, the class must have explicit dependencies that can easily be substituted and clear responsibilities that can easily be invoked and verified. In software engineering terms, that means that the code must be loosely coupled and highly cohesive —in other words, well-designed.
@@ -449,10 +449,10 @@ We try to make sure that we always create a valid object…Partially creating an
     
     <item>
       <title>Introduction to RxJava for Android (Pt. 2)</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/06/19/introduction-to-rxjava-for-android-pt-2/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/06/19/introduction-to-rxjava-for-android-pt-2/</link>
       <pubDate>Fri, 19 Jun 2015 12:19:14 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/06/19/introduction-to-rxjava-for-android-pt-2/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/06/19/introduction-to-rxjava-for-android-pt-2/</guid>
       <description>&lt;p&gt;I concluded my last post by summing up what we&amp;rsquo;ve seen so far and what we still need to understand about RxJava:&lt;/p&gt;
 
 &lt;blockquote&gt;We now know what an asynchronous data stream is and we know that RxJava uses the Observer pattern to deliver these streams to everyone that’s interested. We still don’t know, however, what it means for a data stream to be “functionally transformed” nor do we know how RxJava allows us to represent anything as an asynchronous data stream that can be created and consumed on any thread. These are questions I’ll have to tackle in the second part of this written version of my upcoming RxJava talk.&lt;/blockquote&gt;
@@ -554,10 +554,10 @@ We try to make sure that we always create a valid object…Partially creating an
     
     <item>
       <title>Introduction to RxJava for Android: The Talk</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/06/17/introduction-to-rxjava-for-android-the-talk/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/06/17/introduction-to-rxjava-for-android-the-talk/</link>
       <pubDate>Wed, 17 Jun 2015 01:48:45 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/06/17/introduction-to-rxjava-for-android-the-talk/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/06/17/introduction-to-rxjava-for-android-the-talk/</guid>
       <description>&lt;p&gt;Earlier today, I gave my Intro To RxJava talk. I&amp;rsquo;m not thrilled at how clear I was at explaining certain aspects of RxJava, but here&amp;rsquo;s the video nonetheless. My talk starts at 28:32. Hopefully, I&amp;rsquo;ll do a better job when I finish &lt;a href=&#34;http://www.philosophicalhacker.com/2015/06/12/an-introduction-to-rxjava-for-android/&#34;&gt;the written version of this talk&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;If you want to hear a hilarious take down of the design of the new Pizza Hut app, check out &lt;a href=&#34;https://www.linkedin.com/profile/view?id=51923912&amp;amp;trk=hp-feed-member-name&#34;&gt;Ian&amp;rsquo;s&lt;/a&gt; talk that happens before mine.&lt;/p&gt;
@@ -570,10 +570,10 @@ We try to make sure that we always create a valid object…Partially creating an
     
     <item>
       <title>An Introduction to RxJava for Android (Pt. 1)</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/06/12/an-introduction-to-rxjava-for-android/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/06/12/an-introduction-to-rxjava-for-android/</link>
       <pubDate>Fri, 12 Jun 2015 12:34:53 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/06/12/an-introduction-to-rxjava-for-android/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/06/12/an-introduction-to-rxjava-for-android/</guid>
       <description>&lt;p&gt;I&amp;rsquo;m taking a brief break from talking about testing. I&amp;rsquo;ll resume my discussion of how &lt;a href=&#34;http://www.philosophicalhacker.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/&#34;&gt;I&amp;rsquo;m making Google&amp;rsquo;s IOSched app unit testable&lt;/a&gt; after I&amp;rsquo;ve posted the content from &lt;a href=&#34;http://www.meetup.com/University-Android/events/222048562/&#34;&gt;my upcoming talk on RxJava&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt; &lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_rxjava_def.jpg&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/06/rxjava_prezi_rxjava_def-1024x791.jpg&#34; alt=&#34;rxjava_prezi_rxjava_def&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
@@ -659,10 +659,10 @@ We try to make sure that we always create a valid object…Partially creating an
     
     <item>
       <title>Unit Testing Dynamically Constructed Views</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/06/06/unit-testing-dynamically-constructed-views/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/06/06/unit-testing-dynamically-constructed-views/</link>
       <pubDate>Sat, 06 Jun 2015 11:08:03 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/06/06/unit-testing-dynamically-constructed-views/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/06/06/unit-testing-dynamically-constructed-views/</guid>
       <description>
 
 &lt;p&gt;Some view hierarchies in Android are specified statically. The structure of these hierarchies does not change at run-time. Occasionally, we need to have dynamically constructed view hierarchies, hierarchies whose structure change at run-time. We might need to, for example, add or remove a view depending on some data we&amp;rsquo;ve fetched or in response to some input. The &lt;code&gt;SessionDetailActivity&lt;/code&gt; in Google&amp;rsquo;s IOSched app has a dynamically constructed view hierarchy. The number of tags associated with a particular IO session determines how many tag views are added to the &lt;code&gt;SessionDetailActivity&lt;/code&gt;&amp;rsquo;s view hierarchy.&lt;/p&gt;
@@ -699,10 +699,10 @@ We try to make sure that we always create a valid object…Partially creating an
     
     <item>
       <title>Towards A Unit Testable Fork of Google&#39;s IOSched App</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/</link>
       <pubDate>Sun, 31 May 2015 20:11:16 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/</guid>
       <description>
 
 &lt;p&gt;In my recent &lt;a href=&#34;http://www.philosophicalhacker.com/2015/04/10/against-android-unit-tests/&#34;&gt;Against Android Unit Tests&lt;/a&gt; series, I discussed the difficulties of unit testing android applications and proposed a different way of building applications that would enhance their unit testability. My proposal in that series was really largely a rough sketch of what it would take to make parts of Google&amp;rsquo;s IOSched app unit testable.&lt;/p&gt;
@@ -735,10 +735,10 @@ We try to make sure that we always create a valid object…Partially creating an
     
     <item>
       <title>An Introduction to Unit Testing on Android</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/05/29/making-the-most-of-android-studios-unit-testing-support/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/05/29/making-the-most-of-android-studios-unit-testing-support/</link>
       <pubDate>Fri, 29 May 2015 11:23:14 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/05/29/making-the-most-of-android-studios-unit-testing-support/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/05/29/making-the-most-of-android-studios-unit-testing-support/</guid>
       <description>&lt;p&gt;Yesterday at IO Extended Orlando, I gave a talk on testing. What follows is a written version of the presentation I gave.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-01.png&#34;&gt;&lt;img src=&#34;http://www.philosophicalhacker.com/wp-content/uploads/2015/05/io-testing-talk-01.png&#34; alt=&#34;IO Testing Talk-01&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
@@ -821,10 +821,10 @@ We try to make sure that we always create a valid object…Partially creating an
     
     <item>
       <title>What I&#39;ve Learned From Trying to Make An Android App Unit Testable</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/</link>
       <pubDate>Fri, 22 May 2015 12:29:28 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/</guid>
       <description>
 
 &lt;p&gt;For the past few posts, I&amp;rsquo;ve introduced and showed how we would apply The Square Way of building Android applications. The primary motivation for The Square Way was to increase the unit testability of our applications. As I stated in the &lt;a href=&#34;http://philosophicalhacker.com/2015/04/10/against-android-unit-tests/&#34;&gt;introduction to this series&lt;/a&gt;, most tests in Android are slow, instrumentation tests and/or tests that rely on third-party frameworks like Roboletric. The Square Way was supposed to help us write fast unit tests that didn&amp;rsquo;t rely on any third-party frameworks.&lt;/p&gt;
@@ -898,10 +898,10 @@ We try to make sure that we always create a valid object…Partially creating an
     
     <item>
       <title>Android Unit Testing Guides</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/05/09/android-unit-testing-guides/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/05/09/android-unit-testing-guides/</link>
       <pubDate>Sat, 09 May 2015 13:20:54 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/05/09/android-unit-testing-guides/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/05/09/android-unit-testing-guides/</guid>
       <description>&lt;p&gt;In &lt;a href=&#34;http://philosophicalhacker.com/2015/05/08/how-to-make-our-android-apps-unit-testable-pt-2/&#34;&gt;my last post&lt;/a&gt;, I showed how we can apply The Square Way to UI app component classes. More specifically I showed how The Square Way would have us rewrite the &lt;code&gt;SessionDetailActivity&lt;/code&gt; so that we could unit test its &lt;code&gt;onStop()&lt;/code&gt; method. At the end of my last post, I said that I&amp;rsquo;d be spending this and the next post doing an overall assessment of The Square Way.&lt;/p&gt;
 
 &lt;p&gt;I actually won&amp;rsquo;t be doing that this post. I&amp;rsquo;ll be postponing the overall assessment of The Square Way until the next few posts. Instead, what I want to do in this post is simply present a few unit-testability guides. These cheatsheets summarize much of what&amp;rsquo;s been covered in the past few posts and provide you with simplified steps to follow if you are interested in enhancing your application&amp;rsquo;s unit-testability via The Square Way.&lt;/p&gt;
@@ -918,10 +918,10 @@ We try to make sure that we always create a valid object…Partially creating an
     
     <item>
       <title>How to Make Our Android Apps Unit Testable (Pt. 2)</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/05/08/how-to-make-our-android-apps-unit-testable-pt-2/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/05/08/how-to-make-our-android-apps-unit-testable-pt-2/</link>
       <pubDate>Fri, 08 May 2015 11:46:13 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/05/08/how-to-make-our-android-apps-unit-testable-pt-2/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/05/08/how-to-make-our-android-apps-unit-testable-pt-2/</guid>
       <description>
 
 &lt;p&gt;In &lt;a href=&#34;http://philosophicalhacker.com/2015/05/01/how-to-make-our-android-apps-unit-testable-pt-1/&#34;&gt;my last post&lt;/a&gt;, I introduced the “The Square Way” of structuring our android code. I said that The Square Way is a generalization of the approach that Square used to make the logic within their &lt;code&gt;Fragment&lt;/code&gt;s unit testable. I also showed how The Square Way would have us rewrite the &lt;code&gt;SessionCalendarService&lt;/code&gt; within Google’s IOSched app so that we could unit test the business logic within it. As we’ll see in this post, The Square Way also makes it easier/possible for us to unit test UI app component business logic.&lt;/p&gt;
@@ -1003,10 +1003,10 @@ We try to make sure that we always create a valid object…Partially creating an
     
     <item>
       <title>How to Make Our Android Apps Unit Testable (Pt. 1)</title>
-      <link>http://replace-this-with-your-hugo-site.com/2015/05/01/how-to-make-our-android-apps-unit-testable-pt-1/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2015/05/01/how-to-make-our-android-apps-unit-testable-pt-1/</link>
       <pubDate>Fri, 01 May 2015 11:30:24 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2015/05/01/how-to-make-our-android-apps-unit-testable-pt-1/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2015/05/01/how-to-make-our-android-apps-unit-testable-pt-1/</guid>
       <description>
 
 &lt;p&gt;Unit testing Android apps is hard, and sometimes it can be impossible. For &lt;a href=&#34;http://philosophicalhacker.com/2015/04/17/why-android-unit-testing-is-so-hard-pt-1/&#34;&gt;the past two posts&lt;/a&gt;, I’ve been explaining why android unit testing is so difficult. The main conclusion from &lt;a href=&#34;http://philosophicalhacker.com/2015/04/24/why-android-unit-testing-is-so-hard-pt-2/&#34;&gt;the last post&lt;/a&gt; is that it is difficult/impossible to unit test our Android applications because of the way we are encouraged to structure them. Google seems to want us to put our business logic in app component classes (e.g., &lt;code&gt;Activity&lt;/code&gt;s, &lt;code&gt;Fragment&lt;/code&gt;s, &lt;code&gt;Service&lt;/code&gt;s, etc.). This approach to writing Android applications is what I have been calling the “standard way.”&lt;/p&gt;

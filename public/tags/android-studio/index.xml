@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Android Studio on Philosophical Hacker</title>
-    <link>http://replace-this-with-your-hugo-site.com/tags/android-studio/</link>
+    <link>http://kmdupr33.github.io/PhilHackerBlog/tags/android-studio/</link>
     <description>Recent content in Android Studio on Philosophical Hacker</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 03 Oct 2014 03:02:54 +0000</lastBuildDate>
-    <atom:link href="http://replace-this-with-your-hugo-site.com/tags/android-studio/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://kmdupr33.github.io/PhilHackerBlog/tags/android-studio/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>An Alternative Multiproject Setup for Android Studio</title>
-      <link>http://replace-this-with-your-hugo-site.com/2014/10/03/an-alternative-multiproject-setup-for-android-studio/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2014/10/03/an-alternative-multiproject-setup-for-android-studio/</link>
       <pubDate>Fri, 03 Oct 2014 03:02:54 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2014/10/03/an-alternative-multiproject-setup-for-android-studio/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2014/10/03/an-alternative-multiproject-setup-for-android-studio/</guid>
       <description>
 
 &lt;p&gt;Google&amp;rsquo;s &lt;a href=&#34;http://tools.android.com/tech-docs/new-build-system/user-guide&#34;&gt;Gradle Plugin user guide recommends&lt;/a&gt; a method for configuring your gradle files to build multiple projects. That method has some shortcomings. In this post, I will briefly explain Google&amp;rsquo;s recommended configuration, note its shortcomings, and  recommend a different way to configure your gradle files to support multi-project setups in Android Studio.&lt;/p&gt;

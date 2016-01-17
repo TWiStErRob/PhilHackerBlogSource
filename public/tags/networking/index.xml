@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Networking on Philosophical Hacker</title>
-    <link>http://replace-this-with-your-hugo-site.com/tags/networking/</link>
+    <link>http://kmdupr33.github.io/PhilHackerBlog/tags/networking/</link>
     <description>Recent content in Networking on Philosophical Hacker</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 22 May 2014 23:47:26 +0000</lastBuildDate>
-    <atom:link href="http://replace-this-with-your-hugo-site.com/tags/networking/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://kmdupr33.github.io/PhilHackerBlog/tags/networking/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>How to Break into a Mobile Dev Career in 10 months or less</title>
-      <link>http://replace-this-with-your-hugo-site.com/2014/05/22/how-to-break-into-a-mobile-dev-career-in-10-months-or-less/</link>
+      <link>http://kmdupr33.github.io/PhilHackerBlog/2014/05/22/how-to-break-into-a-mobile-dev-career-in-10-months-or-less/</link>
       <pubDate>Thu, 22 May 2014 23:47:26 +0000</pubDate>
       
-      <guid>http://replace-this-with-your-hugo-site.com/2014/05/22/how-to-break-into-a-mobile-dev-career-in-10-months-or-less/</guid>
+      <guid>http://kmdupr33.github.io/PhilHackerBlog/2014/05/22/how-to-break-into-a-mobile-dev-career-in-10-months-or-less/</guid>
       <description>&lt;p&gt;A little less than a year ago, I decided that &lt;a href=&#34;https://philosophicalhacker.com/2014/04/21/why-im-glad-my-dream-job-didnt-work-out/&#34;&gt;the philosophy professor scam&lt;/a&gt; was too risky for my wife and I. Instead, I decided to pursue a career in app development (and maybe do a tech startup). About 10 months after that decision, I got two internships at two companies as an Android Developer.¹ Hopefully, one of these internships will turn in to a full-time gig (and I have some reason to think that this will happen). At this point, I think its safe to say that I have successfully broken into a mobile dev career with a master&amp;rsquo;s degree in a philosophy. What follows is a combination of programming resources and advice that helped me pull this off. I&amp;rsquo;m hoping that other non-traditional hackers like me will find these resources useful, but before I get in to that, a disclaimer:&lt;/p&gt;
 
 &lt;p&gt;Breaking into a mobile dev career may not be as easy for others as it has been for me. Orlando&amp;rsquo;s tech scene is growing crazy fast, so its possible that luck was the primary factor that contributed to success in snagging a mobile dev internship.&lt;/p&gt;
