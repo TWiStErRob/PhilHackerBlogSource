@@ -6,7 +6,7 @@ comments: true
 date: 2015-06-17T01:48:45Z
 slug: introduction-to-rxjava-for-android-the-talk
 title: 'Introduction to RxJava for Android: The Talk'
-url: /2015/06/17/introduction-to-rxjava-for-android-the-talk/
+url: /2015/06/16/introduction-to-rxjava-for-android-the-talk/
 wordpress_id: 453
 ---
 
