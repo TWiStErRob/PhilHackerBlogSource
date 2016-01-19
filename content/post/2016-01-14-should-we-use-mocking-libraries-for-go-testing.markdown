@@ -6,7 +6,7 @@ comments: true
 date: 2016-01-14T02:20:53Z
 slug: should-we-use-mocking-libraries-for-go-testing
 title: Should we use mocking libraries for go testing?
-url: /2016/01/14/should-we-use-mocking-libraries-for-go-testing/
+url: /2016/01/13/should-we-use-mocking-libraries-for-go-testing/
 wordpress_id: 734
 ---
 
