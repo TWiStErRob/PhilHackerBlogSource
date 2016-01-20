@@ -1,9 +1,9 @@
 +++
 author = ""
 comments = true
-date = "2016-01-17T10:43:26-05:00"
-draft = true
+date = "2016-01-20T10:43:26-05:00"
 share = true
+tags = ["go"]
 title = "Getting started with Gomock"
 +++
 
@@ -11,7 +11,7 @@ In [my last post](http://www.philosophicalhacker.com/2016/01/13/should-we-use-mo
 
 <!--more-->
 
-# Your first mock-utilizing test
+### Your first mock-utilizing test
 
 To get started using gomock, first follow the installation instructions laid out in the gomock [repo's readme][2]. Once you've installed gomock, you can start generating mocks for your tests. Let's explore how gomock works with an example.
 
