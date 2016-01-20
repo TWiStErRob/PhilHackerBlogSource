@@ -82,7 +82,7 @@ func TestEmailSender(t *testing.T) {
 }
 {{< / highlight >}}
 
-Of course, this is a contrived example, but its enough to help convey the idea of a mock. As you can see, the test will fail if the mock doesn't receive a call with the appropriate arguments. The mock has been "pre-programmed" to expect a call to Send() with specify arguments and that expectation must be fulfilled in order for the test to pass.
+Of course, this is a contrived example, but its enough to help convey the idea of a mock. As you can see, the test will fail if the mock doesn't receive a call with the appropriate arguments. The mock has been "pre-programmed" to expect a call to Send() with specific arguments and that expectation must be fulfilled in order for the test to pass.
 
 Let's quickly define another word: "test double." Test doubles are objects that are used instead of a "real object" to facilitate testing. A mock is a test double, but not all test doubles are mocks.
 
