@@ -1,11 +1,11 @@
 +++
 comments = true
 date = "2016-01-23T13:01:07-05:00"
-draft = true
+draft = false
 share = true
 slug = "post-title"
 tags = ["go"]
-title = "Table driven tests with Gomock"
+title = "Table-driven tests with Gomock"
 +++
 
 Table-driven tests are a common testing pattern for go tests. Since I recently started working with gomock, I wondered if there was a way to use table-driven tests with gomock mocks. It turns out that this is definitely possible, and that's what this post is about. Before I show how to combine table-driven tests with gomock mocks, I briefly review how gomock and table-driven tests work and I try to show why you might want to combine table-driven tests with mocks in the first place.
