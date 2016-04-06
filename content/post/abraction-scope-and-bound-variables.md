@@ -7,7 +7,7 @@ image = ""
 menu = ""
 share = true
 slug = "abstraction-scope-and-bound-variables"
-title = "Abstraction Scope and Bound Variables"
+title = "Abstraction, Scope, and Bound Variables"
 
 +++
 
