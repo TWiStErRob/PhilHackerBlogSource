@@ -1,14 +1,10 @@
 +++
-author = ""
 comments = true
 date = "2016-04-06T07:47:43-04:00"
 draft = false
-image = ""
-menu = ""
 share = true
 slug = "abstraction-scope-and-bound-variables"
 title = "Abstraction, Scope, and Bound Variables"
-
 +++
 
 Here's my big take away from sicp section 1.1.8:

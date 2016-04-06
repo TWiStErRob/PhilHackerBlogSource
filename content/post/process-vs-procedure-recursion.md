@@ -2,12 +2,11 @@
 author = ""
 comments = true
 date = "2016-04-06T07:58:01-04:00"
-draft = true
+draft = false
 image = ""
 menu = ""
 share = true
-slug = "Process vs. Procedure Recursion"
-tags = ["tag1", "tag2"]
+slug = "process-vs-procedure-recursion"
 title = "Process vs. Procedure Recursion"
 
 +++
