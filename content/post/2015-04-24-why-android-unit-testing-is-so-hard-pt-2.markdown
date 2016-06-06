@@ -86,6 +86,21 @@ Throughout this series, I’ve been saying that an examination of why Android un
 
 I’ve just shown that placing our business logic in application components classes makes it difficult or impossible to unit test our applications. In the next post, I’ll suggest that we start delegating business logic to classes that make proper use of dependency injection. If we’re going to go through the trouble of defining these classes, however, we might as well make these class’s dependencies android-agnostic interfaces. This step in the process of enhancing our application’s testability is trivial compared to the first step, and completing this second step will enable us to write fast unit tests without having to rely on android-specific testing tools (e.g, Roboletric, Instrumented Tests).
 
+---
+
+Against Android Unit Tests:
+
+ * [Introduction](http://www.philosophicalhacker.com/2015/04/10/against-android-unit-tests/)
+ * Why Android Unit Testing is so Hard: [part 1](http://www.philosophicalhacker.com/2015/04/17/why-android-unit-testing-is-so-hard-pt-1/), [part 2](http://www.philosophicalhacker.com/2015/04/24/why-android-unit-testing-is-so-hard-pt-2/)
+ * How to Make Our Android Apps Unit Testable: [part 1](http://www.philosophicalhacker.com/2015/05/01/how-to-make-our-android-apps-unit-testable-pt-1/), [part 2](http://www.philosophicalhacker.com/2015/05/08/how-to-make-our-android-apps-unit-testable-pt-2/)
+ * [Quick Summary](http://www.philosophicalhacker.com/2015/05/09/android-unit-testing-guides/)
+ * [Conclusion](http://www.philosophicalhacker.com/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/)
+ * [Followup: Summary](http://www.philosophicalhacker.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/)
+ * [Followup: Unit Testing Dynamically Constructed Views](http://www.philosophicalhacker.com/2015/06/06/unit-testing-dynamically-constructed-views/)
+ * [Followup: Testing in Android Studio 1.2](http://www.philosophicalhacker.com/2015/05/29/making-the-most-of-android-studios-unit-testing-support/)
+
+---
+
 **Notes**
 
 1. Of course, you could pass the `ServiceLauncher` in as a Serializable. This is not a particularly robust solution since it only works if you don’t care about the performance hit that results from using Serializable.

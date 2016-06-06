@@ -96,3 +96,18 @@ This is not as simple as using true dependency injection to get dependencies int
 I think the Square Way is the way to go if we want to make our apps unit testable. Of course, I'm open to other alternative proposals. I have not shown that all other ways of enhancing an app's testability are inferior to the Square Way.
 
 Since this is the end of the series, I also wanted to say thanks to everyone for their support as I wrote these articles. I appreciate all of the feedback -- positive and otherwise, the retweets, and the general social media love. The positive response has helped me realize how sorely we need to think and talk about testing for Android, and because of this realization, I've decided to spend the foreseeable future discussing Android testing on this blog. I'll be posting new posts every Friday. I look forward to continuing the conversation.
+
+---
+
+Against Android Unit Tests:
+
+ * [Introduction](http://www.philosophicalhacker.com/2015/04/10/against-android-unit-tests/)
+ * Why Android Unit Testing is so Hard: [part 1](http://www.philosophicalhacker.com/2015/04/17/why-android-unit-testing-is-so-hard-pt-1/), [part 2](http://www.philosophicalhacker.com/2015/04/24/why-android-unit-testing-is-so-hard-pt-2/)
+ * How to Make Our Android Apps Unit Testable: [part 1](http://www.philosophicalhacker.com/2015/05/01/how-to-make-our-android-apps-unit-testable-pt-1/), [part 2](http://www.philosophicalhacker.com/2015/05/08/how-to-make-our-android-apps-unit-testable-pt-2/)
+ * [Quick Summary](http://www.philosophicalhacker.com/2015/05/09/android-unit-testing-guides/)
+ * [Conclusion](http://www.philosophicalhacker.com/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/)
+ * [Followup: Summary](http://www.philosophicalhacker.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/)
+ * [Followup: Unit Testing Dynamically Constructed Views](http://www.philosophicalhacker.com/2015/06/06/unit-testing-dynamically-constructed-views/)
+ * [Followup: Testing in Android Studio 1.2](http://www.philosophicalhacker.com/2015/05/29/making-the-most-of-android-studios-unit-testing-support/)
+
+---

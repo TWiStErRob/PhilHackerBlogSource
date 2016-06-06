@@ -45,6 +45,21 @@ In the fourth post, I’ll discuss some challenges with the general strategy I 
 In the final post, I try to provide further incentive for enhancing the testability of our application by showing how the architecture I propose has some nice benefits aside from testability.[
 ](http://www.philosophicalhacker.com/wp-content/uploads/2015/04/androidstack-01.png)
 
+---
+
+Against Android Unit Tests:
+
+ * [Introduction](http://www.philosophicalhacker.com/2015/04/10/against-android-unit-tests/)
+ * Why Android Unit Testing is so Hard: [part 1](http://www.philosophicalhacker.com/2015/04/17/why-android-unit-testing-is-so-hard-pt-1/), [part 2](http://www.philosophicalhacker.com/2015/04/24/why-android-unit-testing-is-so-hard-pt-2/)
+ * How to Make Our Android Apps Unit Testable: [part 1](http://www.philosophicalhacker.com/2015/05/01/how-to-make-our-android-apps-unit-testable-pt-1/), [part 2](http://www.philosophicalhacker.com/2015/05/08/how-to-make-our-android-apps-unit-testable-pt-2/)
+ * [Quick Summary](http://www.philosophicalhacker.com/2015/05/09/android-unit-testing-guides/)
+ * [Conclusion](http://www.philosophicalhacker.com/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/)
+ * [Followup: Summary](http://www.philosophicalhacker.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/)
+ * [Followup: Unit Testing Dynamically Constructed Views](http://www.philosophicalhacker.com/2015/06/06/unit-testing-dynamically-constructed-views/)
+ * [Followup: Testing in Android Studio 1.2](http://www.philosophicalhacker.com/2015/05/29/making-the-most-of-android-studios-unit-testing-support/)
+
+---
+
 Notes:
 
 

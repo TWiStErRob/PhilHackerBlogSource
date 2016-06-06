@@ -45,3 +45,18 @@ As [Google's testing blog points out](http://googletesting.blogspot.com/2008/12/
 My hope is to eventually have [a fork of Google's IOSched app](https://github.com/kmdupr33/iosched) that allows us to unit test all of its business logic. Making a non-trivial app like IOSched unit testable will tell us a lot about what it really takes to unit test Android apps. We might find out that unit testing Android apps is just too impractical. Either way, I look forward to exploring how we might pull this off.
 
 You can check out my progress towards this goal by looking at the aforementioned fork of the IOSched repo. I'll try to make sure the master branch always has something that is semi-polished in it. I make no guarantees about other branches. I'd love to work with others toward this goal. If people are interested in contributing to the repo, I'll put together some code standards and guidelines for contributing.
+
+---
+
+Against Android Unit Tests:
+
+ * [Introduction](http://www.philosophicalhacker.com/2015/04/10/against-android-unit-tests/)
+ * Why Android Unit Testing is so Hard: [part 1](http://www.philosophicalhacker.com/2015/04/17/why-android-unit-testing-is-so-hard-pt-1/), [part 2](http://www.philosophicalhacker.com/2015/04/24/why-android-unit-testing-is-so-hard-pt-2/)
+ * How to Make Our Android Apps Unit Testable: [part 1](http://www.philosophicalhacker.com/2015/05/01/how-to-make-our-android-apps-unit-testable-pt-1/), [part 2](http://www.philosophicalhacker.com/2015/05/08/how-to-make-our-android-apps-unit-testable-pt-2/)
+ * [Quick Summary](http://www.philosophicalhacker.com/2015/05/09/android-unit-testing-guides/)
+ * [Conclusion](http://www.philosophicalhacker.com/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/)
+ * [Followup: Summary](http://www.philosophicalhacker.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/)
+ * [Followup: Unit Testing Dynamically Constructed Views](http://www.philosophicalhacker.com/2015/06/06/unit-testing-dynamically-constructed-views/)
+ * [Followup: Testing in Android Studio 1.2](http://www.philosophicalhacker.com/2015/05/29/making-the-most-of-android-studios-unit-testing-support/)
+
+---
