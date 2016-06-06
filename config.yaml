@@ -1,4 +1,4 @@
-baseurl: http://kmdupr33.github.io/
+baseurl: http://philosophicalhacker.com/
 disablePathToLower: true
 languageCode: en-us
 title: Philosophical Hacker
@@ -6,7 +6,7 @@ theme: casper
 DisqusShortname: philosophicalhacker
 params:
     cover: images/the-thinker.jpg
-    description: Articles on android and go development
+    description: Articles on android development
     twitterName: philosohacker
     facebookName: philosophicalhacker
     linkedinName: k-matthew-dupree-44672178
