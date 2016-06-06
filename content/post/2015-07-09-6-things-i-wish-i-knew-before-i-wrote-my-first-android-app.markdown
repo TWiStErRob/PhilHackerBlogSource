@@ -26,10 +26,11 @@ If you're an experienced Java developer, items 1, 2, and 5 probably won't be in
 
 ## 1. Don't have static references to Contexts
 
+{{< gist kmdupr33 e9af62a0ad04abbb0a7d >}}
 
 This might seem like an impossible mistake for anyone to make. Its not. I made this mistake. I've seen others make this mistake, and I've interviewed people who weren't very quick at figuring out why this is a mistake in the first place. Don't do this. Its a n00b move.
 
-If MeTrackerStore keeps a reference to the Activity passed into its constructor, the Activity will never be garbage collected. (Unless the static variable is reassigned to a different Activity.) This is because mMeTrackerStore is static, and the memory for static variables isn't reclaimed until the process in which the application is running quits. If you find yourself tempted to do this, there's probably something seriously wrong with your code. Find help. Maybe looking at Google's Udacity course on ["Android Development for Beginners"](https://www.udacity.com/course/android-development-for-beginners--ud837) will help you out.
+If `MeTrackerStore` keeps a reference to the Activity passed into its constructor, the Activity will never be garbage collected. (Unless the static variable is reassigned to a different Activity.) This is because `mMeTrackerStore` is static, and the memory for static variables isn't reclaimed until the process in which the application is running quits. If you find yourself tempted to do this, there's probably something seriously wrong with your code. Find help. Maybe looking at Google's Udacity course on ["Android Development for Beginners"](https://www.udacity.com/course/android-development-for-beginners--ud837) will help you out.
 
 Note: Technically, you can hold a static reference to an application Context without causing a memory leak, but [I wouldn't recommend that you do that either](http://www.philosophicalhacker.com/2015/07/14/why-static-references-to-application-contexts-are-probably-not-the-best-idea/). 
 
@@ -37,7 +38,7 @@ Note: Technically, you can hold a static reference to an application Context wit
 
 ## 2. Beware of "implicit references" to objects whose lifecycle you do not control
 
-
+{{< gist kmdupr33 494707e126e5fc7156ea >}}
 
 There's multiple problems with this code. I'm only going to focus on one of those problems. In Java, (non-static) inner classes have an implicit reference to the instances of the class that encloses them.
 
@@ -50,7 +51,7 @@ There's a great Google IO video [that explains why this sort of thing happens](
 
 ## 3. Make Android Studio work for You
 
-
+{{< gist kmdupr33 f0e08822fe0d3b74973a >}}
 
 
 This snippet is what Android Studio generated when I used the "Generate Getter" code completion in Android Studio. The getter keeps the 'm' prefixed to the instance variable and uses it when generating a getter method name. This is not ideal.
