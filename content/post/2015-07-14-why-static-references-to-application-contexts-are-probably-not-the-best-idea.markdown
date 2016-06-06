@@ -49,11 +49,11 @@ Global static references to an application `Context` are no exception to this po
 
 Here's a quick example to illustrate this. Suppose you run across this method signature while you're looking at code:
 
-
+{{< gist kmdupr33 b3ae8532aa3ef1f738b9  >}}
 
 When you encounter this signature, you have no idea how this method displays the string passed in as a parameter. Now, suppose instead that you encountered this signature:
 
-
+{{< gist kmdupr33 d783e83a14b2cbc3807b >}}
 
 With this signature you have a hint that maybe this method uses a `Toast` to display the string. Because `Context` is a god-object, knowing that a particular class or method depends on it doesn't always shed much light on what that class/method does or how it does it, but a little help in understanding what a class/method does is better than no help. 
 
@@ -85,7 +85,7 @@ For the vast majority of cases, breaking encapsulation in this way probably wou
 
 If one of your classes calls a method on an application Context and you would like to verify that that method has been called in a unit test, using an static reference will not make your life easy. As I've pointed out in [this post](http://www.philosophicalhacker.com/2015/04/24/why-android-unit-testing-is-so-hard-pt-2/), there are cases where you'll probably want to do this. Suppose you've got an ServiceLauncher object that launches an Android Service. If you've used dependency injection to pass in the Context upon which the ServiceLauncher depends, unit testing is easy:
 
- 
+{{< gist kmdupr33 4b9cf75237955e97558a >}} 
 
 If the ServiceLauncher used a static reference to an application Context, this class would more difficult to unit test. In this particular case, you could use the testing support library to verify that intents are sent with a UI test, but UI tests are slower than unit tests, and, in any case, there are methods on a Context that you might want to verify that don't use intents, so injecting a Context into a target object will give you more flexibility when testing than using a globally accessible static reference, even if you leverage the testing support library to help you verify that certain intents were sent.
 
