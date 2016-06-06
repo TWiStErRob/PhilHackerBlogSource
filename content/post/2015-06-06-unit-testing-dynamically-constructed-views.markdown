@@ -26,7 +26,7 @@ If you're not familiar with MVP, you should check out [this post](https://corner
 
 Before I outline my approach to refactoring the `SessionDetailActivity` so that we can have unit testable, view constructing code, let's try to get a handle on how the `SessionDetailActivity `works without any kind of refactoring. Here's what the code currently looks like:
 
-
+{{< gist kmdupr33 0560695307233112cf3f >}}
 
 There are few important things to notice about this code fragment.
 
@@ -36,15 +36,15 @@ Also note that there's business logic that determines the properties of the view
 
 The problem of creating unit testable, dynamically constructed views is basically the problem of finding sensible places to put these two different kinds of business logic. Here's what I suggest, the view-hierarchy-affecting business logic should go in a `SessionDetailPresenter`:
 
-
+{{< gist kmdupr33 a0cef94a26e88f4f5ecf >}}
 
 The `SessionDetailActivity` in this code segment is acting as the View within the MVP triad, and as such, it should not contain any business logic. Thus, we know that the view-property-affecting business logic should not be within the `SessionDetailActivity`. Instead of placing the view-property affecting business logic within the `SessionDetailActivity`, we have the `SessionDetailActivity` delegate that logic out to another View-Presenter pair:
 
-
+{{< gist kmdupr33 49428a2fcaf71df555f0  >}}
 
 The "SessionTagViewTranslator" in this code segment is really just the View within the View-Presenter pair. For reasons that I discuss [here](http://www.philosophicalhacker.com/2015/04/05/dont-call-it-mvp/), I prefer the name "ViewTranslator" over "View" because it more clearly marks the difference between an MVP View and an Android View. Astute readers will notice that the SessionDetailActivity shouldn't be responsible for forwarding the click event on the view to the TagPresenter. This problem arises because of a circular dependency between MVP Views and Presenters. I'll discuss how to break this dependency in my next post. The `TagPresenter` is fairly trivial, but here's what it looks like:
 
-
+{{< gist kmdupr33 fd03667d4593eff59b1a >}}
 
 The SesionTagViewTranslator is even more trivial, so I won't bother showing the code for that.
 
