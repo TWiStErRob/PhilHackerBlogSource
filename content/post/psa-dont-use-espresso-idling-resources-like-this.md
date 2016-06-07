@@ -132,4 +132,4 @@ public class NotesFragment extends Fragment implements NotesContract.View {
 }
 {{< / highlight >}}
 
-Voila. And now your espresso tests will wait until the notes have been loaded before asserting the view state and you've avoiding mixing testing responsibilities with your business logic. Bon Appetite.
+Voila. And now your espresso tests will wait until the notes have been loaded before asserting the view state and you've avoided mixing testing responsibilities with your business logic. Bon Appetite.
