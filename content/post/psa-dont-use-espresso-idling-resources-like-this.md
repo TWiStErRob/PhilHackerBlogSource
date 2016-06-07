@@ -1,7 +1,7 @@
 +++
 comments = true
 date = "2016-06-07T06:54:20-04:00"
-draft = true
+draft = false
 share = true
 image = "/images/coffee.jpeg"
 slug = "psa-dont-use-esprsso-idling-resources-like-this"
