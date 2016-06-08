@@ -5,7 +5,7 @@ title: Philosophical Hacker
 theme: casper
 DisqusShortname: philosophicalhacker
 params:
-    cover: images/the-thinker.jpg
+    cover: images/cropped-thinker.jpg
     description: Articles on android development
     twitterName: philosohacker
     facebookName: philosophicalhacker
