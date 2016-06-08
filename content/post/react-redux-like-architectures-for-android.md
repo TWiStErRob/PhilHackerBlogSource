@@ -6,7 +6,7 @@ image = "./images/react-android-redux.png"
 share = true
 slug = "react-and-redux-like-architectures-for-android"
 tags = ["android"]
-title = "React-and-Redux-like Architectures for Android"
+title = "How React-and-Redux-like Architectures for Android can make Testing Easier"
 +++
 
 >I think there's a lot of value in seeing what else is happening, even if you're not a master of one of those other languages. As long as you're being exposed to it, you're opening your mind up to different ways of approaching problems and solving problems and different techniques.
