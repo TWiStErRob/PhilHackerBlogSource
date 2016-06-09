@@ -8,6 +8,9 @@ slug: how-to-make-our-android-apps-unit-testable-pt-1
 title: How to Make Our Android Apps Unit Testable (Pt. 1)
 url: /2015/05/01/how-to-make-our-android-apps-unit-testable-pt-1/
 wordpress_id: 307
+tags:
+- android
+- testing
 ---
 
 Unit testing Android apps is hard, and sometimes it can be impossible. For [the past two posts](http://philosophicalhacker.com/2015/04/17/why-android-unit-testing-is-so-hard-pt-1/), I’ve been explaining why android unit testing is so difficult. The main conclusion from [the last post](http://philosophicalhacker.com/2015/04/24/why-android-unit-testing-is-so-hard-pt-2/) is that it is difficult/impossible to unit test our Android applications because of the way we are encouraged to structure them. Google seems to want us to put our business logic in app component classes (e.g., `Activity`s, `Fragment`s, `Service`s, etc.). This approach to writing Android applications is what I have been calling the “standard way.”

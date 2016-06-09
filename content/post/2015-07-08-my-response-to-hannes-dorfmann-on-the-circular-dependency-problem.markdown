@@ -8,6 +8,9 @@ slug: my-response-to-hannes-dorfmann-on-the-circular-dependency-problem
 title: My Response to Hannes Dorfmann on "the Circular Dependency Problem"
 url: /2015/07/08/my-response-to-hannes-dorfmann-on-the-circular-dependency-problem/
 wordpress_id: 551
+tags:
+- android
+- testing
 ---
 
 In [my last post](http://www.philosophicalhacker.com/2015/07/07/mvpr-a-flexible-testable-architecture-for-android-pt-1/), I argued that there are two disadvantages to `Activities` and Presenters. The first disadvantage is that they are often bloated classes. The second disadvantage is that these classes often have a circular dependency between themselves and their Views. Yesterday, Hannes Dorfmann made a comment on my post that was so thoughtful and excellent that I think its worth dedicating an entire post to responding to it.

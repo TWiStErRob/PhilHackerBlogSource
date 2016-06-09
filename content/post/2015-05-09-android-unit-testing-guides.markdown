@@ -8,6 +8,9 @@ slug: android-unit-testing-guides
 title: Android Unit Testing Guides
 url: /2015/05/09/android-unit-testing-guides/
 wordpress_id: 328
+tags:
+- android
+- testing
 ---
 
 In [my last post](http://philosophicalhacker.com/2015/05/08/how-to-make-our-android-apps-unit-testable-pt-2/), I showed how we can apply The Square Way to UI app component classes. More specifically I showed how The Square Way would have us rewrite the `SessionDetailActivity` so that we could unit test its `onStop()` method. At the end of my last post, I said that I'd be spending this and the next post doing an overall assessment of The Square Way.

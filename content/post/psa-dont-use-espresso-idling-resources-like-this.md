@@ -5,7 +5,7 @@ draft = false
 share = true
 image = "/images/coffee.jpeg"
 slug = "psa-dont-use-esprsso-idling-resources-like-this"
-tags = ["android"]
+tags = ["android", "testing"]
 title = "PSA: Dont Use Espresso Idling Resources like Google does"
 +++
 

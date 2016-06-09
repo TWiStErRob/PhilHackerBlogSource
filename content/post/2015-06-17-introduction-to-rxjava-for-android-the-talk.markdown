@@ -8,6 +8,9 @@ slug: introduction-to-rxjava-for-android-the-talk
 title: 'Introduction to RxJava for Android: The Talk'
 url: /2015/06/16/introduction-to-rxjava-for-android-the-talk/
 wordpress_id: 453
+tags:
+- android
+- rxjava
 ---
 
 Earlier today, I gave my Intro To RxJava talk. I'm not thrilled at how clear I was at explaining certain aspects of RxJava, but here's the video nonetheless. My talk starts at 28:32. Hopefully, I'll do a better job when I finish [the written version of this talk](http://www.philosophicalhacker.com/2015/06/12/an-introduction-to-rxjava-for-android/).

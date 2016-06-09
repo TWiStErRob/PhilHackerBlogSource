@@ -8,6 +8,9 @@ slug: introduction-to-rxjava-for-android-pt-2
 title: Introduction to RxJava for Android (Pt. 2)
 url: /2015/06/19/introduction-to-rxjava-for-android-pt-2/
 wordpress_id: 462
+tags:
+- android
+- rxjava
 ---
 
 I concluded my last post by summing up what we've seen so far and what we still need to understand about RxJava:

@@ -8,6 +8,9 @@ slug: making-the-most-of-android-studios-unit-testing-support
 title: An Introduction to Unit Testing on Android
 url: /2015/05/29/making-the-most-of-android-studios-unit-testing-support/
 wordpress_id: 367
+tags:
+- android
+- testing
 ---
 
 Yesterday at IO Extended Orlando, I gave a talk on testing. What follows is a written version of the presentation I gave.

@@ -8,6 +8,9 @@ slug: what-ive-learned-from-trying-to-make-an-android-app-unit-testable
 title: What I've Learned From Trying to Make An Android App Unit Testable
 url: /2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/
 wordpress_id: 349
+tags:
+- android
+- testing
 ---
 
 For the past few posts, I've introduced and showed how we would apply The Square Way of building Android applications. The primary motivation for The Square Way was to increase the unit testability of our applications. As I stated in the [introduction to this series](http://philosophicalhacker.com/2015/04/10/against-android-unit-tests/), most tests in Android are slow, instrumentation tests and/or tests that rely on third-party frameworks like Roboletric. The Square Way was supposed to help us write fast unit tests that didn't rely on any third-party frameworks.

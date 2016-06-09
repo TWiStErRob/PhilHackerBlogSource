@@ -8,6 +8,9 @@ slug: an-introduction-to-rxjava-for-android
 title: An Introduction to RxJava for Android (Pt. 1)
 url: /2015/06/12/an-introduction-to-rxjava-for-android/
 wordpress_id: 427
+tags:
+- android
+- rxjava
 ---
 
 I'm taking a brief break from talking about testing. I'll resume my discussion of how [I'm making Google's IOSched app unit testable](http://www.philosophicalhacker.com/2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/) after I've posted the content from [my upcoming talk on RxJava](http://www.meetup.com/University-Android/events/222048562/).
@@ -36,10 +39,10 @@ Now, suppose that you're supposed to implement something like this for an app yo
 
 
 
-	
+
   * there are at least three characters entered into the `SearchWidget`
 
-	
+
   * there has been at least a 100 millisecond delay before any other characters have been entered into the `SearchWidget`
 
 

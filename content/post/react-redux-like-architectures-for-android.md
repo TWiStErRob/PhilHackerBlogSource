@@ -5,7 +5,7 @@ draft = false
 image = "./images/react-android-redux.png"
 share = true
 slug = "react-and-redux-like-architectures-for-android"
-tags = ["android"]
+tags = ["android", "testing"]
 title = "How React-and-Redux-like Architectures for Android can make Testing Easier"
 +++
 

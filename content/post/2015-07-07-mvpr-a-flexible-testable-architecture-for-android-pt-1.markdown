@@ -8,6 +8,9 @@ slug: mvpr-a-flexible-testable-architecture-for-android-pt-1
 title: 'MVPR: A Flexible, Testable Architecture for Android (Pt. 1)'
 url: /2015/07/07/mvpr-a-flexible-testable-architecture-for-android-pt-1/
 wordpress_id: 499
+tags:
+- android
+- testing
 ---
 
 <blockquote>Thorough unit testing helps us improve the internal quality because, to be tested, a unit has to be structured to run outside the system in a test fixture. A unit test for an object needs to create the object, provide its dependencies, interact with it, and check that it behaved as expected. So, for a class to be easy to unit-test, the class must have explicit dependencies that can easily be substituted and clear responsibilities that can easily be invoked and verified. In software engineering terms, that means that the code must be loosely coupled and highly cohesive —in other words, well-designed.
@@ -31,16 +34,16 @@ I think there's a better way to structure our applications. In the next few pos
 
 
 
-	
+
   1. It breaks up the multiple responsibilities typically handled by `Presenters` and `Activities`
 
-	
+
   2. It breaks the circular dependency that traditionally exists between Views on the one hand and Activities or Presenters on the other hand.
 
-	
+
   3. It enables us to use constructor dependency injection for all of our objects that present data to the user and respond to user input.
 
-	
+
   4. It makes our ui-related business logic classes easier to unit test, impossible to construct without the dependencies necessary to fulfill their responsibilities, and (slightly) more amenable to the use of composition and polymorphism to extend and/or modify object behavior.
 
 
@@ -61,22 +64,22 @@ In this post, I will try to give some reasons why we might consider a new arch
 
 
 
-	
+
   * Handle View Events
 
-	
+
   * Update Model
 
-	
+
   * Invoke another View
 
-	
+
   * Interact with System Components
 
-	
+
   * Handle System Events
 
-	
+
   * Update View based on System Events
 
 

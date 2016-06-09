@@ -8,6 +8,9 @@ slug: how-to-keep-your-rxjava-subscribers-from-leaking
 title: How to Keep your RxJava Subscribers from Leaking
 url: /2015/03/24/how-to-keep-your-rxjava-subscribers-from-leaking/
 wordpress_id: 257
+tags:
+- android
+- rxjava
 ---
 
 **Edit:** Shortly after writing this, I realized that the solution that I present here isn't very good. I'm leaving it here just in case it can serve as a building block for better solutions.

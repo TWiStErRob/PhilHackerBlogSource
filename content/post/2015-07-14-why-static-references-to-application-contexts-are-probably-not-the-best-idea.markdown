@@ -9,6 +9,9 @@ title: Why Having Global Static References to Application Contexts is Probably n
   the Best Idea
 url: /2015/07/14/why-static-references-to-application-contexts-are-probably-not-the-best-idea/
 wordpress_id: 600
+tags:
+- android
+- testing
 ---
 
 In my last post, I went over [6 things I wish I knew before I wrote my first Android app](http://www.philosophicalhacker.com/2015/07/09/6-things-i-wish-i-knew-before-i-wrote-my-first-android-app/). One of the things I listed in that post was this:

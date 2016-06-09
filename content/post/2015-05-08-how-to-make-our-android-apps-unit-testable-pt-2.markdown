@@ -8,6 +8,9 @@ slug: how-to-make-our-android-apps-unit-testable-pt-2
 title: How to Make Our Android Apps Unit Testable (Pt. 2)
 url: /2015/05/08/how-to-make-our-android-apps-unit-testable-pt-2/
 wordpress_id: 321
+tags:
+- android
+- testing
 ---
 
 In [my last post](http://philosophicalhacker.com/2015/05/01/how-to-make-our-android-apps-unit-testable-pt-1/), I introduced the “The Square Way” of structuring our android code. I said that The Square Way is a generalization of the approach that Square used to make the logic within their `Fragment`s unit testable. I also showed how The Square Way would have us rewrite the `SessionCalendarService` within Google’s IOSched app so that we could unit test the business logic within it. As we’ll see in this post, The Square Way also makes it easier/possible for us to unit test UI app component business logic.

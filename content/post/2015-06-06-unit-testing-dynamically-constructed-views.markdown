@@ -8,6 +8,9 @@ slug: unit-testing-dynamically-constructed-views
 title: Unit Testing Dynamically Constructed Views
 url: /2015/06/06/unit-testing-dynamically-constructed-views/
 wordpress_id: 3
+tags:
+- android
+- testing
 ---
 
 Some view hierarchies in Android are specified statically. The structure of these hierarchies does not change at run-time. Occasionally, we need to have dynamically constructed view hierarchies, hierarchies whose structure change at run-time. We might need to, for example, add or remove a view depending on some data we've fetched or in response to some input. The `SessionDetailActivity` in Google's IOSched app has a dynamically constructed view hierarchy. The number of tags associated with a particular IO session determines how many tag views are added to the `SessionDetailActivity`'s view hierarchy.

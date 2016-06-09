@@ -8,6 +8,9 @@ slug: why-android-unit-testing-is-so-hard-pt-2
 title: Why Android Unit Testing Is So Hard (Pt. 2)
 url: /2015/04/24/why-android-unit-testing-is-so-hard-pt-2/
 wordpress_id: 301
+tags:
+- android
+- testing
 ---
 
 **Edit:** In [the post that concludes this series](http://philosophicalhacker.com/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/), I point out that making unit testable Android apps does not require us to remove compile-time dependencies on the Android SDK and that attempting to do so is impractical anyway. Ignore anything in this post that suggests otherwise.

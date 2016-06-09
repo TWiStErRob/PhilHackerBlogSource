@@ -8,6 +8,9 @@ slug: making-a-tdd-based-hackernews-client-for-android
 title: Making a TDD-based HackerNews client for Android
 url: /2015/07/17/making-a-tdd-based-hackernews-client-for-android/
 wordpress_id: 624
+tags:
+  - android
+  - testing
 ---
 
 I'm using TDD to write a HackerNews client for Android. This post (and the ones that will likely follow it) share a little bit about some of the techniques I used to follow a TDD-based work-flow for developing this application. It also discusses the architecture that arises when Android apps are built with testability in mind from the ground up.

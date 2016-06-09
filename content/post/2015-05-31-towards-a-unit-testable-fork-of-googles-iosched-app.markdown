@@ -8,6 +8,9 @@ slug: towards-a-unit-testable-fork-of-googles-iosched-app
 title: Towards A Unit Testable Fork of Google's IOSched App
 url: /2015/05/31/towards-a-unit-testable-fork-of-googles-iosched-app/
 wordpress_id: 391
+tags:
+- android
+- testing
 ---
 
 In my recent [Against Android Unit Tests](http://www.philosophicalhacker.com/2015/04/10/against-android-unit-tests/) series, I discussed the difficulties of unit testing android applications and proposed a different way of building applications that would enhance their unit testability. My proposal in that series was really largely a rough sketch of what it would take to make parts of Google's IOSched app unit testable.

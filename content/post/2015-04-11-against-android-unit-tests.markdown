@@ -8,6 +8,9 @@ slug: against-android-unit-tests
 title: Against Android Unit Tests
 url: /2015/04/10/against-android-unit-tests/
 wordpress_id: 277
+tags:
+- android
+- testing
 ---
 
 **Edit:** Since I've written this, I've come to realize that making unit testable Android apps does not require us to remove compile-time dependencies on the Android SDK. I talk about this realization in [the post that concludes this series](http://philosophicalhacker.com/2015/05/22/what-ive-learned-from-trying-to-make-an-android-app-unit-testable/).

@@ -8,6 +8,9 @@ slug: 6-things-i-wish-i-knew-before-i-wrote-my-first-android-app
 title: 6 Things I wish I Knew before I Wrote my first Android App
 url: /2015/07/09/6-things-i-wish-i-knew-before-i-wrote-my-first-android-app/
 wordpress_id: 559
+tags:
+- android
+- testing
 ---
 
 My first app was terrible. It was so terrible, in fact, that I removed it from the store and I don't even bother listing it on my resume' anymore. That app wouldn't have been so terrible if I knew a few things about Android development before I wrote it.
