@@ -157,6 +157,8 @@ Here's the problem: the `EspressoNotifyingLoaderCallbacks` has a `LoaderIdlingRe
 
 We can't afford to wait this long! We need the `EspressoNotifyingLoaderCallbacks` to be injected into the `Activity` before that `Activity` adds the `PresenterFragmentImpl`, thereby triggering it's lifecycle methods that create a `Loader`.
 
+Technically, in this particular case, we can inject the `EspressoNotifyingLoaderCallbacks` into the `PresenterFragmentImpl` before that Fragment is added to it's hosting `Activity`, but if we were trying to test logic in an `Activity`, we'd be out of luck. Either way, moving our logic out of the `PresenterFragmentImpl` would give us a cleaner way of separating our test code from our application code. I'll attempt to show this cleaner separation in another post. 
+
 I can think of a few ways around this problem, but none of them seem particularly pretty. If we didn't have any logic in our `Activity` and `PresenterFragmentImpl` in the first place and if we placed that logic in a POJO that could make use of [constructor dependency injection](http://misko.hevery.com/2009/02/19/constructor-injection-vs-setter-injection/), this would be much easier. We could just pass the `EspressoNotifyingLoaderCallbacks` as a dependency to some POJO's constructor. The `Activity`, moreover, could just forward its lifecycle calls to that POJO, so that it would act appropriately.
 
 So, the reason why functional testing with Android `Activity`'s is so hard is the same reason why unit testing `Activity`'s is hard: we can't do proper dependency injection.
