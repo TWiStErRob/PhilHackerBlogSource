@@ -4,7 +4,7 @@ date = "2016-06-16T16:58:30-04:00"
 draft = false
 image = "images/life-ring.jpg"
 share = true
-slug = "post-title"
+slug = "how-to-safely-move-logic-out-of-activities"
 tags = ["android", "testing", "refactoring"]
 title = "How to Safely move Logic out of Activities"
 +++
