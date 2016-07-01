@@ -10,34 +10,7 @@ title = "Why don't we have a unit test recorder?"
 
 Last week, I introduced Vice, a *proof of concept* regression test generation library. Vice generates regression tests simply by exercising the code we want to test.
 
-For example, this class exercises the `reverse` method on the `Reverser` class:
-
-{{< highlight java "style=default" >}}
-@ViceFor(Reverser.class)
-public class ViceMaker {
-    @Clamp
-    public void clampReverse(Reverser reverser) {
-        reverser.reverse("hello");
-    }
-}
-{{< / highlight >}}
-
-When we run Vice, the following unit test is generated:
-
-{{< highlight java "style=default">}}
-public class ReverserCharacterization {
-  @Test
-  public void characterizeReverse() {
-    Reverser reverser = new Reverser();
-    final String result = reverser.reverse("hello");
-    assertEquals("olleh", result);
-  }
-}
-{{< / highlight >}}
-
-This is neat, but there's already [something else out there that does something like this](https://github.com/dmcg/okey-doke), and ultimately, Vice as it stands doesn't answer a fundamental question I have about regression tests: if we can record functional UI tests using [the espresso test recorder](http://android-developers.blogspot.com/2016/05/android-studio-22-preview-new-ui.html) or [apple's test recorder](https://developer.apple.com/library/mac/documentation/ToolsLanguages/Conceptual/Xcode_Overview/RecordingUITests.html), why don't we have a *unit test recorder*?
-
-In case its not obvious, this seems like an important question because unit-level tests can run much more quickly than functional UI tests, so they can actually serve as, to use Michael Feathers' metaphor, a "software vice" when we're refactoring or adding features. Having to wait 5+ minutes to know if you're changes have broken anything is way too long for functional UI tests to be useful feedback while programming.
+This is neat, but there's already [something else out there that does something like this](https://github.com/dmcg/okey-doke), and ultimately, Vice as it stands doesn't answer a fundamental question I have about regression tests: if we can record functional UI tests using [the espresso test recorder](http://android-developers.blogspot.com/2016/05/android-studio-22-preview-new-ui.html) or [apple's test recorder](https://developer.apple.com/library/mac/documentation/ToolsLanguages/Conceptual/Xcode_Overview/RecordingUITests.html), why don't we have a *unit test recorder*?<sup>1</sup>
 
 This past week, I've been exploring potential ways creating a unit test recorder with special attention to implementing this functionality for Android development. In this post, I present an overall strategy for doing this and I present what I've learned so far vis-a-vis practically implementing this strategy for Android development.
 
@@ -108,3 +81,6 @@ Another possibility is to leverage [the Transform api](http://tools.android.com/
 
 I'll be trying out these alternative approaches in the coming week. Hopefully, next time I'll have a working unit test recorder!
 
+### Notes
+
+1. In case its not obvious, this seems like an important question because unit-level tests can run much more quickly than functional UI tests, so they can actually serve as, to use Michael Feathers' metaphor, a "software vice" when we're refactoring or adding features. Having to wait 5+ minutes to know if you're changes have broken anything is way too long for functional UI tests to be useful feedback while programming.
