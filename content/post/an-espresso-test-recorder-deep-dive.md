@@ -3,6 +3,7 @@ comments = true
 date = "2016-07-07T23:28:29-04:00"
 draft = true
 share = true
+image = "images/diving-suit.jpg"
 slug = "an-espresso-test-recorder-deep-dive"
 tags = ["android", "espresso"]
 title = "An Espresso Test Recorder Deep Dive"
