@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="/bower_components/webcomponentsjs/webcomponents-lite.js" charset="utf-8"></script>
+    <link rel="import" href="/bower_components/paper-toolbar/paper-toolbar.html">
+    <link rel="import" href="/bower_components/paper-card/paper-card.html">
+    <!-- <link rel="import" href="/bower_components/iron-icons/iron-icons.html"> -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <style media="screen">
+      body {
+        padding: 0px;
+        margin: 0px;
+        font-family: "Roboto";
+      }
+
+      paper-card {
+        margin: 10px;
+        width: 98%;
+      }
+
+      h1 {
+        font-size: 20px;
+        margin: 10px;
+        text-align: center;
+      }
+    </style>
+    <meta charset="utf-8">
+    <title>Android Studio Tips</title>
+  </head>
+  <body>
+    <paper-toolbar>
+      <!-- <iron-icon icon="build"></iron-icon>
+      <iron-icon icon="android"></iron-icon> -->
+      <div class="title">
+        Android Studio Tips
+      </div>
+    </paper-toolbar>
+    <h1>This is a community curated list of Android Studio Tips. Contribute on github here</h1>
+    <section id="main">
+      {{ range $page := .Data.Pages }}
+        <paper-card>
+          <div class="card-content">
+            {{$page.Content}}
+          </div>
+        </paper-card>
+      {{ end }}
+    </section>
+  </body>
+</html>
