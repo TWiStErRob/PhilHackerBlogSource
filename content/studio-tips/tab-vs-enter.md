@@ -1,3 +1,3 @@
-# Use Tab instead of Enter
+# Tab vs. Enter
 
 whenever you do something else
