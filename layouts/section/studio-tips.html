@@ -13,9 +13,16 @@
         font-family: "Roboto";
       }
 
+      #main {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        width: 100%;
+      }
+
       paper-card {
+        max-width: 750px;
         margin: 10px;
-        width: 98%;
       }
 
       h1 {
@@ -24,7 +31,7 @@
         text-align: center;
       }
 
-      a {
+      .toolbar-link {
         text-decoration: none;
         color: white;
       }
@@ -39,7 +46,7 @@
       <div class="title">
         Android Studio Tips
       </div>
-      <h3><a href="http://philosophicalhacker.com">from Philosophical Hacker</a></h3>
+      <h3><a class="toolbar-link" href="http://philosophicalhacker.com">from Philosophical Hacker</a></h3>
     </paper-toolbar>
     <h1>This is a curated list of Android Studio Tips. Contribute on github <a href="https://github.com/kmdupr33/PhilHackerBlogSource/blob/master/CONTRIBUTING.md">here</a></h1>
     <section id="main">
