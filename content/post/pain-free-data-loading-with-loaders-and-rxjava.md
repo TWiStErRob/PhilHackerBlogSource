@@ -13,7 +13,7 @@ title = "RxLoader: Lightweight, Boilerplate-Free Data loading with Loaders and R
 >Loaders are awesome...they're essentially the best practice implementation of asynchronous data loading in your Activities.
 >
 >-Reto Meier, Developing Android Apps Udacity Course
-
+<!--more-->
 The following code should make you nervous:
 
 {{< highlight java "style=default" >}}
