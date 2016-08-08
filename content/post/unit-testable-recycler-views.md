@@ -10,6 +10,8 @@ title = "Unit Testable RecyclerViews"
 
 When building our Android apps, we can often wind up with a decent amount of code in our `RecyclerView.Adapter`s that we want to test. In this article, I briefly suggest two ways of structuring our `RecyclerView`-related classes so that we can accomplish this.
 
+<!--more-->
+
 First, let's look at a simple list that'll serve as a working example:
 
 ![Simple RecyclerView](/images/simple-list.png)
