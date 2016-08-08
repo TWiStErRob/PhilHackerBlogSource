@@ -1,7 +1,7 @@
 +++
 comments = true
 date = "2016-08-08T08:34:46-04:00"
-draft = true
+draft = false
 share = true
 slug = "unit-testable-recycler-views"
 tags = ["android", "testing"]
