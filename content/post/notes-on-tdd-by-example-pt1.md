@@ -8,7 +8,7 @@ tags = ["testing", "tdd by example", "startups"]
 title = "TDD and Startups"
 +++
 
-Beck introduces *TDD by Example* with a little story meant to show the business value of automated testing:
+Kent Beck introduces *TDD by Example* with a little story meant to show the business value of automated testing:
 
 > Early one Friday, the boss came to Ward Cunningham to introduce him to Peter, a prospective customer for WyCash, the bond portfolio management system the company was selling. Peter said..."I'm starting a new bond fund, and my strategy requires that I handle bonds in different currencies.” The boss turned to Ward, “Well, can we do it?"...The trick now was to make space for the new functionality without breaking anything that already worked. What would happen if Ward just ran the tests? After the addition of a few unimplemented operations to Currency, the bulk of the tests passed. By the end of the day, all of the tests were passing. Ward checked the code into the build and went to the boss. “We can do it,” he said confidently. Let's think a bit about this story. In two days, the potential market was multiplied several fold, multiplying the value of WyCash several fold. The ability to create so much business value so quickly was no accident, however.
 
