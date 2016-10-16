@@ -24,6 +24,12 @@ I sometimes suspect that Facebook's success over Friendster and MySpace is parti
 
 I actually think this is one of the most under-rated arguments for TDD. When considering whether to write tests, I suspect a lot of developers think, "Well, I can get it working without tests, so why bother writing them?" Unfortunately, this overlooks the key issue, which, if Beck, Freeman and Pryce, and Reis are right, is this: "How can I structure my system so that I can make the biggest possible changes while maintaining confidence that the functionality is correct?"<sup>1</sup> If TDD folks are right, moreover, the answer to this key question is of course to do TDD.
 
+If this is right, then it means that a comment that Beck makes later on in the first part of TDD by Example may need refinement. He says:
+
+>For TDD to make economic sense, you'll need to be able to either write twice as many lines per day as before, or write half as many lines for the same functionality. You'll have to measure and see what effect TDD has on your own practice. Be sure to factor debugging, integrating, and explaining time into your metrics, though.
+
+This remark may in fact be consistent with the idea that there's immense value in the flexible architectures that emerge as a result of TDD. Its hard to tell exactly what Beck is saying here. Beck's intent aside, I think this passage should have made it clearer that these a lot of valuable in being able to change code confidently, and this may make TDD worth it even if we wind up writing more code.
+
 ### Notes:
 
 1. Of course, if you're not building a product whose features are likely to change, then this argument for testing doesn't apply.
