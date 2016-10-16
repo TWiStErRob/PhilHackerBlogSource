@@ -28,7 +28,7 @@ If this is right, then it means that a comment that Beck makes later on in the f
 
 >For TDD to make economic sense, you'll need to be able to either write twice as many lines per day as before, or write half as many lines for the same functionality. You'll have to measure and see what effect TDD has on your own practice. Be sure to factor debugging, integrating, and explaining time into your metrics, though.
 
-This remark may in fact be consistent with the idea that there's immense value in the flexible architectures that emerge as a result of TDD. Its hard to tell exactly what Beck is saying here. Beck's intent aside, I think this passage should have made it clearer that these a lot of value in being able to change code confidently, and this may make TDD worth it even if we wind up writing more code when we factor in the code we need to write tests.
+This remark may in fact be consistent with the idea that there's immense value in the flexible architectures that emerge as a result of TDD. Its hard to tell exactly what Beck is saying here. Beck's intent aside, I think this passage should have made it clearer that there's a lot of value in being able to change code confidently, and this may make TDD worth it even if we wind up writing more code when we factor in the code we need to write tests.
 
 ### Notes:
 
