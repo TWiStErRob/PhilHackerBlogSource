@@ -22,7 +22,7 @@ I sometimes suspect that Facebook's success over Friendster and MySpace is parti
 
 > The reason to build a new team to pursue an idea is that you believe you can accelerate through the Build-Measure-Learn feedback loop faster than anyone else can. If that’s true, it makes no difference what the competition knows. If it’s not true, a startup has much bigger problems...
 
-I actually think this is one of the most under-rated arguments for investing in extensive automated testing. When considering whether to write tests, I suspect a lot of developers think, "Well, I can get it working without tests, so why bother writing them?" Unfortunately, this overlooks the key issue, which, if Beck, Freeman and Pryce, and Reis are right, is this: "How can I structure my system so that I can make the biggest possible changes while maintaining confidence that the functionality is correct?"<sup>1</sup> If TDD folks are right, moreover, the answer to this key question is of course to do TDD.
+I actually think this is one of the most under-rated arguments for TDD. When considering whether to write tests, I suspect a lot of developers think, "Well, I can get it working without tests, so why bother writing them?" Unfortunately, this overlooks the key issue, which, if Beck, Freeman and Pryce, and Reis are right, is this: "How can I structure my system so that I can make the biggest possible changes while maintaining confidence that the functionality is correct?"<sup>1</sup> If TDD folks are right, moreover, the answer to this key question is of course to do TDD.
 
 ### Notes:
 
