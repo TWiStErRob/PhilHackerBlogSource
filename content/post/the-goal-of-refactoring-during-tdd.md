@@ -7,6 +7,7 @@ comments = true
 draft = false
 slug = "the-goal-of-refactoring-during-tdd"
 share = true
+author = ""
 title = "The goal of refactoring During TDD"
 date = "2016-10-16T16:35:28-04:00"
 +++

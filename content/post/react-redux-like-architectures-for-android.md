@@ -2,6 +2,7 @@
 comments = true
 date = "2016-06-08T17:30:09-04:00"
 draft = false
+author = ""
 image = "./images/react-android-redux.png"
 share = true
 slug = "react-and-redux-like-architectures-for-android"

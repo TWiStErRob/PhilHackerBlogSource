@@ -3,6 +3,7 @@ comments = true
 date = "2016-07-07T23:28:29-04:00"
 draft = false
 share = true
+author = ""
 image = "images/diving-suit.jpg"
 slug = "an-espresso-test-recorder-deep-dive"
 tags = ["android", "espresso"]
@@ -202,4 +203,3 @@ Google's debugger/breakpoint based approach may actually work for the kind of un
 ### Notes
 
 1. Using the Transform api from the Gradle plugin proved to be a dead end because I needed my Transform implementation to load classes that depend on the android SDK and depending on the Android SDK from a gradle build script is not well supported.
-

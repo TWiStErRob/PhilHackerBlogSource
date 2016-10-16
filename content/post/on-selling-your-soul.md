@@ -2,6 +2,7 @@
 comments = true
 date = "2016-08-09T08:21:36-04:00"
 draft = false
+author = ""
 image = "images/backman-silicon-valley.jpg"
 share = true
 slug = "on-selling-your-soul"
@@ -21,13 +22,13 @@ Yesterday, Gregg Pollack, the founder of CodeSchool spoke. At the end of his tal
 
 >If you take away one thing from this talk, know that 50% of building a startup is sales and marketing.<sup>1</sup>
 
-That statement was pretty surprising to me. I'm not sure why, but I know that if its true, then I'm not spending nearly enough time on marketing and sales for my company. (To be frank, these founder's talk notes are a partial remedy to that.) 
+That statement was pretty surprising to me. I'm not sure why, but I know that if its true, then I'm not spending nearly enough time on marketing and sales for my company. (To be frank, these founder's talk notes are a partial remedy to that.)
 
-I've found that while working on University Android, I've had a bit of a tough time transitioning from an engineering mindset to the mindset of an entrepreneur. I often find myself getting caught up in engineering issues that simply are not relevant *yet* for my company. 
+I've found that while working on University Android, I've had a bit of a tough time transitioning from an engineering mindset to the mindset of an entrepreneur. I often find myself getting caught up in engineering issues that simply are not relevant *yet* for my company.
 
 As an engineer at an established company, you're paid to write *scalable* code. As a founder, on the other hand, you won't get paid until you find a scalable business model. To be sure, the engineering solutions I come up with as a founder have to be scalable to some extent, but scalable solutions for founders are only good insofar as they allow them to find a scalable business model.
 
-Going forward, I'm going to try to spend more time hustling. 
+Going forward, I'm going to try to spend more time hustling.
 
 ### The Asshole
 

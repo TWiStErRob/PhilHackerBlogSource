@@ -2,6 +2,7 @@
 comments = true
 date = "2016-06-16T16:58:30-04:00"
 draft = false
+author = ""
 image = "images/life-ring.jpg"
 share = true
 slug = "how-to-safely-move-logic-out-of-activities"

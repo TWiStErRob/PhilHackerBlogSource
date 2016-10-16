@@ -1,4 +1,5 @@
 +++
+author = ""
 comments = true
 date = "2016-08-08T08:34:46-04:00"
 draft = false
@@ -47,11 +48,11 @@ public class MainActivity extends AppCompatActivity {
 }
 {{< / highlight >}}
 
-Now that we've introduced a working example, let's look at two ways of making RecyclerView-related code unit testable. 
+Now that we've introduced a working example, let's look at two ways of making RecyclerView-related code unit testable.
 
 ### An Obvious Way: MVP
 
-One of the oft-cited benefits of using MVP in Android apps is that it enhances testability. So, a natural way of structuring our `RecyclerView` related classes so that we can enhance testability is to apply MVP to those classes. To do this, we make the `ViewHolder` sublcass implement an MVP `View`. 
+One of the oft-cited benefits of using MVP in Android apps is that it enhances testability. So, a natural way of structuring our `RecyclerView` related classes so that we can enhance testability is to apply MVP to those classes. To do this, we make the `ViewHolder` sublcass implement an MVP `View`.
 
 {{< highlight java "style=default" >}}
 private static class SimpleListItemViewHolder extends RecyclerView.ViewHolder implements SimpleListItemView {
@@ -117,7 +118,7 @@ public class PresenterTest {
 
 ### A Lighter Way: Reusing a Presenter
 
-Let's look at another way of making our `RecyclerView` related classes unit testable. While the above approach works fine, I sometimes find that having to create an extra presenter class that is stored and retrieved as a tag on a `ViewHolder`'s item view a bit much, especially if I already have a `Presenter` that is simply responsible for fetching items to display in the list. 
+Let's look at another way of making our `RecyclerView` related classes unit testable. While the above approach works fine, I sometimes find that having to create an extra presenter class that is stored and retrieved as a tag on a `ViewHolder`'s item view a bit much, especially if I already have a `Presenter` that is simply responsible for fetching items to display in the list.
 
 Let's alter our working example a bit to suppose we had such a presenter. Instead of simply displaying the position of a ViewHolder in our `RecyclerView`, let's display numbers we have to fetch from somewhere else. In this case, we'll probably want a (unit-testable)`Presenter` that looks like this:
 
@@ -148,7 +149,7 @@ static class Presenter {
 }
 {{< / highlight >}}
 
-Now, if we were simply using MVP for a RecyclerView-related classes, the highlighted `displayNumbers` method is where we'd have to create our `Adapter` that would creat and use a separate `Presenter` class that would hold our presentation logic. Since we already have a `Presenter`, however, we can simply reuse it by passing it to the `RecyclerView.Adapter` via our MVP View method: 
+Now, if we were simply using MVP for a RecyclerView-related classes, the highlighted `displayNumbers` method is where we'd have to create our `Adapter` that would creat and use a separate `Presenter` class that would hold our presentation logic. Since we already have a `Presenter`, however, we can simply reuse it by passing it to the `RecyclerView.Adapter` via our MVP View method:
 
 {{< highlight java "style=default, hl_lines=7" >}}
 static class Presenter {

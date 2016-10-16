@@ -2,6 +2,7 @@
 comments = true
 date = "2016-10-16T13:32:57-04:00"
 draft = false
+author = ""
 share = true
 slug = "tdd-and-startups"
 tags = ["testing", "tdd by example", "startups"]

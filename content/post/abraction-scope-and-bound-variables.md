@@ -3,6 +3,7 @@ comments = true
 date = "2016-04-06T07:47:43-04:00"
 draft = false
 share = true
+author = ""
 slug = "abstraction-scope-and-bound-variables"
 title = "Abstraction, Scope, and Bound Variables"
 +++

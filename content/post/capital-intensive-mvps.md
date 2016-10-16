@@ -3,6 +3,7 @@ comments = true
 date = "2016-08-12T08:21:54-04:00"
 draft = false
 share = true
+author = ""
 slug = "capital-intensive-mvps"
 tags = ["entrepreneurship"]
 title = "Capital Intensive MVPs"
@@ -18,7 +19,7 @@ Some MVPs are easier to build than others, and some MVPs are so difficult to bui
 
 ### High Customer Acquisition Costs
 
-Even if you've built an MVP, you still have to be able to verify that people are willing to pay for your solution *at a price that's high enough for you to offset the cost of acquiring those customers in the first place*. The difficulty of verifying this varies from MVP to MVP, and customer acquisition costs can be prohibitive, even if we're just trying to validate our business assumptions with an MVP. 
+Even if you've built an MVP, you still have to be able to verify that people are willing to pay for your solution *at a price that's high enough for you to offset the cost of acquiring those customers in the first place*. The difficulty of verifying this varies from MVP to MVP, and customer acquisition costs can be prohibitive, even if we're just trying to validate our business assumptions with an MVP.
 
 It's much easier for me to get my SnapChatGramBook app in front of 100 dousche-bag teenagers than it is to get my military simulator in front of 20 procurement folks at various defense companies. More generally, if you've got to charge a lot for your product, it's going to take more money to get people to pay for it, and again, the costs may be prohibitive.
 

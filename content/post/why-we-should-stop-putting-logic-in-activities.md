@@ -1,4 +1,5 @@
 +++
+author = ""
 comments = true
 date = "2016-06-14T23:13:00-04:00"
 draft = false
@@ -157,7 +158,7 @@ Here's the problem: the `EspressoNotifyingLoaderCallbacks` has a `LoaderIdlingRe
 
 We can't afford to wait this long! We need the `EspressoNotifyingLoaderCallbacks` to be injected into the `Activity` before that `Activity` adds the `PresenterFragmentImpl`, thereby triggering it's lifecycle methods that create a `Loader`.
 
-Technically, in this particular case, we can inject the `EspressoNotifyingLoaderCallbacks` into the `PresenterFragmentImpl` before that Fragment is added to it's hosting `Activity`, but if we were trying to test logic in an `Activity`, we'd be out of luck. Either way, moving our logic out of the `PresenterFragmentImpl` would give us a cleaner way of separating our test code from our application code. I'll attempt to show this cleaner separation in another post. 
+Technically, in this particular case, we can inject the `EspressoNotifyingLoaderCallbacks` into the `PresenterFragmentImpl` before that Fragment is added to it's hosting `Activity`, but if we were trying to test logic in an `Activity`, we'd be out of luck. Either way, moving our logic out of the `PresenterFragmentImpl` would give us a cleaner way of separating our test code from our application code. I'll attempt to show this cleaner separation in another post.
 
 I can think of a few ways around this problem, but none of them seem particularly pretty. If we didn't have any logic in our `Activity` and `PresenterFragmentImpl` in the first place and if we placed that logic in a POJO that could make use of [constructor dependency injection](http://misko.hevery.com/2009/02/19/constructor-injection-vs-setter-injection/), this would be much easier. We could just pass the `EspressoNotifyingLoaderCallbacks` as a dependency to some POJO's constructor. The `Activity`, moreover, could just forward its lifecycle calls to that POJO, so that it would act appropriately.
 
@@ -184,4 +185,3 @@ Together I take these two comments to mean something like this: `Activity`'s are
 After seeing that putting our logic in `Activity`s makes unit and functional testing difficult, and after getting some insight into the intended design of `Activity`s, I think we wouldn't be crazy in thinking that putting app-logic in our `Activity` makes about as much sense as putting app-logic in a main function of a java program.
 
 Of course, I'm open to being wrong about any of this. I'm offering this argument mainly as a way of getting a conversation going in the community about best practices in Android development. I mostly just don't want to open up the Google IO app for 2017 and see test code mixed in with application code. As long as we can agree on a way of avoiding that, I'll be happy, even if I turn out to be wrong about this.
-

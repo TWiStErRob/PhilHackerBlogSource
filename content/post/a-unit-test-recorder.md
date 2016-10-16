@@ -1,6 +1,7 @@
 +++
 comments = true
 date = "2016-06-29T15:16:00-04:00"
+author = ""
 draft = true
 share = true
 slug = "a-unit-test-recorder"

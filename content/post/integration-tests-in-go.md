@@ -3,6 +3,7 @@ comments = true
 date = "2016-01-22T19:27:36-05:00"
 draft = false
 share = true
+author = ""
 tags = ["go"]
 title = "Integration Tests in Go"
 +++

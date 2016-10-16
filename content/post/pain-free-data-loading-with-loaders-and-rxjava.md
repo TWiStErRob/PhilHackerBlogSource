@@ -4,6 +4,7 @@ date = "2016-07-23T15:43:29-04:00"
 draft = false
 image = ""
 menu = ""
+author = ""
 share = true
 slug = "rxloader-boilerplate-free-data-loading-with-loaders-and-rxjava"
 tags = ["android", "rxjava"]
@@ -37,7 +38,7 @@ public class BoilerplateFree extends AppCompatActivity {
 
 When you see this code you should be asking, "What will happen upon a configuration change? Will the `Activity` leak? Do we need to re-query the network just because of a configuration change?" (Hopefully, when you see this code, you're also wondering, [like I do](http://www.philosophicalhacker.com/post/why-we-should-stop-putting-logic-in-activities/), "Why are we putting logic in our `Activitys`?")
 
-Nervous questions aside, wouldn't it be better if we *could* write data loading code like this? Wouldn't it be nice if we load data into our apps using `Observable`s without worrying about leaking activities and/or wasting the user's data by re-querying the network every time there was a configuration change? Wouldn't it be nice, moreover, if we could do this without writing any boilerplate code? 
+Nervous questions aside, wouldn't it be better if we *could* write data loading code like this? Wouldn't it be nice if we load data into our apps using `Observable`s without worrying about leaking activities and/or wasting the user's data by re-querying the network every time there was a configuration change? Wouldn't it be nice, moreover, if we could do this without writing any boilerplate code?
 
 I think so, and in this post, I'll introduce a *tiny* library that'll help us write code like this. The gist of the approach is to use Loaders *with* RxJava. Before we get into this approach, however, lets look at some other ways that people handle asynchronous data loading in their apps so that we can see what this approach offers that other ones don't.
 
@@ -51,7 +52,7 @@ Loaders give us what we want vis-a-vis memory-leak-free querying whose results p
 
 #### Retained Fragment
 
-Using a retained fragment is another approach for persisting the results of a network request across orientation changes and avoiding memory leaks. Unfortunately, this approach requires a fair amount of boiler-plate code. The barebones implementation as discussed in [the docs](https://developer.android.com/guide/topics/resources/runtime-changes.html) will make this clear enough. Even if we could get rid of most of this boilerplate, we still don't have an api for working with our asynchronous data that's as nice as RxJava's `Observable`. 
+Using a retained fragment is another approach for persisting the results of a network request across orientation changes and avoiding memory leaks. Unfortunately, this approach requires a fair amount of boiler-plate code. The barebones implementation as discussed in [the docs](https://developer.android.com/guide/topics/resources/runtime-changes.html) will make this clear enough. Even if we could get rid of most of this boilerplate, we still don't have an api for working with our asynchronous data that's as nice as RxJava's `Observable`.
 
 #### Cache-Replay
 
@@ -77,7 +78,7 @@ public class MyActivity extends RxActivity {
             .subscribe();
     }
 }
-{{< / highlight >}} 
+{{< / highlight >}}
 
 Unfortunately, if we don't want to subclass a particular kind of Activity to take advantage of this we'll need to write more boilerplate to generate an observable sequence of life-cycle events. Either way, RxLifecycle, combined with the previously outlined cache-replay approach, gives us a pretty nice way of loading data in our Android apps.
 
@@ -97,7 +98,7 @@ I think if we use `Loader`s *with* `Observable`s, we can come up with a solution
 Observable.create(new Observable.OnSubscribe<T>() {
     @Override
     public void call(final Subscriber<? super T> subscriber) {
-        loaderManager.initLoader(loaderId, null, 
+        loaderManager.initLoader(loaderId, null,
                 new LoaderManager.LoaderCallbacks<T>() {
                     @Override
                     public Loader<U> onCreateLoader(int id, Bundle args) {
@@ -139,7 +140,7 @@ public class BoilerplateFree extends AppCompatActivity {
         });
     }
 }
-{{< / highlight >}} 
+{{< / highlight >}}
 
 But where does the `mLoginObservable` that's wrapped the `LoaderManager.init` call come from? That's where RxLoader comes into play. RxLoader is a *very* lightweight library (less than 150 LOC). It's simply an RxJava `Transformer` that lets you take an Observable and compose it into something with loader-like behaviour, something that in fact uses a `Loader` to get this behaviour for free. With RxLoader, your data loading code is as simple as this:
 
@@ -165,8 +166,8 @@ public class BoilerplateFree extends AppCompatActivity {
 
 One line of code gets you an `Observable` with memory-leak-proof data loading whose results are cached across orientation changes.
 
-[Here's](https://github.com/kmdupr33/RxLoader) the project on github. I'll be improving it and getting it on to maven central soon. 
+[Here's](https://github.com/kmdupr33/RxLoader) the project on github. I'll be improving it and getting it on to maven central soon.
 
 ### Notes
 
-1. Quote is from [the RxLifecycle docs](https://github.com/trello/RxLifecycle). 
+1. Quote is from [the RxLifecycle docs](https://github.com/trello/RxLifecycle).

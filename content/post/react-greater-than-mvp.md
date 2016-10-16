@@ -2,6 +2,7 @@
 comments = true
 date = "2016-06-09T15:22:47-04:00"
 draft = false
+author = ""
 share = true
 slug = "testing-strategies-with-a-react-redux-architecture"
 tags = ["android", "testing"]
