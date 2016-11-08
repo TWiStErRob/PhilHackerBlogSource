@@ -20,7 +20,7 @@ Let's start off with two descriptions of attitudes towards testing. The first co
 
 > Testing seems to be like going to gym. Everyone feels like "yeah. I should be testing. I should be going to the gym everyday."
 
-> Koushik Goupal, Fragmented Episode 1 12:01
+> Koushik Goupal, Fragmented Episode 13 12:01
 
 The second comes from *Pragmatic Programmer*:
 
