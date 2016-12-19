@@ -85,7 +85,7 @@ The view is one of the injected dependencies and we can easily verify that the a
 
 One other thing to notice here: we've replaced static method calls with calls to injected dependencies. This isn't necessarily mandated by MVP, but its something that we need to do if want to make this code unit testable.
 
-There's another kind of seam that we haven't explored yet: linking seams. Linking seams are created using build variants, and we'll talk about those more in my next post.
+There's another kind of seam that we haven't explored yet: linking seams. Linking seams are created using build variants, and we'll talk about those more in [my next post]({{< relref "post/build-variants-and-link-seams.md" >}}).
 
 
 ## Notes:
