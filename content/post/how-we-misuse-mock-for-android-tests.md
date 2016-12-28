@@ -1,6 +1,6 @@
 +++
 share = true
-draft = true
+draft = false
 title = "How we Misuse Mocks for Android Tests"
 tags = [
   "android",
