@@ -1,14 +1,14 @@
 +++
 share = true
 draft = true
-title = "Should we Use Mocks for Android Tests?"
+title = "How we Misuse Mocks for Android Tests"
 tags = [
   "android",
   "testing",
 ]
 menu = ""
 date = "2016-12-27T08:21:42-05:00"
-slug = "should-we-use-mocks-for-android-tests"
+slug = "how-we-misuse-mocks-for-android-tests"
 image = "/images/tools.jpg"
 comments = true
 author = ""
