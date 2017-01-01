@@ -34,7 +34,7 @@ Second, whether a particular object's interaction with a collaborator is an impl
 
 >Some of us think about objects in terms of Alan Kay’s emphasis on message passing, others don’t. In my world, I’m interested in the protocols of how objects communicate, not what’s inside them, so testing based on interactions is a natural fit.
 
-I think a compelling example of an object interacting with a collaborator in a way that isn't an implementation detail is actually a `Presenter` interacting with a `View` in MVP. Take, for example, this `Presenter` that we talked about in [my post on MVP and object seams]({{<relref "post/object-seams-and-mvp-for-testability.md  ">}})
+I think a compelling example of an object interacting with a collaborator in a way that isn't an implementation detail is actually a `Presenter` interacting with a `View` in MVP. Take, for example, this `Presenter` that we talked about in [my post on MVP and object seams]({{<relref "post/object-seams-and-mvp-for-testability.md">}})
 
 {{< highlight java "style=default, hl_lines=9" >}}
 class Presenter {
