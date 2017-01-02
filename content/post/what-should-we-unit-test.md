@@ -8,7 +8,7 @@ tags = [
 ]
 menu = ""
 comments = true
-draft = true
+draft = false
 image = "images/the-scream.jpg"
 share = true
 date = "2017-01-01T16:41:45-05:00"
