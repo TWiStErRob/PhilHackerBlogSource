@@ -1,13 +1,11 @@
 +++
 title = "Preface"
 slug = "preface"
-comments = true
-share = true
 draft = false
 image = ""
 author = ""
 date = "2017-01-02T14:01:26-05:00"
-menu = ""
+next = "why-android-unit-testing-is-so-hard"
 +++
 
 Almost a year and a half ago now, I wrote a series of blog posts about Android testing. The posts I wrote were received enthusiastically, and several people told me directly that they found my posts very insightful. Naturally, I was stoked about this.

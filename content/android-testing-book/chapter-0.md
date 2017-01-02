@@ -7,7 +7,9 @@ menu = ""
 date = "2017-01-02T13:02:36-05:00"
 draft = false
 share = true
-slug = "post-title"
+slug = "why-android-unit-testing-is-so-hard"
 title = "Why Android Testing is So Hard"
 comments = true
+next = "what-makes-android-apps-testable"
+previous = "preface"
 +++

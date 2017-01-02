@@ -13,7 +13,7 @@
       align-items: center;
       flex-flow: column;
     }
-    
+
     article {
       max-width: 800px;
     }
@@ -23,12 +23,20 @@
       margin-left: 25px;
       margin-right: 25px;
     }
+
+    nav > a {
+      font-size: 50px;
+    }
   </style>
   <body>
     <article>
       <h1>{{.Title}}</h1>
       {{.Content}}
     </article>
+    <nav>
+      {{with .Params.previous}}<a href="/android-testing-book/{{.}}">&#8592;</a>{{end}}
+      {{with .Params.next}}<a href="/android-testing-book/{{.}}">&#8594;</a>{{end}}
+    </nav>
   </body>
   {{ partial "analytics.html" . }}
 </html>
