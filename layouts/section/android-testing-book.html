@@ -18,6 +18,11 @@
       flex-flow: column;
       height: 100vh;
     }
+
+    nav {
+      display: flex;
+      justify-content: center;
+    }
   </style>
   <body>
     <section class="cover">
@@ -35,6 +40,9 @@
         </ol>
       {{ end }}
     </section>
+    <nav>
+      <a href="/android-testing-book/preface">&#8594;</a>
+    </nav>
   </body>
   {{ partial "analytics.html" . }}
 </html>
