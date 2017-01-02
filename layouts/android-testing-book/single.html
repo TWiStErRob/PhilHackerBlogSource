@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" href="/css/android-testing-book-style.css">
+  </head>
+  <style media="screen">
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-flow: column;
+    }
+    
+    article {
+      max-width: 800px;
+    }
+
+    blockquote {
+      font-style: italic;
+      margin-left: 25px;
+      margin-right: 25px;
+    }
+  </style>
+  <body>
+    <article>
+      <h1>{{.Title}}</h1>
+      {{.Content}}
+    </article>
+  </body>
+  {{ partial "analytics.html" . }}
+</html>
