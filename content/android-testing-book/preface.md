@@ -20,7 +20,7 @@ Ouch. Hearing that didn't feel great, but sometimes the truth hurts.
 
 Here's the truth: Even though we've made some strides since that episode was recorded, Don Felker's remark is still right on. We're behind on our testing game.
 
-After hearing Felker make this comment, I starting looking for those 10 year old conversations about testing. Since then, the books I've read and the talks and podcasts I've listened to do indeed show that we're behind, and those resources -- along the experiments I've engaged in on making apps testable -- have given me some ideas about how we can up our testing game. This book is a distillation of the things that I learned about testing as they relate to Android development.
+After hearing Felker make this comment, I starting looking for those 10 year old conversations about testing. Since then, the books I've read, the talks and podcasts I've listened to, and the experiments I've engaged in have given me some ideas about how we can up our testing game. This book is a distillation of the things that I learned about testing as they relate to Android development.
 
 Here's the gist of what I've learned, a gist that is also a preview of the contents of this book:
 
