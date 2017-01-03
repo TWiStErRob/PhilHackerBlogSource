@@ -9,5 +9,5 @@ image = ""
 date = "2017-01-02T13:11:02-05:00"
 title = "What to Test First"
 author = ""
-draft = false
+draft = true
 +++

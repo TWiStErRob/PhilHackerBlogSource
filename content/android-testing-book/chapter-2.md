@@ -1,7 +1,7 @@
 +++
 weight = 2
 part = "Part 1: Making Testing Possible"
-draft = false
+draft = true
 menu = ""
 slug = "post-title"
 comments = true

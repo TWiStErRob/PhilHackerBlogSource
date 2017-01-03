@@ -1,7 +1,7 @@
 +++
 title = "Preface"
 slug = "preface"
-draft = false
+draft = true
 image = ""
 author = ""
 date = "2017-01-02T14:01:26-05:00"
