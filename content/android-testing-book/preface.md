@@ -12,7 +12,7 @@ Almost a year and a half ago now, I wrote a series of blog posts about Android t
 
 To make things even better -- or so I thought -- I saw that my blog posts were getting traffic from *Fragmented*, a newish (at the time) Android developer podcast. I quickly went to their site and raced to the end of the episode, the part where I figured the hosts would be talking about my posts.
 
-Don Felker, one of the hosts, struggled a bit to pronounce the name of my site, which served to build up my anticipation of what he'd say about my posts. "Maybe he'll have the same reaction as everyone else, and he'll say they're really insightful", I hoped to myself. What I heard next dashed those hopes and made me doubt whether I'd written anything that I should be proud of:
+Don Felker, one of the hosts, struggled a bit to pronounce the name of [my site](philosophicalhacker.com), which served to build up my anticipation of what he'd say about my posts. "Maybe he'll have the same reaction as everyone else, and he'll say they're really insightful", I hoped to myself. What I heard next dashed those hopes and made me doubt whether I'd written anything that I should be proud of:
 
 >The topic is why is Android Unit Testing so Hard...and I'm posting this here because the topics he brings up are arrange, act, assert...[and] how to organize a unit test...what I noticed is that when I read this, I felt like I was taking a step 10 years back. A lot of these discussion are discussions that other languages had 10 years ago. So, its interesting to me to see how Android is finally catching up.<sup>1</sup>
 
@@ -34,7 +34,7 @@ Maybe someday we'll have the pleasure of hearing some other host of some other p
 
 >I found this interesting link on testing, but to be honest, it made me feel like our community is behind. **The Android community** has been saying this for a long a time.
 
---Matt Dupree, a philosophical hacker
+--K. Matt Dupree (a philosophical hacker)
 
 ## Notes:
 
