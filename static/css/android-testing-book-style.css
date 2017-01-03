@@ -1,5 +1,5 @@
 body {
-  font-family: sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 22px;
 }
 
@@ -14,5 +14,6 @@ a {
 }
 
 nav > a {
+  color: #4CAF50;
   font-size: 50px;
 }
