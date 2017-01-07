@@ -29,6 +29,10 @@
       margin-right: 25px;
     }
 
+    body > img {
+      width: 100%;      
+    }
+
     blockquote {
       font-style: italic;
       margin-left: 25px;
@@ -36,9 +40,12 @@
     }
   </style>
   <body>
+    <img src="{{.Params.image}}" alt="{{.Params.image}}">
     <article>
-      <h1>{{.Title}}</h1>
-      {{.Content}}
+      <section>
+        <h1>{{.Title}}</h1>
+        {{.Content}}
+      </section>
     </article>
     <nav>
       {{with .Params.previous}}<a href="/android-testing-book/{{.}}">&#8592;</a>{{end}}

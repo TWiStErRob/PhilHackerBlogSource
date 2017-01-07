@@ -2,19 +2,23 @@
 title = "Preface"
 slug = "preface"
 draft = true
-image = ""
+image = "/images/rollercoaster.jpg"
 author = ""
 date = "2017-01-02T14:01:26-05:00"
 next = "why-android-unit-testing-is-so-hard"
 +++
 
-Almost a year and a half ago now, I wrote a series of blog posts about Android testing. The posts I wrote were received enthusiastically, and several people told me directly that they found my posts very insightful. Naturally, I was stoked about this.
+Almost a year and a half ago now, I took a ride on a very nerdy, android-related emotional rollercoaster. I started climbing an emotional high after I wrote a series of blog posts about Android testing. The posts I wrote were received enthusiastically, and several people told me directly that they found my posts very insightful. Naturally, I was stoked about this.
 
 To make things even better -- or so I thought -- I saw that my blog posts were getting traffic from *Fragmented*, a newish (at the time) Android developer podcast. I quickly went to their site and raced to the end of the episode, the part where I figured the hosts would be talking about my posts.
 
-Don Felker, one of the hosts, struggled a bit to pronounce the name of [my site](philosophicalhacker.com), which served to build up my anticipation of what he'd say about my posts. "Maybe he'll have the same reaction as everyone else, and he'll say they're really insightful", I hoped to myself. What I heard next dashed those hopes and made me doubt whether I'd written anything that I should be proud of:
+Don Felker, one of the hosts, struggled a bit to pronounce the name of [my site](philosophicalhacker.com), which served to build up my anticipation of what he'd say about my posts. "Maybe he'll have the same reaction as everyone else, and he'll say they're really insightful", I hoped to myself.
 
->The topic is why is Android Unit Testing so Hard...and I'm posting this here because the topics he brings up are arrange, act, assert...[and] how to organize a unit test...what I noticed is that when I read this, I felt like I was taking a step 10 years back. A lot of these discussion are discussions that other languages had 10 years ago. So, its interesting to me to see how Android is finally catching up.<sup>1</sup>
+That was the highest point of the emotional coster. Things looked great from up there.
+
+What I heard next dashed my hopes of getting a compliment from Felker and made me doubt whether I'd written anything that I should be proud of:
+
+>The topic [of philosophicalhacker's post] is why is Android Unit Testing so Hard...and I'm posting this here because the topics he brings up are arrange, act, assert...[and] how to organize a unit test...what I noticed is that when I read this, I felt like I was taking a step 10 years back. A lot of these discussion are discussions that other languages had 10 years ago. So, its interesting to me to see how Android is finally catching up.<sup>1</sup>
 
 Ouch. Hearing that didn't feel great, but sometimes the truth hurts.
 
@@ -30,7 +34,7 @@ The second part of the book is about how to make effective use of tests once you
 
 I still have *a lot* to learn<sup>2</sup>, but my hope in writing this book is that by sharing some of the lessons I've learned, we'll be able to catch up on best practices for testing software. More than that: I'd love it if we led the way on innovating in the automated testing space.
 
-Maybe someday we'll have the pleasure of hearing some other host of some other programming language podcast say this:
+Maybe someday we'll have the pleasure of hearing some other host of some other programming language podcast send some other developer on an emotional rollercoaster by saying,
 
 >I found this interesting link on testing, but to be honest, it made me feel like our community is behind. **The Android community** has been saying this for a long a time.
 
