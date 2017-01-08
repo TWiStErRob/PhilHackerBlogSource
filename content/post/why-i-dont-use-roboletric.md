@@ -16,7 +16,7 @@ date = "2017-01-06T22:01:04-05:00"
 
 The more that I learn about testing, the more suspicious of Robolectric I get. I'm honestly starting to think that many of the heros of unit testing (e.g., Kent Beck, Michael Feathers, Steve Freeman, and Nat Pryce) would be pretty suspicious of Robolectric. Here are my concerns:
 
-1. Robolectric is a set of mocks for a set of types we don't own. Mocking types we don't own is not recommended by the folks who invented mocks.
+1. Robolectric is *largely*<sup>1</sup> a set of mocks for a set of types we don't own. Mocking types we don't own is not recommended by the folks who invented mocks.
 
 1. Robolectric turns TDD on its head by allowing us to ignore something our standard unit tests are trying to tell us: our logic is tightly coupled and muddled with Android-SDK-related implementation details. That's why we have such a hard time writing standard unit tests. Instead of listening to the design feedback of standard unit tests, Robolectric asks us to use a giant mock instead.
 
@@ -36,21 +36,21 @@ Obviously, Android developers aren't the first ones who have tried testing code 
 
 Here's Freeman and Pryce on this:
 
->...we grow our systems a slice of functionality at a time. As the code scales up...we use two principal heuristics to guide this structuring: Separation of Concerns...[and] Higher Levels of Abstraction...Applied consistently, these two forces will push the structure of an application towards something like Cockburn’s “ports and adapters” architecture [Cockburn08] , in which the code for the business domain is isolated from its dependencies on technical infrastructure, such as databases and user interfaces.<sup>1</sup>
+>...we grow our systems a slice of functionality at a time. As the code scales up...we use two principal heuristics to guide this structuring: Separation of Concerns...[and] Higher Levels of Abstraction...Applied consistently, these two forces will push the structure of an application towards something like Cockburn’s “ports and adapters” architecture [Cockburn08] , in which the code for the business domain is isolated from its dependencies on technical infrastructure, such as databases and user interfaces.<sup>2</sup>
 
-Higher levels of abstraction make our code more understandable and maintainable, and in order to achieve this in our design, we need to make sure our objects are "Context Independent," which means that "each object has no build-in knowledge of the system in which it executes."<sup>2</sup> A few pages later in the next chapter, they go on to talk about how TDD specifically helps them drive towards this goal:
+Higher levels of abstraction make our code more understandable and maintainable, and in order to achieve this in our design, we need to make sure our objects are "Context Independent," which means that "each object has no build-in knowledge of the system in which it executes."<sup>3</sup> A few pages later in the next chapter, they go on to talk about how TDD specifically helps them drive towards this goal:
 
->...to construct an object for a unit test, we have to pass its dependencies to it, which means that we have to know what they are. This encourages context independence, since we have to be able to set up the target object’s environment before we can unit-test it—a unit test is just another context. We’ll notice that an object with implicit (or just too many) dependencies is painful to prepare for testing—and make a point of cleaning it up.<sup>3</sup>
+>...to construct an object for a unit test, we have to pass its dependencies to it, which means that we have to know what they are. This encourages context independence, since we have to be able to set up the target object’s environment before we can unit-test it—a unit test is just another context. We’ll notice that an object with implicit (or just too many) dependencies is painful to prepare for testing—and make a point of cleaning it up.<sup>4</sup>
 
 Many of the difficulties we have as Android developers in testing (and otherwise) arise because our systems don't exhibit separation of concerns and higher levels of abstraction. Freeman and Pryce are saying that there's a direct link between these properties and testability, a link that Feathers echos in his book:
 
->one pervasive problem in legacy code bases is that there often aren’t any layers of abstraction; the most important code in the system often sits intermingled with low-level API calls. We’ve already seen how this can make testing difficult, but the problems go beyond testing. **Code is harder to understand when it is littered with wide interfaces containing dozens of unused methods.**<sup>4</sup>
+>one pervasive problem in legacy code bases is that there often aren’t any layers of abstraction; the most important code in the system often sits intermingled with low-level API calls. We’ve already seen how this can make testing difficult, but the problems go beyond testing. **Code is harder to understand when it is littered with wide interfaces containing dozens of unused methods.**<sup>5</sup>
 
 The emphasis on the last sentence is mine. It's meant to highlight that Feathers and Freeman and Pryce are in agreement on the link between testability, abstraction, and understandable code.
 
 So, outside the Android community, its widely recognized that writing tests without any layers of abstraction between our application code and a framework is often impossible, so TDD exerts a positive influence on us to create layers of abstraction and because of this, we wind up with cleaner code.
 
-Hopefully, now we can start to see why Robolectric actually turns TDD on its head. Let's start by remembering something I noted at the outset of this post: unfortunately, most Android apps are written in a way that muddles and couples application code with Android-SDK-related implementation details. The natural direction TDD with pure unit tests is pushing us in is to **move the code we want to test OUT of Android framework classes like Activities, Fragments, and Services;** its pushing us in a cleaner direction of separating our application-specific logic from the Android SDK.<sup>5</sup>
+Hopefully, now we can start to see why Robolectric actually turns TDD on its head. Let's start by remembering something I noted at the outset of this post: unfortunately, most Android apps are written in a way that muddles and couples application code with Android-SDK-related implementation details. The natural direction TDD with pure unit tests is pushing us in is to **move the code we want to test OUT of Android framework classes like Activities, Fragments, and Services;** its pushing us in a cleaner direction of separating our application-specific logic from the Android SDK.<sup>6</sup>
 
 Robolectric, on the other hand, allows us to test our apps while leaving our application code mixed in with the Android SDK. Robolectric does this by "defanging the Android SDK" by mocking types we don't own to make testing easier, but if we take traditional TDD seriously, **this is exactly backwards**.
 
@@ -61,6 +61,8 @@ We don't need to make testing easier by leaving our app code the same and changi
 So, there you have it. Those are the biggest reasons why I don't use robolectric. If you've got some ideas on where robolectric may be appropriate, I'd love to hear them.
 
 ### Notes:
+
+1. Jake Wharton has pointed out [here](https://www.reddit.com/r/androiddev/comments/5mimhe/why_i_dont_use_roboletric_philosophical_hacker/dc40feu/) and [here](fragmentedpodcast.com/episodes/7/) that some parts of Robolectric actually use real Android code, so I guess these parts wouldn't really count as mocks.
 
 1. *Growing Object Oriented Software Guided by Tests*, Steve Freeman and Nat Pryce, 93-94.
 
