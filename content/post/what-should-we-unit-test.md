@@ -30,7 +30,7 @@ Over-zealous testing enthusiasts may shout a different answer at us: "YOU SHOULD
 
 I think that if we keep in mind the fears that lead us to write tests in the first place, we'll have a much easier time figuring out what to test. This should come as no surprise. After all, Kent Beck's answer to the question of what to test is this:
 
->Write tests until fear is transformed into boredom.<sup>1</sup>
+>Write tests until fear is transformed into boredom.<sup>2</sup>
 
 This post is about the tests that fear drives us to write, tests that we should be spending most of our time writing.
 
@@ -61,11 +61,11 @@ For some of us, all the code we write is susceptible to change. That's why test 
 
 ### Conclusion
 
-If you let fear by your guide, you'll write the tests you need to write. We're writing tests because we're afraid that if we don't, new functionality won't work as expected, that we'll break stuff that used to work, or that we won't be able to cope with changing business requirements. Keeping these fears in mind will lead us to write tests when we're writing complicated new features, when we're finding that our old code breaks often, and when we suspect that our code will need to change.
+If you let fear be your guide, you'll write the tests you need to write. We're writing tests because we're afraid that if we don't, new functionality won't work as expected, that we'll break stuff that used to work, or that we won't be able to cope with changing business requirements. Keeping these fears in mind will lead us to write tests when we're writing complicated new features, when we're finding that our old code breaks often, and when we suspect that our code will need to change.
 
 ### Notes:
 
-1. I think this is partially because many of us in the android community don't have a firm grasp of the meaning of the phrase "business logic." People often give hand-wavy definitions of business logic during their presentations. (I've been guilty of giving such definitions myself.) Sometimes I'll even hear someone give an example of business logic and I'll think to myself, "That's not really business logic." (I thought this when I heard Jake Wharton's example of business logic in [Fragmented Episode 7 on testing](fragmentedpodcast.com/episodes/7/).) Another reason I think this platitude is unhelpful is that business logic, on whatever definition you fancy, is often mixed in with all other types of code in Android applications. This makes its hard to tease out the subset of the Android code that is properly called "business logic."
+1. I think this is partially because many of us in the android community don't have a firm grasp of the meaning of the phrase "business logic." People often give hand-wavy definitions of business logic during their presentations. (I've been guilty of giving such definitions myself.) Sometimes I'll even hear someone give an example of business logic and I'll think to myself, "That's not really business logic." (I thought this when I heard Jake Wharton's example of business logic in [Fragmented Episode 7 on testing](http://fragmentedpodcast.com/episodes/7/).) Another reason I think this platitude is unhelpful is that business logic, on whatever definition you fancy, is often mixed in with all other types of code in Android applications. This makes its hard to tease out the subset of the Android code that is properly called "business logic."
 
 1. *TDD By Example*, Kent Beck, 194. On this same page, Beck also reluctantly gives us a list of things to test: conditionals, loops, operations, and polymorphism.
 
