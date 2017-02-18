@@ -96,7 +96,7 @@ public class SessionsPresenterTests {
 
 When we need to change the API of the SUT *solely*<sup>2</sup> for the purpose of testing, our tests are telling us there's a problem with our design.
 
-Even with these added methods, however, we lose the ability to speed up our tests by running them in parallel.<sup>3</sup> The likelihood that tests are run regularly is related to how long it takes to run them. Tests are often more likely to be useful the more often they are run, so placing an uneeded limit on how quickly our tests can run is not ideal.
+Even with these added methods, however, we lose the ability to speed up our tests by running them in parallel.<sup>3</sup> The likelihood that tests are run regularly is related to how long it takes to run them. Tests are often more likely to be useful the more often they are run, so placing an unneeded limit on how quickly our tests can run is not ideal.
 
 At this point, some readers may point out that these problems are alleviated if we inject the singleton through the constructor and if we keep our `Activity` as a dumb view that isn't scary enough to test. The code for this suggestion might look something like this:
 
@@ -135,7 +135,7 @@ Similarly, singletons are overkill. We don't really need the data loaded for our
 
 Often what we really want is data that is cached across configuration changes, but the fact that the cached data within a singleton lives for the entire process makes implementing our retrieval of that data more complicated. Let me explain why.
 
-Suppose I want to want to send two emails with two different attachments. Both times I go to attach an email, the same *type* of Activity will be launched. Suppose this `Activity` gets its data from a singleton-based data loader. If both of these `Activity`s try to grab data from the Singleton, the user can wind up with stale data the second time they try to attach an email because the first `Activity` has already populated the cache with dat that was fresh at the time the first `Activity` asked for it.
+Suppose I want to want to send two emails with two different attachments. Both times I go to attach an email, the same *type* of Activity will be launched. Suppose this `Activity` gets its data from a singleton-based data loader. If both of these `Activity`s try to grab data from the Singleton, the user can wind up with stale data the second time they try to attach an email because the first `Activity` has already populated the cache with data that was fresh at the time the first `Activity` asked for it.
 
 Of course, these are solvable problems. However, I think it'd be better if we didn't have these problems in the first place. It turns out there's already a solution for data loading that doesn't have any of these problems/complications.
 
