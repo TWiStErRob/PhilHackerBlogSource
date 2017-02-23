@@ -15,6 +15,10 @@ tags = [
 ]
 +++
 
+[Korean Translation]( http://kimjihyok.info/entry/%EB%B2%88%EC%97%AD-%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%EC%99%80-%EB%AC%B4%EC%8B%A0%EB%A1%A0%EC%9D%98-%EB%B0%A9%ED%96%A5-God-Object-%EC%A0%9C%EA%B1%B0-%EC%A0%91%EA%B7%BC%EB%A1%A0) by Jihyok KIM
+
+---
+
 >God is dead...and also Context is dead.
 
 >--Friedrich Nietszche (probably)
