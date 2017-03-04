@@ -55,6 +55,14 @@ Misko Hevery, in case you don't know, is a Google engineer and the father of Ang
 
 ## Talks:
 
+#### Dagger and Testing *
+
+[Great talk on Dagger](http://jakewharton.com/android-apps-with-dagger-devoxx/), which is arguably essential for UI-level testing. A great highlight here is Jake's discussion of "mock mode" in his u2020 app.
+
+#### Increasing App Quality with Testing and Monitoring
+
+[This](https://www.youtube.com/watch?v=4fyhgHQYG1U&list=PLOU2XLYxmsILe6_eGvDN3GyiodoV3qNSC&index=48) is a nice panel-like talk with developers from companies like Shazam and American Express. It was mostly useful for getting an idea of how testing works in the real world and at scale.
+
 #### Jake Wharton on The Robot Pattern *
 
 Jake Wharton basically renamed Fowler's Page Object Pattern and [he has a nice talk](https://realm.io/news/kau-jake-wharton-testing-robots/) explaining how to apply the pattern to espresso tests.
