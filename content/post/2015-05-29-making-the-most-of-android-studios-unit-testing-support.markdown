@@ -86,7 +86,11 @@ So, in any possible scenario where we've run our unit and functional tests, we'r
 
 We just talked a lot about unit tests, but we never did ask a simple question: what exactly is a unit test? Some of us might have a clear definition of a unit test in our mind, but until recently, I was not one of those people. I actually think that there's a good amount of confusion over what unit tests are, especially among android developers. The confusion on the definition of a unit test is, I think, a result of us being pretty vague when we use the term. We can see this if we look at two unit test cases mentioned on developer.android.com that are both called "unit tests," but in fact have very different properties. The first snippet is found on [the android page about unit testing activities](http://developer.android.com/training/activity-testing/activity-unit-testing.html):
 
+{{< gist kmdupr33 "fda1634fab637941d338" >}}
+
 This second snippet is found on the android page entitled "[Building Effective Unit Tests](http://developer.android.com/training/testing/unit-testing/local-unit-tests.html)":
+
+{{< gist kmdupr33 "f3462dc4bb1cc76ddac5" >}}
 
 In spite of their differences, these two snippets are both called "unit tests." I don't mean to quibble over definitions, but our sloppiness with the word "unit test" is, I think, unhelpful. Here's a more precise definition:
 
