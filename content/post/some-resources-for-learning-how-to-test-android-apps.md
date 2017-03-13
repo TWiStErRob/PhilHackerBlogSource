@@ -33,7 +33,7 @@ There's also a nice appendix in the book that talks about the history of "mockin
 
 ### TDD By Example *
 
-This is [the book by the guy popularized TDD](https://www.amazon.com/Test-Driven-Development-Kent-Beck/dp/0321146530/ref=pd_sbs_14_t_1?_encoding=UTF8&psc=1&refRID=GBD9CHYJGZ7Y5YEB07CH). Since I had already read *Working Effectively with Legacy Code* and *Growing Object Oriented Software Guided by Tests* before picking this up, there wasn't a ton new for me to glean. However, since this is written by Kent Beck, I consider it essential reading. One thing I found interesting was how non-dogmatic Beck was in advocating for TDD. I also did learn [a neat heuristic for determining when I should be writing tests or doing TDD](www.philosophicalhacker.com/post/what-should-we-unit-test/).
+This is [the book by the guy popularized TDD](https://www.amazon.com/Test-Driven-Development-Kent-Beck/dp/0321146530/ref=pd_sbs_14_t_1?_encoding=UTF8&psc=1&refRID=GBD9CHYJGZ7Y5YEB07CH). Since I had already read *Working Effectively with Legacy Code* and *Growing Object Oriented Software Guided by Tests* before picking this up, there wasn't a ton new for me to glean. However, since this is written by Kent Beck, I consider it essential reading. One thing I found interesting was how non-dogmatic Beck was in advocating for TDD. I also did learn [a neat heuristic for determining when I should be writing tests or doing TDD]({{<relref "what-should-we-unit-test.md">}}).
 
 ### xUnit Test Patterns
 
@@ -75,4 +75,4 @@ This is [a fantastic five part discussion](https://martinfowler.com/articles/is-
 
 ### Fragmented episode 7
 
-[Great episode of Fragmented](http://fragmentedpodcast.com/episodes/7) with Jake Wharton. The discussion around Roboelectric and what we should test is good. That discussion partially inspired ["Why I Don't Use Roboelectric."](www.philosophicalhacker.com/post/why-i-dont-use-roboletric/)
+[Great episode of Fragmented](http://fragmentedpodcast.com/episodes/7) with Jake Wharton. The discussion around Roboelectric and what we should test is good. That discussion partially inspired ["Why I Don't Use Roboelectric."]({{<relref "why-i-dont-use-roboletric.md">}})
