@@ -263,7 +263,7 @@ java.lang.NullPointerException
 
 This time, the complaint basically boils down to the fact that `getActivity()` returns null. At this point, we might decide to call `onAttach` and pass in a dummy `Activity` to get around this. Or, we might realize that even if we did do this, there's going to be a lot of things we have to do to get this test setup *that have nothing to do with testing the behavior we're interested in.* 
 
-At this point, we might tempted give up and go use roboelectric. [I've said before]({{<relref "why-i-dont-use-roboletric.md">}}) that using roboelectric feels like exactly the wrong thing to do here. The test is trying to tell us something about our code. We don't need to change the way we test. We need to change the way we code. 
+At this point, we might be tempted give up and go use roboelectric. [I've said before]({{<relref "why-i-dont-use-roboletric.md">}}) that using roboelectric feels like exactly the wrong thing to do here. The test is trying to tell us something about our code. We don't need to change the way we test. We need to change the way we code. 
 
 So, before giving up, let's think for a second about what's happening. We're interested in testing a small piece of behavior, and the way our class is designed is forcing us to care about a bunch of other objects *that have nothing to do with the behavior we're testing.* What this means is that our class has low cohesion. Our class has a bunch of functionality and objects that have little to do with each other. This is what makes it difficult to complete the arrange step in our unit test; its what makes it difficult to get our object into a state where we can actually run our test.
 
