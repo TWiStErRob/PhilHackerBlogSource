@@ -23,7 +23,7 @@ The resources are divided into books, articles, talks, and podcasts. I've marked
 
 ### Working Effectively with Legacy Code *
 
-If you're working on already existing Android app and you're trying to figure out how to get tests in place, I can't recommend this book enough. [The book](https://www.amazon.com/Working-Effectively-Legacy-Michael-Feathers/dp/0131177052) has a lot of fantastic theory on [what makes code testable in general](www.philosophicalhacker.com/post/what-makes-android-apps-testable/). It also has a bunch of great tips for conservative refactorings you can do to safely get your codebase to a more testable state.
+If you're working on already existing Android app and you're trying to figure out how to get tests in place, I can't recommend this book enough. [The book](https://www.amazon.com/Working-Effectively-Legacy-Michael-Feathers/dp/0131177052) has a lot of fantastic theory on [what makes code testable in general]({{< relref "what-makes-android-apps-testable.md" >}}). It also has a bunch of great tips for conservative refactorings you can do to safely get your codebase to a more testable state.
 
 ### Growing Object Oriented Software Guided by Tests
 
