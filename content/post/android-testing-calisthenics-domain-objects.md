@@ -38,7 +38,7 @@ So, those who attempt to add tests to already existing Android apps are really d
 
 ### Calisthenics
 
-Instead of starting with the hardest possible target to test, let's work our way up. This github project has some exercises to get you ready. If you want, you can checkout the project and switch between the challenge and solution branches as you work through them. Throughout the remainder of the post, I'll present a testing challenge and the solution to that challenge. If you really want to ready for testing Android apps, I'd suggest you try to work through the challenge and check your solution with the ones that I suggest.
+Instead of starting with the hardest possible target to test, let's work our way up. [This github project](https://github.com/kmdupr33/TestingCalisthenics) has some exercises to get you ready. If you want, you can checkout the project and switch between the challenge and solution branches as you work through them. Throughout the remainder of the post, I'll present a testing challenge and the solution to that challenge. If you really want to ready for testing Android apps, I'd suggest you try to work through the challenge and check your solution with the ones that I suggest.
 
 #### Domain Object
 
