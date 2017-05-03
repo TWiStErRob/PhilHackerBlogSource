@@ -1,0 +1,39 @@
+{{ partial "header.html" . }} 
+{{ $baseurl := .Site.BaseURL }}        
+<main class="content" role="main">
+    <article class="post {{ .Section }}">
+
+        <header class="post-header">
+            <h1 class="post-title">A Note on: {{.Title}}</h1>
+            <small>
+                Normally, I try to publish fairly polished posts about Android development. 
+                Occasionally, I write about something that's not Android-related or something that's
+                not really polished at all. I call these writings "notes," and what follows is a note
+                on {{.Title}}
+            </small>
+
+            <section class="post-meta">
+                {{ range .Params.tags }}
+                <span class="post-tag small"><a href="{{ $baseurl }}tags/{{ . | urlize }}/">#{{ . }}</a></span> {{ end }}
+                <strong>&middot; {{.ReadingTime}} minute read</strong>
+            </section>
+        </header>
+
+        <section class="post-content">
+            {{ .Content }}
+        </section>
+
+
+        <footer class="post-footer">
+            {{if .Site.Params.logo}}
+            <figure class="author-image">
+                <a class="img" href="{{.Site.BaseURL}}" style="background-image: url({{ $baseurl }}{{.Site.Params.logo}})"><span class="hidden">{{.Site.Params.author}}'s Picture</span></a>
+            </figure>
+            {{end}} {{ partial "mailchimp.html" . }} {{ partial "share.html" . }} {{ partial "disqus.html" . }}
+
+        </footer>
+    </article>
+
+</main>
+
+{{if not .Params.hideSuggestions }} {{ partial "suggestions.html" . }} {{ end }} {{ partial "footer.html" . }}
