@@ -1,0 +1,24 @@
+{{ partial "header.html" . }}
+
+{{ partial "list-header.html" . }}
+
+<main class="content" role="main">
+    {{ $paginator := .Paginator }}
+
+	<div class="extra-pagination inner">
+    {{ partial "pagination.html" $paginator }}
+	</div>
+
+	{{ range $index, $page := $paginator.Pages }}
+    <div style="margin-left: 40px;">
+        <h3>{{$page.Title}}</h3>
+        <h5>{{$page.Params.venue}} &#183; {{ $page.Date.Format "2 Jan 2006" }}</h5>                
+    </div>	   
+	{{ end }}
+
+	{{ partial "pagination.html" $paginator }}
+</main>
+
+
+
+{{ partial "footer.html" . }}

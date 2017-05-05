@@ -13,7 +13,18 @@ params:
     googleAnalyticsUserID: UA-63544399-1
 menu:
     main:
-    - name: "Home"
-      weight: -120
-      identifier: "blog"
-      url: "/"
+    - name: Home
+      weight: -4
+      identifier: blog
+      url: /
+    - name: Talks
+      weight: -3
+      identifier: talks
+      url: /talk
+    - name: Github
+      weight: -2
+      url: https://github.com/kmdupr33
+    - name: Notes
+      weight: -1
+      identifer: notes
+      url: /note
