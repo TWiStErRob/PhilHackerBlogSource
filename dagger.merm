@@ -1,0 +1,6 @@
+graph LR
+  SessionDetailModel --> PresenterImpl
+  sduae["SessionDetailUserActionEnum.values()"] --> PresenterImpl
+  sdqe["SessionDetailQueryEnum.values()"] --> PresenterImpl
+  PresenterImpl --> SessionDetailFragment
+  aw["[AndroidViews]"] --> SessionDetailFragment

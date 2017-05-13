@@ -57,7 +57,3 @@ We might represent this object graph by placing the class names of the instances
 Notice that the Java objects represented in this graph don't have any circular dependencies. This means that there are no cycles in the graph. If you follow the direction of the arrows, there's no way to go backwards. The graph is acyclic.
 
 So, what we have here is a directed acyclic graph or a "DAG," which -- fun fact -- is where the name "Dagger" comes from.<sup>1</sup>
-
-### Notes:
-
-1. Don't believe me? Watch [Jake Wharton's talk on Dagger 1.](http://jakewharton.com/android-apps-with-dagger-devoxx/)
