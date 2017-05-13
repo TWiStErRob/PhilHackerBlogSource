@@ -65,12 +65,36 @@ We might represent this object graph by placing the class names of the instances
 
 ![object graph](/images/object-graph.svg)
 
+Notice that the Java objects represented in this graph don't have any circular dependencies. This means that there are no cycles in the graph. If you follow the direction of the arrows, there's no way to go backwards. The graph is acyclic.
+
+So, what we have here is a directed acyclic graph or a "DAG," which -- fun fact -- is where the name "Dagger" comes from.<sup>1</sup>
+
 ### Dagger as an Object Graph Canary
 
+The above `JsonReader` example is just a small subgraph of the object graph that typically makes up an application's object graph. My central claim here is that Dagger can give us some architectural insights about our application's object graph. I'm going to go on to try to show specific insights that I think we can gain from "listening" to Dagger, but I want to try to provide some initial motivation for thinking about Dagger as an Object Graph Canary.
+
+Let's think for a second about why Dagger exists. Smart engineers at Google and Square said to themselves, 
+
+>If my application is well-structured, I wind up with a lot of boiler-plate code that's concerned with constructing the object-graph. Let me build a library so that I don't have a bunch of boiler-plate.
+
+The fact that this problem existed for Dagger to solve is remarkable because the contrapostive of the conditional that expresses the problem that Dagger solves is this:
+
+>If I don't have a lot of boiler-plate code that's concerned with constructing the object-graph, then my application is not well-structured.
+
+Obviously, there's going to be applications where the initial conditional is false. E.g., it's possible that small, well-structured applications won't lead to lots of boiler-plate, so there will also be cases where the contrapostive is false. Its also completely possible that the object-graph related boiler-plate has to do with the fact that Java is not a sufficiently powerful language for us to get our work done without boiler-plate.
+
+Still, I think that for many non-trivial applications, written in Java, there's an interesting connection here between object-graph related boilerplate and the quality of an application's architecture. Let's explore some specific examples of this connection.
+
 ### The Canary's Warnings
+
+If Dagger is an object-graph canary, we can heed its warning by paying attention to times when we feel like we don't need Dagger because we don't have object-graph-related boiler-plate. There's a few different reasons we might not have object-graph-related boiler-plate.
 
 #### Rigid Object Graph (no DI)
 
 #### Shallow Object Graph (no abstractions)
 
 #### Complex Object Graph (bad abstractions)
+
+### Notes:
+
+1. Don't believe me? Watch [Jake Wharton's talk on Dagger 1.](http://jakewharton.com/android-apps-with-dagger-devoxx/)
