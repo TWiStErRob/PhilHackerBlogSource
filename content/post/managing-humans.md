@@ -7,6 +7,9 @@ title = "Managing Humans"
 share = true
 image = ""
 tags = ["management","software"]
+aliases = [
+    "/note/managing-humans/"
+]
 slug = "managing-humans"
 author = ""
 +++
@@ -63,6 +66,6 @@ Loop does a great job about going over the pros and cons of type, which was grea
 
 I read that and thought, "Wow. That's me." Most of the time, thinking about how to manage people is scary and complicated for me, so I often prefer to stick to managing bits. It turns out that for "completionists" like me, this is a recipe for crankiness.
 
-### There's more but...
+### Conclusion
 
-...I'd rather be reading than writing right now, so I'll have to capture the rest of my takeaways another time.
+Loop's book helped me adjust my expectations about working in software companies a little bit. Less pretentiously, the book helped me grow up a little. I recommend it.
