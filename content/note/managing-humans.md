@@ -8,7 +8,7 @@ share = true
 image = ""
 tags = ["management","software"]
 aliases = [
-    "/note/managing-humans/"
+    "/post/managing-humans/"
 ]
 slug = "managing-humans"
 author = ""
