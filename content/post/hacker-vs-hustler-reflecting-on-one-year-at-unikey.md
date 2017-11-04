@@ -9,6 +9,12 @@ menu = ""
 date = "2017-11-03T18:33:49-04:00"
 share = true
 slug = "hacker-vs-hustler-reflecting-on-one-year-at-unikey"
+description = """
+Two Wednesdays ago marked my 1 year anniversary at UniKey. This is pretty weird for me because I've never been at a job for a year before, so this 1st ever anniversary in my career has given me the urge to reflect a bit on a couple of questions: 
+
+1. Why was UniKey the first place I've stuck around this long?
+2. What have I learned in the past year by sticking around?
+"""
 +++
 
 >Me: I really like my new job.
