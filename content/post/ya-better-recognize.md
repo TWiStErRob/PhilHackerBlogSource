@@ -1,5 +1,5 @@
 +++
-draft = true
+draft = false
 title = "Ya Better Recognize"
 comments = true
 tags = ["io psych","management"]
@@ -22,7 +22,7 @@ Looking back on it, this is one of the more annoying passages of the book, as it
 
 >We know from extensive research that human behavior is shaped by its consequences and that providing positive consequences for employee performance is one of the most powerful ways to enhance performance.
 
-This is useful for me to keep in mind, as I've made the mistake in the past of believing that some folks are just "bad apples" when its more likely that there's something problematic about the way in which they are being lead or incentivized.[^1]
+This is useful for me to keep in mind, as I've made the mistake in the past of believing that some folks are just "bad apples" when its more likely that there's something problematic about the way in which they are being led or incentivized.[^1]
 
 ### Recognition done right
 
