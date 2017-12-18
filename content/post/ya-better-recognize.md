@@ -28,7 +28,7 @@ This is useful for me to keep in mind, as I've made the mistake in the past of b
 
 Recognition done right has to be _timely_ and the form the recognition takes must be meaningful to the receiver.
 
-Their claim that timeliness seems to rest on more general claims about human conditioning. Interestingly, one of the implications of timeliness is that: "saving up individual recognition for an annual performance appraisal or rewards banquet can be counterproductive."[^2] 
+Their claim that timeliness matters seems to rest on more general claims about human conditioning. Interestingly, one of the implications of timeliness is that: "saving up individual recognition for an annual performance appraisal or rewards banquet can be counterproductive."[^2] 
 
 One interesting idea they suggested that would likely increase timeliness of recognition is to rotate responsibility for who gives recognition at regular meetings. There's a bit of a trade-off here, however, since this can hurt "contingency" -- people may feel like they have to give recognition even if there is nothing worth recognizing.[^3]
 
