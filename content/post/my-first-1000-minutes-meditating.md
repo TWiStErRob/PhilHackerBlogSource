@@ -35,7 +35,7 @@ Today, I completed my 1000th minute of meditation, and I know now that --- and t
 
 >On a regular basis, at work, demonstrate both your physical and mental strength -- your grit. Work an eighty-hour week, be the calm one in face of stress, attack a big problem with sheer brute force and energy...At Morgan Stanley, the analysis pulled all-nighters weekly, and it didn't kill us, but made us strong. This approach to work, however, as you get older, can in fact kill you. So do it early.[^2]
 
-Paul Graham basically defines a startup in such a way that working to your limit is essential for working at a startup.
+Paul Graham, the founder of the incubator that's produced billion dollar companies like Dropbox and AirBnb, basically defines a startup in such a way that working to your limit is essential for working at a startup.
 
 >Economically, you can think of a startup as a way to compress your whole working life into a few years. Instead of working at a low intensity for forty years, you work as hard as you possibly can for four.[^3]
 
@@ -57,18 +57,18 @@ The move towards "yoga mats" started for me when I noticed that although I wasn'
 
 I did some research on this and it turns out that stress and anxiety messes with your ability to _think clearly_ and to _regulate your emotions_ much more than I had expected.[^8] So, by working through the anxiety instead of addressing it, I was trading off some short-term productivity gains for some big losses on how I communicated with people.[^9]
 
-After realizing I was making a bad trade off by not relaxing occasionally, I started trying to be calm by taking Sunday's off completely. I followed everyone's standard advice for relaxing: just do something you like doing that isn't work. So, for a while, I mostly played _League of Legends_ to "relax." 🎮
+After realizing I was making a bad trade off by not relaxing occasionally, I started trying to be calm by taking Sunday's off completely. I followed everyone's standard advice for relaxing: just do something you like doing that isn't work.[^10] So, for a while, I mostly played _League of Legends_ to "relax." 🎮
 
 A few weeks into this, I was playing one Sunday, hands tightly gripped around the mouse and cursing under my breath, and I thought, "Is this _actually_ relaxing? It feels good and it's fun, but is it actually going to help me be calm when it counts?" This question turned into a quest for how I could --- and I get that this is weird quest --- _relax more efficiently_. This is the quest that led me to start considering meditation seriously.
 
-Although I was very skeptical of the effectiveness of meditation, it struck me as a potentially more efficient way of relaxing. Instead of losing my entire Sunday to gaming and other "relaxing" things, I could just set aside 10 minutes per day to meditate. Supposedly, 10 minutes a day is enough to have significant impacts on stress and anxiety levels.[^10]
+Although I was very skeptical of the effectiveness of meditation, it struck me as a potentially more efficient way of relaxing. Instead of losing my entire Sunday to gaming and other "relaxing" things, I could just set aside 10 minutes per day to meditate. Supposedly, 10 minutes a day is enough to have significant impacts on stress and anxiety levels.[^11]
 
 So, with a healthy dose of skepticism, I decided to give meditation a try for a bit by using [the Headspace app](https://www.headspace.com), and so far, I think the results have been pretty positive:
 
 1. I haven't had any anxiety-related chest pain or GERD since I started.
 1. I've been more aware of some unhelpful patterns of thought I tend to fall into, patterns which tend to waste time and produce more anxiety.
 1. There's been a few moments where I felt that I would have ordinarily interacted with others with more intensity and instead found myself simply anticipating and watching my intense emotions dissipate instead of actin' a fool.
-1. My daily meditation habit has also helped "bootstrap" other helpful habits.[^11]
+1. My daily meditation habit has also helped "bootstrap" other helpful habits.[^12]
 
 In addition to these "in the field benefits," the experience of meditating is surprisingly and uniquely refreshing. Two things stand out from the experience:
 
@@ -76,7 +76,7 @@ In addition to these "in the field benefits," the experience of meditating is su
 
 1. Occasionally, during the "focus on your breath" part of the exercises, I sometimes slip into a state where it actually feels like my mind is resting. Ordinarily, my mind is constantly running, thinking about myself and the past and the future. In these moments, however, I feel "present" and I'm not thinking about anything else except my breath. It feels great.
 
-I've read a bit about the changes that happen to the brain during meditation, and apparently, there's a set of regions in the brain called "the default mode network." 🧠 Judson Brewer, a psychiatrist whose been scientifically studying and practicing meditation for decades, calls this region the "narrative network" of the brain because its the part that is always telling a story about our past, our future, our successes, and our failures.[^12] This region, according to his research, is less active during meditation and his research lines up exactly with my experience of meditation, which is reassuring because like I said, I approached meditation with a lot of skepticism.
+I've read a bit about the changes that happen to the brain during meditation, and apparently, there's a set of regions in the brain called "the default mode network." 🧠 Judson Brewer, a psychiatrist whose been scientifically studying and practicing meditation for decades, calls this region the "narrative network" of the brain because its the part that is always telling a story about our past, our future, our successes, and our failures.[^13] This region, according to his research, is less active during meditation and his research lines up exactly with my experience of meditation, which is reassuring because like I said, I approached meditation with a lot of skepticism.
 
 ### Footnotes
 
@@ -99,8 +99,10 @@ I've read a bit about the changes that happen to the brain during meditation, an
 
 [^9]: I actually think this matters a lot less for people who aren't aspiring leaders. Interestingly, a lot of the examples that I've seen about how grindy things can be at startups seems to focus around individual contributors. We definitely see this in Paul Graham's example. Its about a programmer who's just trying to grind out some code. Doesn't really matter if he gets pissed at his computer in the process. [The hbr article I stumbled across a few weeks ago about how executives tend to get more sleep than individual contributors](https://hbr.org/2018/02/senior-executives-get-more-sleep-than-everyone-else) also points in this direction.
 
-[^10]: I believe this is mentioned in "The Stressed Brain" video, but its also mentioned in [this TED talk](https://www.ted.com/talks/andy_puddicombe_all_it_takes_is_10_mindful_minutes) and in [this HBR article](https://hbr.org/2017/01/spending-10-minutes-a-day-on-mindfulness-subtly-changes-the-way-you-react-to-everything).
+[^10]: "Do something that's not work" as advice for relaxation presumes a certain view about the relationship between work and life. This is the same view that's presumed by the phrase "work-life balance," and it turns out that this view has been called into question by I/O Psychologists. More specifically, in _Psychologically Healthy Workplaces_ Larissa K. Barber, Matthew J. Grawitch, and Patrick W. say, "Eikhof, Warhusrt, and Haunschild (2007) noted a number of assumptions in the work-life balance literature, such as the notion that the work domain is the source of the problem...and that the work domain should be separated from the nonwork domain (work-life integration is stressful). All of these assumptions overlook contradictory evidence showing that many individuals derive enjoyment and personal meaning from their work (Wrzeniewski, LoBuglio, Dutton, and Berg, 2013; Wrzesniewski, McCauley, Rozin and Schwarts, 1997)..."
 
-[^11]: I'm not sure if its the meditation habit itself that's doing the work here. Stress and anxiety compromise the executive functioning of the brain, so it might be that the stress reduction that results from meditation has improved my executive functioning, which in turn has made space for me to adopt other helpful habits.
+[^11]: I believe this is mentioned in "The Stressed Brain" video, but its also mentioned in [this TED talk](https://www.ted.com/talks/andy_puddicombe_all_it_takes_is_10_mindful_minutes) and in [this HBR article](https://hbr.org/2017/01/spending-10-minutes-a-day-on-mindfulness-subtly-changes-the-way-you-react-to-everything).
 
-[^12]: Judson Brewer, _The Craving Mind_, xvi.
+[^12]: I'm not sure if its the meditation habit itself that's doing the work here. Stress and anxiety compromise the executive functioning of the brain, so it might be that the stress reduction that results from meditation has improved my executive functioning, which in turn has made space for me to adopt other helpful habits.
+
+[^13]: Judson Brewer, _The Craving Mind_, xvi.
