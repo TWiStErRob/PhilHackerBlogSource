@@ -47,7 +47,7 @@ This year has largely been about the struggle between my "inner hacker" -- the p
 
 #### Generalists > Specialists, even at 50+ employees
 
-Its basically a truism that at startups, you wear many hats.<sup>1</sup> I knew that coming into UniKey, but because my inner hacker didn't want to look up from my monitor, I didn't notice that this can be true even at startups with 50+ people.
+Its basically a truism that at startups, you wear many hats.[^1] I knew that coming into UniKey, but because my inner hacker didn't want to look up from my monitor, I didn't notice that this can be true even at startups with 50+ people.
 
 Sometimes the best thing I can do is to take off my android dev hat and be an iOS or web dev for a few hours. Sometimes I should take off my hacker hat entirely and be a graphic designer or a copy writer or a project manager for a few hours. Sometimes I even need to get on a call with a partner to really understand what they want and what they're afraid of.
 
@@ -57,7 +57,7 @@ My inner hacker wants to build scalable, flexible code and infrastructure. This 
 
 #### Technical debt probably isn't going to kill a company
 
-I've read a few things this year that suggest this<sup>2</sup> and I've seen at UniKey that there are often far bigger dangers for a startup than, for example, untested code.
+I've read a few things this year that suggest this[^2] and I've seen at UniKey that there are often far bigger dangers for a startup than, for example, untested code.
 
 ### Two years?!
 
@@ -67,6 +67,6 @@ I'm thankful for the lessons I've learned and the people I've worked with this p
 
 ### Notes:
 
-1. This is more than just "conventional wisdom." Noam Wasserman, a Harvard prof with a massive data set on startups, reiterates this in his _Founder's Dilemnas_
+[^1]: This is more than just "conventional wisdom." Noam Wasserman, a Harvard prof with a massive data set on startups, reiterates this in his _Founder's Dilemnas_
 
-1. I found the idea that technical problems are "blown out of proportion" in _Peopleware_, Microsoft Research's ["The Influence of Organizational Structure on Software Quality"](https://www.microsoft.com/en-us/research/publication/the-influence-of-organizational-structure-on-software-quality-an-empirical-case-study/), and _TDD By Example_
+[^2]: I found the idea that technical problems are "blown out of proportion" in _Peopleware_, Microsoft Research's ["The Influence of Organizational Structure on Software Quality"](https://www.microsoft.com/en-us/research/publication/the-influence-of-organizational-structure-on-software-quality-an-empirical-case-study/), and _TDD By Example_

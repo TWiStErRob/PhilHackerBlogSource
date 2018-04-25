@@ -4,6 +4,7 @@ languageCode: en-us
 title: Philosophical Hacker
 theme: casper
 DisqusShortname: philosophicalhacker
+pygmentsCodefences: true
 params:
     cover: images/cropped-thinker.jpg
     description: Thoughts on programming and startups from a wannabe philosophy professor turned wannabe tech entrepreneur
