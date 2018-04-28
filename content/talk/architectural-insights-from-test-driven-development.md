@@ -4,7 +4,7 @@ comments = false
 venue = "Orlando Code Camp"
 date = "2017-04-08"
 title = "Architectural Insights from Test Driven Android Development"
-draft = true
+draft = false
 share = true
 menu = ""
 +++

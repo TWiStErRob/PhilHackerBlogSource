@@ -4,7 +4,7 @@ comments = false
 venue = "AnDevCon D.C."
 date = "2017-07-17"
 title = "If Android Tests Could Talk"
-draft = true
+draft = false
 share = true
 menu = ""
 +++
