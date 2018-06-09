@@ -10,7 +10,7 @@ author = ""
 title = "Mobile Down, Smart Speakers Up: 2 Notable Trends from this Year's Internet Trends Report"
 +++
 
-I'm a big fan of KCPB's internet trends report, and I've been following their reports for the last few years. This year, I've decided to clip and comment on what I think are some notable trends they've captured for 2018. Here are 2 trends that really stood out to me from this year's report, along with some commentary.
+I'm a big fan of KPCB's internet trends report, and I've been following their reports for the last few years. This year, I've decided to clip and comment on what I think are some notable trends they've captured for 2018. Here are 2 trends that really stood out to me from this year's report, along with some commentary.
 
 ## 1. The End of Mobile's Golden Era
 
