@@ -2,7 +2,7 @@
 draft = false
 date = "2018-06-09T13:35:58-04:00"
 slug = "internet-trends-2018"
-image = ""
+image = "/images/smartphonespeaker.png"
 comments = true
 share = true
 menu= ""
