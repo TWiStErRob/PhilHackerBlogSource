@@ -11,6 +11,8 @@ menu= ""		# set "main" to add this content to the main menu
 author = ""
 +++
 
+>Edit: James Shore, the guy who attempted to shame Uncle Bob on Twitter, [has fairly pointed out](https://news.ycombinator.com/item?id=17486006) that I've omitted some of the context that makes his shaming appear more reasonable. I've edited this post to include more of that context.
+
 Holy crap! In case you missed it, Uncle Bob got excoriated on Twitter earlier this week for a comment he made about the media's coverage of the separation of immigrant children from their parents. Here's the comment:
 
 {{< tweet 1010152980988026881 >}}
@@ -23,7 +25,17 @@ The last tweet in this "storm" really stands out:
 
 {{< tweet 1011480282266865669 >}}
 
-Although I think that many Americans' response to illegal immigrants and refugees is _very_ morally problematic and although I'm really not a fan of Trump (voted for Hilary even though I didn't care much for her either), this sort of shaming strikes me as a bad idea.
+Now, this isn't the first time Uncle Bob has made problematic statements, and the context on this particular occasion [in James' own words](https://news.ycombinator.com/item?id=17486006) has the following elements:
+
+>a) Bob's attempt to deflect criticism of a child-separation policy, which is going to cause lasting harm to thousands of children, mostly by repeating right-wing pundits that were outright defending the policy.
+
+>b) Five hours of tweets before mine, most of which were people trying to engage in good faith with Bob and being ignored.
+
+>c) Bob's history of engaging in bad faith mockery of people who criticized his attitude towards women.
+
+I think a) and b) are pretty fair characterizations of the situation, but I can't speak to c). 
+
+I think that many Americans' response to illegal immigrants and refugees is _very_ morally problematic and although I'm really not a fan of Trump (voted for Hilary even though I didn't care much for her either), this sort of shaming strikes me as a bad idea, even given the context of the conversation.
 
 Instead, I think maybe we should go easy on Uncle Bob.
 
