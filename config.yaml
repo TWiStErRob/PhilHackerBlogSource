@@ -6,8 +6,8 @@ theme: casper
 DisqusShortname: philosophicalhacker
 pygmentsCodefences: true
 params:
-    cover: images/cropped-thinker.jpg
-    description: Thoughts on programming and startups from a wannabe philosophy professor turned wannabe tech entrepreneur
+    cover: images/black.jpg
+    description: Thoughts on programming and startups from Matt Dupree, a wannabe philosophy professor turned wannabe tech entrepreneur living in Orlando
     twitterName: philosohacker
     facebookName: philosophicalhacker
     linkedinName: k-matthew-dupree-44672178
