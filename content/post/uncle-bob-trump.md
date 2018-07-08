@@ -35,7 +35,7 @@ Now, this isn't the first time Uncle Bob has made problematic statements, and th
 
 I think a) and b) are pretty fair characterizations of the situation, but I can't speak to c). 
 
-I think that many Americans' response to illegal immigrants and refugees is _very_ morally problematic and although I'm really not a fan of Trump (voted for Hilary even though I didn't care much for her either), this sort of shaming strikes me as a bad idea, even given the context of the conversation.
+Now, I think that many Americans' response to illegal immigrants and refugees is _very_ morally problematic and although I'm really not a fan of Trump (voted for Hilary even though I didn't care much for her either), this sort of shaming strikes me as a bad idea, even given the context of the conversation.
 
 Instead, I think maybe we should go easy on Uncle Bob.
 
