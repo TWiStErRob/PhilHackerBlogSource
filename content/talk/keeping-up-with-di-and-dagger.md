@@ -4,7 +4,7 @@ comments = false
 venue = "GDG Dallas Meetup"
 date = "2018-07-12"
 title = "Keeping up with DI and Dagger"
-draft = true
+draft = false
 share = true
 menu = ""
 +++
