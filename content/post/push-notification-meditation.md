@@ -1,5 +1,5 @@
 +++
-draft = true
+draft = false
 date = 2018-09-05T19:04:54-04:00
 slug = "push-notification-meditation"
 tags = ["meditation","philosophy", "psychology"]
