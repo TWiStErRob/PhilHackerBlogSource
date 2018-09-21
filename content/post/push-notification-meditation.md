@@ -19,7 +19,7 @@ Although it was counter-intuitive, I had pretty good reason to believe it, as it
 
 That skepticism changed a few weeks ago while I was meditating and my phone chimed. I learned that I --- like the smoker in Brewer's study --- had a rather shocking ignorance about the unpleasant aspects of my (smartphone) addiction.[^1] 
 
-Don't worry. This isn't another rant about our unhealthy attachment to our phones. 😌 [Plenty](https://wellbeing.google/) [of](https://www.nytimes.com/2011/10/01/opinion/you-love-your-iphone-literally.html) [ink](https://www.amazon.com/Craving-Mind-Cigarettes-Smartphones-Hooked/dp/0300223242) has been spilt that already. I'm more interested in what addictions in general say about the limits of our self-knowledge, the relationship between self-knowledge and self-control, and the importance of mindfulness. 
+Don't worry. This isn't another rant about our unhealthy attachment to our phones. 😌 [Plenty](https://wellbeing.google/) [of](https://www.nytimes.com/2011/10/01/opinion/you-love-your-iphone-literally.html) [ink](https://www.amazon.com/Craving-Mind-Cigarettes-Smartphones-Hooked/dp/0300223242) has been spilt on that already. I'm more interested in what addictions in general say about the limits of our self-knowledge, the relationship between self-knowledge and self-control, and the importance of mindfulness. 
 
 To explore that, I want to talk a little bit more about the experience of receiving a text message while meditating, and discuss why that experience has led me to feel more confident that meditation is a good use of my time. But before we get into all that, let's look at Brewer's smoking cessation program a little more closely.
 
@@ -31,7 +31,7 @@ In his book, _The Craving Mind_, Brewer said while he was first piloting the min
 
 He goes on to suggest that there's a relationship between these realizations (facilitated by mindfulness) and smoking cessation. Again, when I first read this, I thought, "Nonsense."
 
-Now, I didn't reject Brewer's claim because I'm some naivè soul who thinks that human cognition is limitless and that people are near-perfectly rational. I was a big fan of [skepticism](https://plato.stanford.edu/entries/skepticism/#PhiSkeVsOrdInc) back in my philosophy days, and more recently, I've been getting a kick out of hearing about studies that suggest that we don't know as much about ourselves as we'd like to think.[^3] Still, until recently, I found it hard to believe that someone could be unaware of something so intense as the _taste of her cigarette_ as she smoked.
+Now, I didn't reject Brewer's claim because I'm some naive soul who thinks that human cognition is limitless and that people are near-perfectly rational. I was a big fan of [skepticism](https://plato.stanford.edu/entries/skepticism/#PhiSkeVsOrdInc) back in my philosophy days, and more recently, I've been getting a kick out of hearing about studies that suggest that we don't know as much about ourselves as we'd like to think.[^3] Still, until recently, I found it hard to believe that someone could be unaware of something so intense as the _taste of her cigarette_ as she smoked.
 
 Again, receiving a text message while meditating shifted my thinking on all of this.
 
