@@ -8,7 +8,7 @@ comments = true	# set false to hide Disqus
 share = true	# set false to hide share buttons
 menu= ""		# set "main" to add this content to the main menu
 author = ""
-title = "Test Driven Principles of Tech Financing: When to write or re-write crappy code"
+title = "Test Driving Principles of Tech Financing: When to write crappy code"
 +++
 
 Because I'm currently working with 2 startups, I've been thinking a lot about tech debt lately. One startup is _very young_ and doesn't have much technology. They're rocking a concierge MVP and doing a lot of stuff manually. Another startup is more mature and took on some technical debt early to ensure that it could make key moves that helped it survive. Because of this, I'm daily faced with two, related questions:
@@ -16,21 +16,19 @@ Because I'm currently working with 2 startups, I've been thinking a lot about te
 * When should I take on more technical debt to help the business?
 * When should I pay back technical debt the business has already incurred?
 
-Here are some answers to these questions:
-
-* Take on debt if the business would gain more from the tech debt than they'll pay on interest in the tech loan.
-* Pay down debt only if the interest the business is paying on that debt over time _t_ is greater than what the business will gain by you doing anything else during time _t_. 
-
-These principles seem obvious, and yet I _know_ that I often don't follow them. In practice, my tech debt principles are often more like the following:
+In practice, my tech debt principles are often more like the following:
 
 * Take on debt if its 8pm on a Friday and you're still not done.
 * Pay down debt when you can't stand to look at that crappy code any longer.
 
-Even when I'm more thoughtful about my tech-debt decisions, I still think I often make bad calls. This post is an attempt improve my decisions about technical debt by bringing to the fore the factors and principles at play when making these decisions. 
+Even when I'm more thoughtful about my tech-debt decisions, I still think I often make bad calls. This post is an attempt improve my decisions about technical debt by bringing to the fore the factors and principles at play when making these decisions.
 
-One way to do this would be to start with the above first-approximation of principles and then try to defend and refine the principles with examples. This is often how philosophers write papers. 
+I want to slowly build up a picture of how I should make tech debt decisions by considering examples and extracting important factors that figure in the principles that guide how to make tech-debt decisions. There's a parallel between this style of explanation and test-driving code, so I figured it'd be fun to express these principles as functions, the factors as parameters, and the examples as test cases. Then, we can test drive the development of functions that express principles of how we should make tech-debt decisions.
 
-I think it'll be more fun and maybe more clear to express these principles as functions, the factors as parameters, and the examples as test cases. Then, we can test drive the development of functions that express principles of how we should make tech-debt decisions.
+<!-- Here are some answers to these questions:
+
+* Take on debt if the business would gain more from the tech debt than they'll pay on interest in the tech loan.
+* Pay down debt only if the interest the business is paying on that debt over time _t_ is greater than what the business will gain by you doing anything else during time _t_. -->
 
 ## Test-driving when to Write Crappy Code
 
