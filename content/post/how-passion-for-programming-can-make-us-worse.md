@@ -30,7 +30,7 @@ Eric Evans opens _Domain Driven Design_ with a great observation:
 
 If he's right about the importance of domain modeling for good software, then our disposition to focus on technical problems can actually distract us from the design conversations we need to have to build good software.
 
-He's got a great analogy for this in the same passage. The domain-ignorant dev is like a film editor 🎥 who chooses a shot that is worse-overall because someone walked in to that shot. He says:
+He's got a great analogy for this in the same passage. The domain-ignorant dev is like a film editor 🎥 who chooses a shot that is better overall because someone walked in to that shot. He says:
 
 >The film editor was focused on the precise execution of his own speciality. He was concerned that other film editors who saw the movie would judge his work based on its technical perfection. In the process, the heart of the scene had been lost.
 
