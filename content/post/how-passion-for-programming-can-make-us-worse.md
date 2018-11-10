@@ -64,7 +64,7 @@ Simply asking which view is right is a bad question. 👎 Here are better ones:
 
 1. Do we usually pick the right view for the right circumstance?
 
-I think we often screw this up, and I think programmer passion, among other things are implicated in this mistake. I think we tend to favor the Spolskian view too often. We should prefer the Spolskian view when the "how" of a project is murkier than the "what" and prefer the Caganesque view when the "what" is murkier than the "how."
+I think we often screw this up, and I think programmer passion, among other things is implicated in this mistake. I think we tend to favor the Spolskian view too often. We should prefer the Spolskian view when the "how" of a project is murkier than the "what" and prefer the Caganesque view when the "what" is murkier than the "how."
 
 If you know exactly what you need to build but you're worried how you're going to build it, isolating developers from the business is a great play. Hard problems don't get solved with constant interruptions and a general lack of focus on the problem. Spolsky's view FTW here.
 
