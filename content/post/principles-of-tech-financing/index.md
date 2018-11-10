@@ -2,198 +2,74 @@
 draft = true
 date = 2018-10-11T19:27:11-04:00
 slug = "principles-of-tech-financing"
-tags = ["programming","business"]
+tags = ["programming","startups"]
 image = "/images/debt.jpg"
 comments = true	# set false to hide Disqus
 share = true	# set false to hide share buttons
 menu= ""		# set "main" to add this content to the main menu
 author = ""
-title = "Test Driving Principles of Tech Financing: When to write crappy code"
+title = "Why I'm Bad at Managing Tech Debt"
 +++
 
-Because I'm currently working with 2 startups, I've been thinking a lot about tech debt lately. One startup is _very young_ and doesn't have much technology. They're rocking a concierge MVP and doing a lot of stuff manually. Another startup is more mature and took on some technical debt early to ensure that it could make key moves that helped it survive. Because of this, I'm daily faced with two, related questions:
+I _love_ programming. Unfortunately, I think my love for programming often gets in the way of thinking clearly about how to manage technical debt. Since technical debt management is one of the key responsibilities of technology leadership, there's some irony here: my love for programming actually makes me a crappier technology leader.[^1]
 
-* When should I take on more technical debt to help the business?
-* When should I pay back technical debt the business has already incurred?
+Specifically, I think this irony plays out in two ways: I often wind up focusing on technical goals that aren't aligned with business goals and even when I'm focused on business goals, my thinking about how to manage technical debt to achieve those goals is shallow.
 
-In practice, my tech debt principles are often more like the following:
+For example, recently, I rewrote some code that I couldn't stand looking at anymore and it led to some pretty subtle bugs that took a long time for us to discover and fix. This was a bad call, and it made me wonder why I'm so bad at making decisions about technical debt.
 
-* Take on debt if its 8pm on a Friday and you're still not done.
-* Pay down debt when you can't stand to look at that crappy code any longer.
+Here's what I came up with:
 
-Even when I'm more thoughtful about my tech-debt decisions, I still think I often make bad calls. This post is an attempt improve my decisions about technical debt by bringing to the fore the factors and principles at play when making these decisions.
+Because of how much I like programming, the way that I think about technical debt is, at best, undisciplined and, at worst, actively hostile to the goals of a startup.
 
-I want to slowly build up a picture of how I should make tech debt decisions by considering examples and extracting important factors that figure in the principles that guide how to make tech-debt decisions. There's a parallel between this style of explanation and test-driving code, so I figured it'd be fun to express these principles as functions, the factors as parameters, and the examples as test cases. Then, we can test drive the development of functions that express principles of how we should make tech-debt decisions.
-
-<!-- Here are some answers to these questions:
-
-* Take on debt if the business would gain more from the tech debt than they'll pay on interest in the tech loan.
-* Pay down debt only if the interest the business is paying on that debt over time _t_ is greater than what the business will gain by you doing anything else during time _t_. -->
-
-## Test-driving when to Write Crappy Code
-
-### First approximation
-
-Let's start with our first-approximation of what we'll call the "when to write crappy code" principle:
-
->Take on debt if the business would gain more from the tech debt than they'll pay on interest in the tech loan.
-
-Here's a first approximation at the function:
-
-```javascript
-const shouldWriteCrappyCode = projects => {
-  const bestProject = projects.getStartableProjectWithHighestExpectedValue();
-  const {
-    acceleratedDeliveryDate,
-    expectedInterest,
-    savedTime
-  } = bestProject.loan();
-  const nextBestProject = projects
-    .canStartBy(acceleratedDeliveryDate)
-    .sortByHighestExpectedValue()
-    .first();
-  return (
-    nextBestProject.expectedValueFromSoonerDelivery(savedTime) >
-    expectedInterest
-  );
-};
-```
-
-Here's an easy, extreme example where this principle applies. Lets suppose your startup is a week from going under because you have a critical bug and your only customer is threatening to cancel your contract if the bug is not fixed in one week. And let's suppose that the only way to fix the bug in that time frame is to write truly terrible code. Obviously, in this case, _no matter how bad the code is_, you take on the tech debt to fix the bug. The business gains more from the tech debt (it gets to live) than it'll pay in interest on the tech loan.
-
-We can express this example as a test case:
-
-```javascript
-describe('when to write crappy code', () => {
-  it("should save your company from death", () => {
-    expect(shouldWriteCrappyCode(Infinity, 1e20000000)).toBeTruthy();
-  });
-});
-```
-
-Let's add more nuance to this example. 
-
-On the business side, imagine the same scenario as above, but the customer is giving us 2 weeks to fix the critical bug. However, they really want to see significant results in one week and have made it pretty clear that they'll be pissed if they don't see results. Now, we suspect that they won't actually cancel the contract if they don't see this progress in that time period. They'll just be cheesed off. 
-
-On the technical side, imagine that we can build a solution in one week that will show significant results, but that building this solution will incur some debt that will lead to failing to solve the overall problem in two weeks. However, if we simply miss the 1 week deadline, we can build something that will solve the overall problem in 2 weeks.
-
-In this case, we don't take on the technical debt. The business will pay more on the interest of their tech debt than they'll gain by taking it on. The interest on the tech loan leads to missing the bigger, more important deadline. Engineering should ask accounts to sweet talk the customer out of the 1 week checkpoint deadline. 
-
-With a new test case expressing this, here's where we stand:
-
-```javascript
-const shouldWriteCrappyCode = (businessValue, interest) => 
-  businessValue > interest;
-
-describe('when to write crappy code', () => {
-  it("should save your company from death", () => {
-    expect(shouldWriteCrappyCode(1e200, 1e20)).toBeTruthy();    
-  });
-  it("shouldn't kill your company", () => {
-    expect(shouldWriteCrappyCode(-1e200, 1e20)).toBeFalsy();
-  });
-});
-```
-
-Pretty boring so far, but we've already said enough to know that we need to refine our function a bit. In that last example, we had to do a little work to conclude that taking short-cuts for the 1 week checkpoint deadline is actually a bad play. This work is captured when we express the principle in prose, but let's push that work down into the function. To fix this, our function needs to be able to consider multiple commitments, to have a notion of when debt must be paid, and to know the current available resources of a company. Here's what the updated test case would look like:
-
-```javascript
-it("shouldn't kill your company", () => {
-    expect(
-      shouldWriteCrappyCode([
-        { businessValue: 0, interest: 1e100 }, // checkpoint deliverable
-        { businessValue: 1e100, interest: 0 } // full bug fix
-      ], 100) // <- Current business resources
-    ).toBeFalsy();
-});
-```
-
-To get this to pass, the function will _assume_ that projects that occur later in the array depend on projects occurring earlier. Here's the implementation:
-
-```javascript
-const shouldWriteCrappyCode = (projects, currentResources) =>
-  projects.reduce(
-    (acc, { businessValue, interest }) => acc + (businessValue - interest),
-    currentResources
-  ) > 0;
-```
-
-Game over for your startup is represented by the inequality here. If at any point running through your projects, your current resources drops below 0, you lose. 
-
-### Adding Uncertainty
-
-Rarely is our situation so clear cut as the 2 examples I've given above. For example, we are often uncertain about the business value of our projects. It might turn out, to continue the above example, that hitting the checkpoint delivery deadline could delight our customers so much that they forgive us for missing the bigger deadline one week later. We might also be unsure whether we can hit the 2 week deadline at all. We can capture uncertainty in our `projects` parameter:
-
-```typescript
-interface Project {
-  interest: number
-  businessValue: number
-  expectation: number // <- between 0 and 1
-}
-
-const shouldWriteCrappyCode = (projects: Project[], currentResources) => //...
-```
-
-Adding this lets us write a few more test cases:
-
-```typescript
-describe("when to write crappy code", () => {
-  describe("should allow your company to make smart bets", () => {
-    it ("should allow your company to bet on accounts",  () => {
-      expect(
-        shouldWriteCrappyCode(
-          [
-            { businessValue: 100, interest: 50, expectation: .9 }, // checkpoint deliverable
-            {
-              businessValue: 100, interest: 0, expectation: .2 // full bug fix
-            }
-          ],
-          100
-        )
-      ).toBeTruthy();
-    });
-    it("should allow your company to bet on engineering", () => {
-      expect(
-        shouldWriteCrappyCode(
-          [
-            { businessValue: 100, interest: 50, expectation: .001 }, // checkpoint deliverable
-            {
-              businessValue: 100, interest: 0, expectation: .8 // full bug fix
-            }
-          ],
-          100
-        )
-      ).toBeFalsy();
-    })
-  });
-});
-```
-
-If writing crappy code can be leveraged by accounts to buy more time and save the company, write crappy code. If the right way is the only way and that means missing a checkpoint deadline, accounts has to deal.
+## Hostile and Undisciplined: On Typical Tech-debt Thinking
 
 
-When I first got clear on these principles, I felt that they were so obvious that they were hardly worth writing down.
+### Hostile
 
-Of course, there are other ways of thinking about technical debt.
+Let's start with misaligned technical goals. 
 
-## When to Rewrite Crappy Code
+It shouldn't surprise me that the technical goals I have are often misaligned with the business. After all, programmers are often given permission to satisfy their hacker urges and "fix" whatever is urking them about their code. I once attended a conference where an engineer from Yahoo! told me about a "developer happiness" card they could play during sprint planning to justify spending time rewriting some bad code. The authors of _Peopleware_ even go as far as suggesting that ensuring developer happiness is the optimal way build successful products:
 
-### An Objection: "Let the engineers decide"
+>We all tend to tie our self-esteem strongly to the quality of the product we product...A market-derived quality standard seems to make good sense only as long as you ignore the effect on the builder's attitude and effectiveness...Quality, far beyond that required by the end user, is a means to higher productivity.[^2]
 
-## Serious objections
+I certainly hope this isn't true. Startups are hard enough as it is without having to worry about appeasing our seemingly fragile egos as programmers. A startup can often turn into a war to survive, and I really hope that I can build a team of soldiers who aren't stuck in their trenches polishing their rifles because it makes them feel better while I'm trying to take a hill.
 
-### Following these principles leads to losses in the long-term
+Beyond merely hoping that this isn't true, Marty Cagan --- former product leader at HP, ebay, and Netscape --- notes that there are teams made of people who are "missionaries, not mercenaries."[^3] These are people who are passionate about the mission of the company rather than simply sticking around for some other extrinsic gain, which, in this case, is the opportunity to write quality code that solves interesting problems. This suggests that the authors of _Peopleware_ are wrong. We can have stellar, motivated teams without necessarily building a product whose quality outstrips market demand.
 
-## Nuances
+I'm not saying that there's anything wrong with caring about quality or interesting problems.[^4] I just think that at a startup, the mission has to come first. Because startups don't have many resources, we put ourselves in a precarious position insofar as we prioritize our hacker aesthetic over business goals.
 
-### Variable interest rate
+### Undisciplined
 
-### Possible gains
+'Nuff said about misaligned technical goals. Let's move on to undisciplined thinking about technical debt. Even when we're focused on business goals, the decisions we make around technical debt aren't really grounded in any deep thinking about the impact of that debt on the business.
 
-## Implications
+Our gut feelings about the risks and impact of technical debt are not enough. These intuitive judgments are going to run through the affect heuristic, a mental shortcut we use to judge the riskiness of X by considering our emotional reaction towards X. As programmers, we don't like crap code, so we're likely to over-estimate the risk that code poses to the business. 
 
-### The importance of measuring/data
+Presumably, this is a part of why I found the following statements so surprising when I first read them, and it's why I'm willing to bet you'll find them surprising as well:
 
-### More tech debt
+>Good engineering is maybe 20 percent of a project's success. Bad engineering will certainly sink projects, but modest engineering can enable project success as long as the other 80 percent lines up right. From this perspective, TDD is overkill.
+>
+>--Kent Beck, TDD by Example
 
-### The right tech debt
+>For the overwhelming majority of the bankrupt projects we studied, there was not a single technological issue to explain the failure. The cause of failure most frequently cited by our survey participants was “politics.”
+>
+>--Tom Demarco and Timothy Lister, Peopleware
+
+Here's a second reason to think we're not disciplined with how we manage tech debt: The mark of serious thinking about a problem is often some kind of measurement. In software, we've already seen the development of measuring work with "story points" and "velocity," and lots of software has been built that makes these concepts first-class tools in thinking about software projects. However, this hasn't happened with the concept of technical debt. 
+
+The "technical debt" metaphor can mislead us in our thinking about when to write or re-write crappy code
+  it makes us think that its always bad
+  its a boogie-man
+
+---
+
+## Notes
+
+[^1]: Hopefully, this suggestion isn't too shocking. I'm not the only one who's suggested that our love for programming might actually make us worse at our jobs. Eric Evans in _Domain Driven Design_ suggests the same thing when he points out that because programmers often don't care about the domain their software models, their code winds up being more complicated and more difficult to maintain than it needs to be.
+
+[^2]: Timothy Lister and Tom Demarco, _Peopleware_ 35-37.
+
+[^3]: "Missionaries vs. Mercenaries," Margy Cagan, https://svpg.com/missionaries-vs-mercenaries/.
+
+[^4]: Erik Dietrich in _Developer Hegemony_ demands more from us here. He says, “You also need to swallow whatever joy you extract from correct, elegant implementations and adopt a willingness to sacrifice Cadillac quality for time to market. You must sell out and believe in selling out, taking your joy of working with the tech and completely compartmentalizing it. Fun with toys is for outside the office. Programming is not a calling, and it’s not a craft. It’s just automation that increases top line revenue through product or reduces bottom line costs through efficiency.” He's probably too extreme on this point, but the deep challenge he's issuing to our hacker sensibilities is worth pondering.
+
+[^5]: This is from the "Technical Debt" entry on Ward's wiki: http://wiki.c2.com/?TechnicalDebt

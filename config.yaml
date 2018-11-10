@@ -3,6 +3,8 @@ disablePathToLower: true
 languageCode: en-us
 title: Philosophical Hacker
 theme: casper
+ignoreFiles:
+  - 'node_modules'
 DisqusShortname: philosophicalhacker
 pygmentsCodefences: true
 params:
@@ -20,12 +22,14 @@ menu:
       url: /
     - name: RxJava O'Reilly Book
       weight: -4
+      identifier: book
       url: https://www.oreilly.com/programming/free/rxjava-for-android-app-development.csp?intcmp=il-prog-free-product-na_new_site_rxjava_for_android_app_development
     - name: Talks
       weight: -3
       identifier: talks
       url: /talk
     - name: Github
+      identifier: github
       weight: -2
       url: https://github.com/kmdupr33
     - name: Notes
