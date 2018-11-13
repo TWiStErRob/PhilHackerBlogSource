@@ -10,7 +10,9 @@ author = ""
 title = "How Passion for Programming Can Make us Worse at our Jobs"
 +++
 
-"Good programmers are passionate about what they do" is basically a platitude in our industry. 🙄 _On the whole_, this may be true, but lately I've been interested in how our passion for programming might get in the way of us doing well for the companies we work for and may even lead to us being worse at programming specifically. 🤔 Here are some ways I think this passion can make us worse at what we do:
+"Good programmers are passionate about what they do" is basically a platitude in our industry. 🙄 _On the whole_, this may be true, but lately I've been interested in how our passion for programming might get in the way of us doing well for the companies we work for and may even lead to us being worse at programming specifically. 🤔 
+
+Here are some ways I think this passion can make us worse at what we do:
 
 1. Neglecting the importance of the domain in building elegant solutions.
 1. Poor judgments about the risks of technical debt (because of the affect heuristic)
@@ -18,7 +20,9 @@ title = "How Passion for Programming Can Make us Worse at our Jobs"
 1. Builder vs. Market quality mismatch, which leads to wasted effort.
 1. Excessive specialization
 
-Let's look at each of these in detail.
+These are all mistakes I've personally made, and while I don't think there's a _necessary_ connection between passion for programming and these mistakes, I do think that my passion played a causal role in explaining these mistakes in my particular case. I thought this was counter-intuitive and worth sharing in case others find themselves in similar circumstances.
+
+Let's look at each of these mistakes in detail.
 
 ### Domain Neglect
 
