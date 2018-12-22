@@ -1,5 +1,5 @@
 +++
-draft = true
+draft = false
 date = 2018-12-18T08:40:08-05:00
 slug = "one-year-meditating"
 tags = ["meditation"]
@@ -35,7 +35,7 @@ Because the quality of my meditation sessions were themselves uneven, I shouldn'
 
 ### Meditation as "Stress Compass"
 
-Even when my meditation sessions went poorly, however, they were still useful in that they provided me with what Judson Brewer calls a "stress compass." Judson explains the metaphor here:
+Even when my meditation sessions went poorly, however, they were still useful in that they provided me with what Judson Brewer calls a "stress compass." Brewer explains the metaphor here:
 
 >if we have been carrying around a this-isn't-quite-right feeling of dis-ease, and we lack a compass to help us orient to where it is coming from, the disconnection can lead to quite a bit of stress...what if we used our feeling of stress or dis-ease as our compass?...What does stress actually feel like, and how does it differ from emotions such as excitement? If we can clearly orient ourselves to the needle...we can use that alignment as a compass to help guide our lives.[^3]
 
