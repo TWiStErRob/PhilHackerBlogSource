@@ -1,6 +1,6 @@
 +++
 draft = false
-date = 2019-02-16T22:11:45-05:00
+date = 2019-03-01T22:11:45-05:00
 slug = "okr-problems"
 tags = ["startups","business", "io psychology", "product management"]
 image = ""
