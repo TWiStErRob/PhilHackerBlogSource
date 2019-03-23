@@ -58,7 +58,7 @@ The claim isn't that technical debt doesn't matter. It matters. The claim here i
 
 Consider two views on how involved programmers should be in non-programming activities. 
 
-On Joel Spolsky's view, developers ought to isolated from the business via a "developer abstraction layer." In fact, he says, "Management’s primary responsibility to create the illusion that a software company can be run by writing code, because that’s what programmers do." 
+On Joel Spolsky's view, developers ought to be isolated from the business via a "developer abstraction layer." In fact, he says, "Management’s primary responsibility to create the illusion that a software company can be run by writing code, because that’s what programmers do." 
 
 Marty Cagan has a _very_ different view. He says, "if your programmers are only programming, you're only getting half their value." Support-driven development --- where software developers actually do customer support --- has even become a thing at companies like Zapier[^1] and Wufoo[^2].
 
@@ -88,11 +88,11 @@ Some are fine with this. I once met an engineer at Yahoo! who said that "develop
 
 >"We all tend to tie our self-esteem strongly to the quality of the product we produce…A market-derived quality standard seems to make good sense **only as long as you ignore the effect on the builder’s attitude and effectiveness…"**
 
-This is a strong claim that I doubt is entirely true, but to the extent that it is true, it would mean the company wastes money satisfying our desire quality insofar as our quality standard outstrips the market demand for quality.
+This is a strong claim that I doubt is entirely true, but to the extent that it is true, it would mean the company wastes money satisfying our desire for quality insofar as our quality standard outstrips the market demand for quality.
 
 This is especially problematic in a startup. An early stage startup is a war to survive, so when our passion for programming drives us to insist on higher quality than our customers demand, we wind up acting like soldiers who have gotten stuck in the trenches polishing our rifles because it makes us feel better. ✨ 🔫 ✨
 
-I’m not saying that there’s anything wrong with caring about quality or interesting problems. I just think that at a startup, its tough if programmers are focusing on these things over survival.
+I’m not saying that there’s anything wrong with caring about quality or interesting problems. I just think that at a startup, it's tough if programmers are focusing on these things over survival.
 
 ### Excessive Specialization
 
@@ -104,7 +104,7 @@ This is because preparing the egg takes the most time of all the steps. 🍳 Reg
 
 An employee at the above diner who believed that improving her coffee prepping skills would actually help the business would be mistaken. The same applies to programmers who think that specializing in their non-limiting-step discipline is good for the business. Programmer passion for her "favorite stack" can blind her to this.
 
-There are _plenty_ of cases where continued specialization will in fact yield benefits to the business, even if programmers are specializing in a non-limiting-step discipline/stack.[^3] A specialist may be able to product higher quality code in less time that contains less bugs, which could lead to increased referrals for your software product. Moreover, deeper knowledge can lead to a richer view of what's possible with a given stack, which can better inform product and project management decisions.
+There are _plenty_ of cases where continued specialization will in fact yield benefits to the business, even if programmers are specializing in a non-limiting-step discipline/stack.[^3] A specialist may be able to produce higher quality code in less time that contains less bugs, which could lead to increased referrals for your software product. Moreover, deeper knowledge can lead to a richer view of what's possible with a given stack, which can better inform product and project management decisions.
 
 _However_, at some point, further investments in quality and keeping up with all the newest approaches to solving problems with our stacks will yield diminishing returns 📉, and I suspect that this point occurs much sooner than a lot of us realize.
 
